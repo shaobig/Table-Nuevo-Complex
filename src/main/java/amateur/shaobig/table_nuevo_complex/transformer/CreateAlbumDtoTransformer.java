@@ -31,7 +31,7 @@ public class CreateAlbumDtoTransformer implements Transformer<Album, CreateAlbum
         List<SongDto> songs = album.getSongs().stream()
                 .map(song -> getSongDtoTransformer().transform(song))
                 .collect(Collectors.toList());
-        return new CreateAlbumDto(album.getNumber(), album.getName(), album.getYear(), album.getType(), albumMetadata, genres, songs);
+        return new CreateAlbumDto(album.getId(), album.getNumber(), album.getName(), album.getYear(), album.getType(), albumMetadata, genres, songs);
     }
 
 }

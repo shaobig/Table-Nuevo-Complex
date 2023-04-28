@@ -16,8 +16,8 @@ import java.util.List;
 @Getter(value = AccessLevel.PACKAGE)
 public class AlbumDtoService implements CreateService<Album, CreateAlbumDto>, ReadAllService<ReadAllAlbumDto> {
 
-    private final AlbumProxyService albumProxyService;
     private final CreateAlbumDtoTransformer createAlbumDtoTransformer;
+    private final AlbumProxyService albumProxyService;
 
     @Override
     public CreateAlbumDto create(Album album) {
