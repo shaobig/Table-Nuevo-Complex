@@ -13,6 +13,7 @@ public class SongTypeConverter implements AttributeConverter<SongType, String> {
     public String convertToDatabaseColumn(SongType attribute) {
         return Optional.of(attribute)
                 .map(SongType::getAlias)
+                .map(String::toUpperCase)
                 .orElseThrow(() -> new NullPointerException("Can't convert the song type attribute"));
     }
 
