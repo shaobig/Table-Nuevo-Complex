@@ -9,11 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumProxyService implements CreateService<Album, Album>, ReadAllService<ReadAllAlbumDto> {
+public class AlbumProxyService implements CreateService<Album, Album>, ReadService<Optional<Album>>, ReadAllService<ReadAllAlbumDto> {
 
     private final AlbumPoolService albumPoolService;
     private final AlbumService albumService;
@@ -21,6 +22,11 @@ public class AlbumProxyService implements CreateService<Album, Album>, ReadAllSe
     @Override
     public Album create(Album album) {
         return getAlbumPoolService().create(new AlbumPool(album)).getAlbum();
+    }
+
+    @Override
+    public Optional<Album> read(Long id) {
+        return getAlbumService().read(id);
     }
 
     @Override

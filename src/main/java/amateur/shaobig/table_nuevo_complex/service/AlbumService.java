@@ -9,17 +9,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumService implements CreateService<Album, Album>, ReadAllService<ReadAllAlbumDto> {
+public class AlbumService implements CreateService<Album, Album>, ReadService<Optional<Album>>, ReadAllService<ReadAllAlbumDto> {
 
     private final AlbumRepository albumRepository;
 
     @Override
     public Album create(Album album) {
         return getAlbumRepository().save(album);
+    }
+
+    @Override
+    public Optional<Album> read(Long id) {
+        return getAlbumRepository().findById(id);
     }
 
     @Override

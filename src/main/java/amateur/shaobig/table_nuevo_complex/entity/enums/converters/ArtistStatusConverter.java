@@ -13,6 +13,7 @@ public class ArtistStatusConverter implements AttributeConverter<ArtistStatus, S
     public String convertToDatabaseColumn(ArtistStatus status) {
         return Optional.of(status)
                 .map(ArtistStatus::getAlias)
+                .map(String::toUpperCase)
                 .orElseThrow(() -> new NullPointerException("Can't convert the artist status"));
     }
 
