@@ -1,6 +1,6 @@
 # Table Nuevo Complex
 
-This application is an utility which provides the basic set of the instruments for the analysis of the _musical collections_ i.e. albums, single songs, collaborative compilations etc.
+This application is an utility which provides the basic set of instruments for music analysing based on a complex estimating system
 
 ## Basic instruments
 
