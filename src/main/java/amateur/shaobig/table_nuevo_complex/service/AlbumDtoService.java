@@ -4,6 +4,7 @@ import amateur.shaobig.table_nuevo_complex.dto.CreateAlbumDto;
 import amateur.shaobig.table_nuevo_complex.dto.ReadAlbumDto;
 import amateur.shaobig.table_nuevo_complex.dto.ReadAllAlbumDto;
 import amateur.shaobig.table_nuevo_complex.entity.Album;
+import amateur.shaobig.table_nuevo_complex.exception.types.EntityNotFoundException;
 import amateur.shaobig.table_nuevo_complex.transformer.CreateAlbumDtoTransformer;
 import amateur.shaobig.table_nuevo_complex.transformer.ReadAlbumDtoTransformer;
 import lombok.AccessLevel;
@@ -30,7 +31,7 @@ public class AlbumDtoService implements CreateService<Album, CreateAlbumDto>, Re
     @Override
     public ReadAlbumDto read(Long id) {
         Album album = getAlbumProxyService().read(id)
-                .orElseThrow(() -> new NullPointerException(String.format("Can't find the album with the id = %d", id)));
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Can't find the album with the id = %d", id)));
         return getReadAlbumDtoTransformer().transform(album);
     }
 
