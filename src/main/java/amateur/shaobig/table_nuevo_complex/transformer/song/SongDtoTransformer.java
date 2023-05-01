@@ -1,7 +1,8 @@
-package amateur.shaobig.table_nuevo_complex.transformer;
+package amateur.shaobig.table_nuevo_complex.transformer.song;
 
-import amateur.shaobig.table_nuevo_complex.dto.SongDto;
+import amateur.shaobig.table_nuevo_complex.dto.song.SongDto;
 import amateur.shaobig.table_nuevo_complex.entity.Song;
+import amateur.shaobig.table_nuevo_complex.transformer.Transformer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

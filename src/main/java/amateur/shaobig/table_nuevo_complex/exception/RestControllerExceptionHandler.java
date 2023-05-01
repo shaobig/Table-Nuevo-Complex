@@ -1,6 +1,6 @@
 package amateur.shaobig.table_nuevo_complex.exception;
 
-import amateur.shaobig.table_nuevo_complex.dto.ExceptionDto;
+import amateur.shaobig.table_nuevo_complex.dto.exception.ExceptionDto;
 import amateur.shaobig.table_nuevo_complex.exception.types.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

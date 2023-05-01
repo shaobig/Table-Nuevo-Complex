@@ -1,5 +1,6 @@
-package amateur.shaobig.table_nuevo_complex.dto;
+package amateur.shaobig.table_nuevo_complex.dto.album;
 
+import amateur.shaobig.table_nuevo_complex.dto.song.SongDto;
 import amateur.shaobig.table_nuevo_complex.entity.enums.AlbumType;
 
 import java.util.List;

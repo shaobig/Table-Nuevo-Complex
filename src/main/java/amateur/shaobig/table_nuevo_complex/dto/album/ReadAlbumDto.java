@@ -1,5 +1,6 @@
-package amateur.shaobig.table_nuevo_complex.dto;
+package amateur.shaobig.table_nuevo_complex.dto.album;
 
+import amateur.shaobig.table_nuevo_complex.dto.song.SongDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;

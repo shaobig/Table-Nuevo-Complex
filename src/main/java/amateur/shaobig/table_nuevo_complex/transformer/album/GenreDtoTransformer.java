@@ -1,7 +1,8 @@
-package amateur.shaobig.table_nuevo_complex.transformer;
+package amateur.shaobig.table_nuevo_complex.transformer.album;
 
-import amateur.shaobig.table_nuevo_complex.dto.GenreDto;
+import amateur.shaobig.table_nuevo_complex.dto.album.GenreDto;
 import amateur.shaobig.table_nuevo_complex.entity.Genre;
+import amateur.shaobig.table_nuevo_complex.transformer.Transformer;
 import org.springframework.stereotype.Component;
 
 @Component

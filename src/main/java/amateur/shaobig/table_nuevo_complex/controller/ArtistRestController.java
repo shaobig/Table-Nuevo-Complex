@@ -1,7 +1,7 @@
 package amateur.shaobig.table_nuevo_complex.controller;
 
-import amateur.shaobig.table_nuevo_complex.dto.album.ReadAllAlbumPoolDto;
-import amateur.shaobig.table_nuevo_complex.service.pool.AlbumPoolService;
+import amateur.shaobig.table_nuevo_complex.dto.artist.ReadArtistDto;
+import amateur.shaobig.table_nuevo_complex.service.artist.ArtistDtoService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,20 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
-@RequestMapping(path = "/album-pool")
+@RequestMapping(path = "/artist")
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumPoolRestController implements ReadAllRestController<ReadAllAlbumPoolDto> {
+public class ArtistRestController implements ReadRestController<ReadArtistDto> {
 
-    private final AlbumPoolService albumPoolService;
+    private final ArtistDtoService artistDtoService;
 
     @Override
-    public ResponseEntity<List<ReadAllAlbumPoolDto>> readAll() {
+    public ResponseEntity<ReadArtistDto> read(Long id) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(getAlbumPoolService().readAll());
+                .body(getArtistDtoService().read(id));
     }
 
 }

@@ -1,7 +1,8 @@
-package amateur.shaobig.table_nuevo_complex.transformer;
+package amateur.shaobig.table_nuevo_complex.transformer.song;
 
-import amateur.shaobig.table_nuevo_complex.dto.SongMetadataDto;
+import amateur.shaobig.table_nuevo_complex.dto.song.SongMetadataDto;
 import amateur.shaobig.table_nuevo_complex.entity.SongMetadata;
+import amateur.shaobig.table_nuevo_complex.transformer.Transformer;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,8 +1,11 @@
-package amateur.shaobig.table_nuevo_complex.service;
+package amateur.shaobig.table_nuevo_complex.service.album;
 
-import amateur.shaobig.table_nuevo_complex.dto.ReadAllAlbumDto;
+import amateur.shaobig.table_nuevo_complex.dto.album.ReadAllAlbumDto;
 import amateur.shaobig.table_nuevo_complex.entity.Album;
 import amateur.shaobig.table_nuevo_complex.repository.AlbumRepository;
+import amateur.shaobig.table_nuevo_complex.service.CreateService;
+import amateur.shaobig.table_nuevo_complex.service.ReadAllService;
+import amateur.shaobig.table_nuevo_complex.service.ReadService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
