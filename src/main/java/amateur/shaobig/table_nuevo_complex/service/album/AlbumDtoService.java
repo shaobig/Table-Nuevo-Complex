@@ -1,12 +1,14 @@
-package amateur.shaobig.table_nuevo_complex.service;
+package amateur.shaobig.table_nuevo_complex.service.album;
 
-import amateur.shaobig.table_nuevo_complex.dto.CreateAlbumDto;
-import amateur.shaobig.table_nuevo_complex.dto.ReadAlbumDto;
-import amateur.shaobig.table_nuevo_complex.dto.ReadAllAlbumDto;
+import amateur.shaobig.table_nuevo_complex.dto.album.CreateAlbumDto;
+import amateur.shaobig.table_nuevo_complex.dto.album.ReadAlbumDto;
+import amateur.shaobig.table_nuevo_complex.dto.album.ReadAllAlbumDto;
 import amateur.shaobig.table_nuevo_complex.entity.Album;
-import amateur.shaobig.table_nuevo_complex.exception.types.EntityNotFoundException;
-import amateur.shaobig.table_nuevo_complex.transformer.CreateAlbumDtoTransformer;
-import amateur.shaobig.table_nuevo_complex.transformer.ReadAlbumDtoTransformer;
+import amateur.shaobig.table_nuevo_complex.service.CreateService;
+import amateur.shaobig.table_nuevo_complex.service.ReadAllService;
+import amateur.shaobig.table_nuevo_complex.service.ReadService;
+import amateur.shaobig.table_nuevo_complex.transformer.album.CreateAlbumDtoTransformer;
+import amateur.shaobig.table_nuevo_complex.transformer.album.ReadAlbumDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +32,7 @@ public class AlbumDtoService implements CreateService<Album, CreateAlbumDto>, Re
 
     @Override
     public ReadAlbumDto read(Long id) {
-        Album album = getAlbumProxyService().read(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Can't find the album with the id = %d", id)));
-        return getReadAlbumDtoTransformer().transform(album);
+        return getReadAlbumDtoTransformer().transform(getAlbumProxyService().read(id));
     }
 
     @Override

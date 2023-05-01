@@ -1,10 +1,12 @@
-package amateur.shaobig.table_nuevo_complex.transformer;
+package amateur.shaobig.table_nuevo_complex.transformer.album;
 
-import amateur.shaobig.table_nuevo_complex.dto.AlbumMetadataDto;
-import amateur.shaobig.table_nuevo_complex.dto.CreateAlbumDto;
-import amateur.shaobig.table_nuevo_complex.dto.GenreDto;
-import amateur.shaobig.table_nuevo_complex.dto.SongDto;
+import amateur.shaobig.table_nuevo_complex.dto.album.AlbumMetadataDto;
+import amateur.shaobig.table_nuevo_complex.dto.album.CreateAlbumDto;
+import amateur.shaobig.table_nuevo_complex.dto.album.GenreDto;
+import amateur.shaobig.table_nuevo_complex.dto.song.SongDto;
 import amateur.shaobig.table_nuevo_complex.entity.Album;
+import amateur.shaobig.table_nuevo_complex.transformer.Transformer;
+import amateur.shaobig.table_nuevo_complex.transformer.song.SongDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

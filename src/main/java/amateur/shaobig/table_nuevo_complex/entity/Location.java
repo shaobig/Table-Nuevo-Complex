@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -15,11 +16,10 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "locations", uniqueConstraints = {@UniqueConstraint(columnNames = {"country", "region", "locality"})})
+@NoArgsConstructor
 @Getter
 @Setter
 public class Location implements Serializable {
-
-    private static final String DEFAULT_LOCATION = "";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +28,6 @@ public class Location implements Serializable {
     private String country;
     private String region;
     private String locality;
-
-    public Location() {
-        this.region = DEFAULT_LOCATION;
-        this.locality = DEFAULT_LOCATION;
-    }
 
     @Override
     public boolean equals(Object o) {
