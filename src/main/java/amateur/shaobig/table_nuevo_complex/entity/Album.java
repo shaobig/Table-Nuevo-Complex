@@ -29,8 +29,6 @@ public class Album implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private Artist artist;
     private int number;
     @Column(nullable = false)
     private String name;
@@ -40,6 +38,8 @@ public class Album implements Serializable {
     private AlbumType type;
     @OneToOne(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private AlbumMetadata metadata;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Artist artist;
     @OneToMany(mappedBy = "album", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Genre> genres;
     @OneToMany(mappedBy = "album", cascade = CascadeType.PERSIST, orphanRemoval = true)
@@ -76,12 +76,12 @@ public class Album implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Album album = (Album) o;
-        return id.equals(album.id);
+        return name.equals(album.name) && year.equals(album.year) && type == album.type && artist.equals(album.artist);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name, year, type, artist);
     }
 
 }

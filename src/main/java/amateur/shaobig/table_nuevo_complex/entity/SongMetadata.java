@@ -36,12 +36,12 @@ public class SongMetadata implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SongMetadata metadata = (SongMetadata) o;
-        return id.equals(metadata.id);
+        return mark == metadata.mark && song.equals(metadata.song);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(song, mark);
     }
 
 }

@@ -36,13 +36,13 @@ public class AlbumPool implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AlbumPool album = (AlbumPool) o;
-        return id.equals(album.id);
+        AlbumPool albumPool = (AlbumPool) o;
+        return album.equals(albumPool.album);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(album);
     }
 
 }
