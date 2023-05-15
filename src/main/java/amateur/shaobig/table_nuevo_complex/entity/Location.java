@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +14,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "locations", uniqueConstraints = {@UniqueConstraint(name = "unique_location_contrainst", columnNames = {"country", "region", "locality"})})
+@Table(name = "locations")
 @NoArgsConstructor
 @Getter
 @Setter

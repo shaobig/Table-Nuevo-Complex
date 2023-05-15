@@ -2,8 +2,10 @@ package amateur.shaobig.table_nuevo_complex.service.artist;
 
 import amateur.shaobig.table_nuevo_complex.entity.Artist;
 import amateur.shaobig.table_nuevo_complex.exception.types.EntityNotFoundException;
+import amateur.shaobig.table_nuevo_complex.service.FindService;
 import amateur.shaobig.table_nuevo_complex.service.ReadAllService;
 import amateur.shaobig.table_nuevo_complex.service.ReadService;
+import amateur.shaobig.table_nuevo_complex.service.location.LocationProxyService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class ArtistProxyService implements ReadService<Artist>, ReadAllService<Artist> {
+public class ArtistProxyService implements ReadService<Artist>, ReadAllService<Artist>, FindService<Artist> {
 
     private final ArtistService artistService;
+    private final LocationProxyService locationProxyService;
 
     @Override
     public Artist read(Long id) {
@@ -27,6 +30,11 @@ public class ArtistProxyService implements ReadService<Artist>, ReadAllService<A
     @Override
     public List<Artist> readAll() {
         return getArtistService().readAll();
+    }
+
+    @Override
+    public Artist find(Artist artist) {
+        return getArtistService().find(artist);
     }
 
 }

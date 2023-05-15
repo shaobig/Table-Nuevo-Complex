@@ -7,6 +7,8 @@ import amateur.shaobig.table_nuevo_complex.exception.types.EntityNotFoundExcepti
 import amateur.shaobig.table_nuevo_complex.service.CreateService;
 import amateur.shaobig.table_nuevo_complex.service.ReadAllService;
 import amateur.shaobig.table_nuevo_complex.service.ReadService;
+import amateur.shaobig.table_nuevo_complex.service.artist.ArtistProxyService;
+import amateur.shaobig.table_nuevo_complex.service.location.LocationProxyService;
 import amateur.shaobig.table_nuevo_complex.service.pool.AlbumPoolService;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -22,9 +25,17 @@ public class AlbumProxyService implements CreateService<Album, Album>, ReadServi
 
     private final AlbumPoolService albumPoolService;
     private final AlbumService albumService;
+    private final ArtistProxyService artistProxyService;
+    private final LocationProxyService locationProxyService;
 
     @Override
     public Album create(Album album) {
+        if (Objects.nonNull(album.getArtist().getId())) {
+            if (Objects.nonNull(album.getArtist().getLocation().getId())) {
+                album.getArtist().setLocation(getLocationProxyService().find(album.getArtist().getLocation()));
+            }
+            album.setArtist(getArtistProxyService().find(album.getArtist()));
+        }
         return getAlbumPoolService().create(new AlbumPool(album)).getAlbum();
     }
 
