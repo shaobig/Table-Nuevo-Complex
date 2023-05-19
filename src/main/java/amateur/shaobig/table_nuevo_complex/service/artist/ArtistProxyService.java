@@ -6,7 +6,6 @@ import amateur.shaobig.table_nuevo_complex.exception.types.EntityNotFoundExcepti
 import amateur.shaobig.table_nuevo_complex.service.FindService;
 import amateur.shaobig.table_nuevo_complex.service.ReadAllService;
 import amateur.shaobig.table_nuevo_complex.service.ReadService;
-import amateur.shaobig.table_nuevo_complex.service.location.LocationProxyService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import java.util.List;
 public class ArtistProxyService implements ReadService<Artist>, ReadAllService<Artist>, FindService<Artist> {
 
     private final ArtistService artistService;
-    private final LocationProxyService locationProxyService;
 
     @Override
     public Artist read(Long id) {

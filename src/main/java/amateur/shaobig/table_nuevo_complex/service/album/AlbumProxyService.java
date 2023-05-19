@@ -31,9 +31,7 @@ public class AlbumProxyService implements CreateService<Album, Album>, ReadServi
     @Override
     public Album create(Album album) {
         if (Objects.nonNull(album.getArtist().getId())) {
-            if (Objects.nonNull(album.getArtist().getLocation().getId())) {
-                album.getArtist().setLocation(getLocationProxyService().find(album.getArtist().getLocation()));
-            }
+            album.getArtist().setLocation(getLocationProxyService().find(album.getArtist().getLocation()));
             album.setArtist(getArtistProxyService().find(album.getArtist()));
         }
         return getAlbumPoolService().create(new AlbumPool(album)).getAlbum();
