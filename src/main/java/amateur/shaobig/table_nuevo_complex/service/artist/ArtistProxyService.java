@@ -1,5 +1,6 @@
 package amateur.shaobig.table_nuevo_complex.service.artist;
 
+import amateur.shaobig.table_nuevo_complex.entity.Album;
 import amateur.shaobig.table_nuevo_complex.entity.Artist;
 import amateur.shaobig.table_nuevo_complex.exception.types.EntityNotFoundException;
 import amateur.shaobig.table_nuevo_complex.service.FindService;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -23,8 +25,10 @@ public class ArtistProxyService implements ReadService<Artist>, ReadAllService<A
 
     @Override
     public Artist read(Long id) {
-        return getArtistService().read(id)
+        Artist artist = getArtistService().read(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Can't find the artist with the id = %d", id)));
+        artist.getAlbums().sort(Comparator.<Album>comparingInt(album -> album.getType().getOrder()).thenComparingInt(Album::getYear));
+        return artist;
     }
 
     @Override

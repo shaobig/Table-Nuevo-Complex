@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
@@ -18,7 +16,7 @@ public class LocationProxyService implements FindService<Location> {
 
     @Override
     public Location find(Location location) {
-        return Objects.isNull(location.getId()) ? location : getLocationService().find(location);
+        return getLocationService().find(location);
     }
 
 }
