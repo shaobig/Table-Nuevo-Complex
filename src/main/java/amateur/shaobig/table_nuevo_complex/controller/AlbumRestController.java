@@ -1,9 +1,7 @@
 package amateur.shaobig.table_nuevo_complex.controller;
 
-import amateur.shaobig.table_nuevo_complex.dto.album.CreateAlbumDto;
 import amateur.shaobig.table_nuevo_complex.dto.album.ReadAlbumDto;
 import amateur.shaobig.table_nuevo_complex.dto.album.ReadAllAlbumDto;
-import amateur.shaobig.table_nuevo_complex.entity.Album;
 import amateur.shaobig.table_nuevo_complex.service.album.AlbumDtoService;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,15 +17,9 @@ import java.util.List;
 @RequestMapping(path = "/album")
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumRestController implements CreateRestController<Album, CreateAlbumDto>, ReadRestController<ReadAlbumDto>, ReadAllRestController<ReadAllAlbumDto> {
+public class AlbumRestController implements ReadRestController<ReadAlbumDto>, ReadAllRestController<ReadAllAlbumDto> {
 
     private final AlbumDtoService albumDtoService;
-
-    @Override
-    public ResponseEntity<CreateAlbumDto> create(Album album) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(getAlbumDtoService().create(album));
-    }
 
     @Override
     public ResponseEntity<ReadAlbumDto> read(Long id) {
