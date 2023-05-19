@@ -44,13 +44,13 @@ public class AlbumMetadata implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AlbumMetadata that = (AlbumMetadata) o;
-        return id.equals(that.id);
+        AlbumMetadata metadata = (AlbumMetadata) o;
+        return album.equals(metadata.album);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(album);
     }
 
 }

@@ -15,7 +15,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "locations", uniqueConstraints = {@UniqueConstraint(columnNames = {"country", "region", "locality"})})
+@Table(name = "locations", uniqueConstraints = {@UniqueConstraint(name = "unique_location_constraint", columnNames = {"country", "region", "locality"})})
 @NoArgsConstructor
 @Getter
 @Setter
@@ -34,12 +34,12 @@ public class Location implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Location location = (Location) o;
-        return id.equals(location.id);
+        return country.equals(location.country) && Objects.equals(region, location.region) && Objects.equals(locality, location.locality);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(country, region, locality);
     }
 
 }

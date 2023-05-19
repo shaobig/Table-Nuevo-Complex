@@ -15,7 +15,7 @@ public class LocationDtoTransformer implements Transformer<Location, LocationDto
 
     @Override
     public LocationDto transform(Location location) {
-        return new LocationDto(location.getCountry(), location.getRegion(), location.getLocality());
+        return new LocationDto(location.getId(), location.getCountry(), location.getRegion(), location.getLocality());
     }
 
 }

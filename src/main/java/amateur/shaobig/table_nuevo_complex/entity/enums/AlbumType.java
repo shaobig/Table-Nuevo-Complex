@@ -7,12 +7,13 @@ import lombok.Getter;
 @Getter
 public enum AlbumType {
 
-    LP("LP"),
-    EP("EP"),
-    COMPILATION("Compilation"),
-    SPLIT("Split"),
-    COVER("Cover");
+    LP("LP", 1),
+    EP("EP", 2),
+    COMPILATION("Compilation", 3),
+    SPLIT("Split", 4),
+    COVER("Cover", 5);
 
     private String alias;
+    private int order;
 
 }

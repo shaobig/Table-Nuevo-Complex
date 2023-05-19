@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Getter(value = AccessLevel.PACKAGE)
 public class ReadAlbumDtoTransformer implements Transformer<Album, ReadAlbumDto> {
 
+    private final AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
     private final SongDtoTransformer songDtoTransformer;
 
     @Override
@@ -25,7 +26,7 @@ public class ReadAlbumDtoTransformer implements Transformer<Album, ReadAlbumDto>
         List<SongDto> songs = album.getSongs().stream()
                 .map(getSongDtoTransformer()::transform)
                 .collect(Collectors.toList());
-        return new ReadAlbumDto(album.getId(), album.getArtist().getName(), album.getNumber(), album.getName(), album.getYear(), album.getMetadata().getTime(), songs);
+        return new ReadAlbumDto(album.getId(), album.getArtist().getName(), album.getNumber(), album.getName(), album.getYear(), album.getType(), getAlbumMetadataDtoTransformer().transform(album.getMetadata()), songs);
     }
 
 }

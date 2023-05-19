@@ -46,12 +46,12 @@ public class Song implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Song song = (Song) o;
-        return id.equals(song.id);
+        return album.equals(song.album) && name.equals(song.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(album, name);
     }
 
 }
