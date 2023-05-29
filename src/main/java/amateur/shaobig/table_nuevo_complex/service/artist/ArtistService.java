@@ -3,6 +3,7 @@ package amateur.shaobig.table_nuevo_complex.service.artist;
 import amateur.shaobig.table_nuevo_complex.entity.Artist;
 import amateur.shaobig.table_nuevo_complex.repository.ArtistRepository;
 import amateur.shaobig.table_nuevo_complex.service.FindService;
+import amateur.shaobig.table_nuevo_complex.service.MergeService;
 import amateur.shaobig.table_nuevo_complex.service.ReadAllService;
 import amateur.shaobig.table_nuevo_complex.service.ReadService;
 import lombok.AccessLevel;
@@ -16,7 +17,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class ArtistService implements ReadService<Optional<Artist>>, ReadAllService<Artist>, FindService<Artist> {
+public class ArtistService implements ReadService<Optional<Artist>>, ReadAllService<Artist>, MergeService<Artist>, FindService<Artist> {
 
     private final ArtistRepository artistRepository;
 
@@ -31,8 +32,13 @@ public class ArtistService implements ReadService<Optional<Artist>>, ReadAllServ
     }
 
     @Override
-    public Artist find(Artist artist) {
+    public Artist merge(Artist artist) {
         return getArtistRepository().getReferenceById(artist.getId());
+    }
+
+    @Override
+    public boolean isFound(Artist artist) {
+        return getArtistRepository().existsByNameAndStatus(artist.getName(), artist.getStatus());
     }
 
 }

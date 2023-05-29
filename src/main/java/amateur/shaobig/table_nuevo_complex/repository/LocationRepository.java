@@ -4,4 +4,7 @@ import amateur.shaobig.table_nuevo_complex.entity.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LocationRepository extends JpaRepository<Location, Long> {
+
+    boolean existsByCountryAndRegionAndLocality(String country, String region, String locality);
+
 }

@@ -28,8 +28,8 @@ public class AlbumPoolProxyService implements CreateService<AlbumPool, AlbumPool
     public AlbumPool create(AlbumPool albumPool) {
         Artist artist = albumPool.getAlbum().getArtist();
         if (Objects.nonNull(artist.getId())) {
-            artist.setLocation(getLocationProxyService().find(artist.getLocation()));
-            albumPool.getAlbum().setArtist(getArtistProxyService().find(artist));
+            artist.setLocation(getLocationProxyService().merge(artist.getLocation()));
+            albumPool.getAlbum().setArtist(getArtistProxyService().merge(artist));
         }
         return getAlbumPoolService().create(albumPool);
     }
