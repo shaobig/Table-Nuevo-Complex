@@ -2,6 +2,7 @@ package amateur.shaobig.table_nuevo_complex.controller;
 
 import amateur.shaobig.table_nuevo_complex.dto.artist.ReadAllArtistDto;
 import amateur.shaobig.table_nuevo_complex.dto.artist.ReadArtistDto;
+import amateur.shaobig.table_nuevo_complex.entity.Artist;
 import amateur.shaobig.table_nuevo_complex.service.artist.ArtistDtoService;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequestMapping(path = "/artist")
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class ArtistRestController implements ReadRestController<ReadArtistDto>, ReadAllRestController<ReadAllArtistDto> {
+public class ArtistRestController implements ReadRestController<ReadArtistDto>, ReadAllRestController<ReadAllArtistDto>, FindRestController<Artist> {
 
     private final ArtistDtoService artistDtoService;
 
@@ -31,6 +32,12 @@ public class ArtistRestController implements ReadRestController<ReadArtistDto>, 
     public ResponseEntity<List<ReadAllArtistDto>> readAll() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(getArtistDtoService().readAll());
+    }
+
+    @Override
+    public ResponseEntity<Boolean> find(Artist artist) {
+        HttpStatus status = getArtistDtoService().isFound(artist) ? HttpStatus.FOUND : HttpStatus.NOT_FOUND;
+        return ResponseEntity.status(status).build();
     }
 
 }

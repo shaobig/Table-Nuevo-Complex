@@ -2,6 +2,8 @@ package amateur.shaobig.table_nuevo_complex.service.artist;
 
 import amateur.shaobig.table_nuevo_complex.dto.artist.ReadAllArtistDto;
 import amateur.shaobig.table_nuevo_complex.dto.artist.ReadArtistDto;
+import amateur.shaobig.table_nuevo_complex.entity.Artist;
+import amateur.shaobig.table_nuevo_complex.service.FindService;
 import amateur.shaobig.table_nuevo_complex.service.ReadAllService;
 import amateur.shaobig.table_nuevo_complex.service.ReadService;
 import amateur.shaobig.table_nuevo_complex.transformer.artist.ReadAllArtistDtoTransformer;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class ArtistDtoService implements ReadService<ReadArtistDto>, ReadAllService<ReadAllArtistDto> {
+public class ArtistDtoService implements ReadService<ReadArtistDto>, ReadAllService<ReadAllArtistDto>, FindService<Artist> {
 
     private final ReadArtistDtoTransformer readArtistDtoTransformer;
     private final ReadAllArtistDtoTransformer readAllArtistDtoTransformer;
@@ -35,6 +37,11 @@ public class ArtistDtoService implements ReadService<ReadArtistDto>, ReadAllServ
                 .map(getReadAllArtistDtoTransformer()::transform)
                 .sorted(Comparator.comparing(ReadAllArtistDto::name))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isFound(Artist artist) {
+        return getArtistProxyService().isFound(artist);
     }
 
 }
