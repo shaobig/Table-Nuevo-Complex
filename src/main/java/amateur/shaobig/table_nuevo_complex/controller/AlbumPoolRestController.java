@@ -2,6 +2,7 @@ package amateur.shaobig.table_nuevo_complex.controller;
 
 import amateur.shaobig.table_nuevo_complex.dto.album.ReadAllAlbumPoolDto;
 import amateur.shaobig.table_nuevo_complex.dto.pool.CreateAlbumPoolDto;
+import amateur.shaobig.table_nuevo_complex.dto.pool.DeleteAlbumPoolDto;
 import amateur.shaobig.table_nuevo_complex.entity.AlbumPool;
 import amateur.shaobig.table_nuevo_complex.service.pool.AlbumPoolDtoService;
 import lombok.AccessLevel;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequestMapping(path = "/album-pool")
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumPoolRestController implements CreateRestController<AlbumPool, CreateAlbumPoolDto>, ReadAllRestController<ReadAllAlbumPoolDto> {
+public class AlbumPoolRestController implements CreateRestController<AlbumPool, CreateAlbumPoolDto>, ReadAllRestController<ReadAllAlbumPoolDto>, DeleteRestController<DeleteAlbumPoolDto> {
 
     private final AlbumPoolDtoService albumPoolDtoService;
 
@@ -32,6 +33,12 @@ public class AlbumPoolRestController implements CreateRestController<AlbumPool, 
     public ResponseEntity<List<ReadAllAlbumPoolDto>> readAll() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(getAlbumPoolDtoService().readAll());
+    }
+
+    @Override
+    public ResponseEntity<DeleteAlbumPoolDto> delete(Long id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(getAlbumPoolDtoService().delete(id));
     }
 
 }
