@@ -1,7 +1,7 @@
 package amateur.shaobig.table_nuevo_complex.service;
 
-public interface DeleteService<E> {
+public interface DeleteService<T> {
 
-    E delete(Long id);
+    T delete(Long id);
 
 }

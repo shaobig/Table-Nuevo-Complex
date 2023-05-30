@@ -1,10 +1,8 @@
 package amateur.shaobig.table_nuevo_complex.transformer.album;
 
 import amateur.shaobig.table_nuevo_complex.dto.album.AlbumMetadataDto;
-import amateur.shaobig.table_nuevo_complex.dto.album.CreateAlbumDto;
 import amateur.shaobig.table_nuevo_complex.dto.album.DeleteAlbumDto;
 import amateur.shaobig.table_nuevo_complex.dto.album.GenreDto;
-import amateur.shaobig.table_nuevo_complex.dto.pool.DeleteAlbumPoolDto;
 import amateur.shaobig.table_nuevo_complex.dto.song.SongDto;
 import amateur.shaobig.table_nuevo_complex.entity.Album;
 import amateur.shaobig.table_nuevo_complex.transformer.Transformer;

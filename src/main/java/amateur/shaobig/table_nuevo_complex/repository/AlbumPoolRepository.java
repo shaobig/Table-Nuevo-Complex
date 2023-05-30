@@ -4,9 +4,11 @@ import amateur.shaobig.table_nuevo_complex.dto.album.ReadAllAlbumPoolDto;
 import amateur.shaobig.table_nuevo_complex.entity.AlbumPool;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface AlbumPoolRepository extends JpaRepository<AlbumPool, Long> {
 
     @Query("SELECT new amateur.shaobig.table_nuevo_complex.dto.album.ReadAllAlbumPoolDto(" +
