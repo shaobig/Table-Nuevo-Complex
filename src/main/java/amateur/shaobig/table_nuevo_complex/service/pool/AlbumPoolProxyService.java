@@ -3,7 +3,9 @@ package amateur.shaobig.table_nuevo_complex.service.pool;
 import amateur.shaobig.table_nuevo_complex.dto.album.ReadAllAlbumPoolDto;
 import amateur.shaobig.table_nuevo_complex.entity.AlbumPool;
 import amateur.shaobig.table_nuevo_complex.entity.Artist;
+import amateur.shaobig.table_nuevo_complex.exception.types.EntityNotFoundException;
 import amateur.shaobig.table_nuevo_complex.service.CreateService;
+import amateur.shaobig.table_nuevo_complex.service.DeleteService;
 import amateur.shaobig.table_nuevo_complex.service.ReadAllService;
 import amateur.shaobig.table_nuevo_complex.service.artist.ArtistProxyService;
 import amateur.shaobig.table_nuevo_complex.service.location.LocationProxyService;
@@ -18,7 +20,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumPoolProxyService implements CreateService<AlbumPool, AlbumPool>, ReadAllService<ReadAllAlbumPoolDto> {
+public class AlbumPoolProxyService implements CreateService<AlbumPool, AlbumPool>, ReadAllService<ReadAllAlbumPoolDto>, DeleteService<AlbumPool> {
 
     private final AlbumPoolService albumPoolService;
     private final ArtistProxyService artistProxyService;
@@ -37,6 +39,12 @@ public class AlbumPoolProxyService implements CreateService<AlbumPool, AlbumPool
     @Override
     public List<ReadAllAlbumPoolDto> readAll() {
         return getAlbumPoolService().readAll();
+    }
+
+    @Override
+    public AlbumPool delete(Long id) {
+        return getAlbumPoolService().delete(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Can't delete the entity with the id = %d", id)));
     }
 
 }
