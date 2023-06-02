@@ -5,6 +5,7 @@ import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.Location;
 import amateur.shaobig.tnc.entity.enums.ArtistStatus;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
+import amateur.shaobig.tnc.service.artist.sorting.AlbumTypeYearListArranger;
 import amateur.shaobig.tnc.service.location.LocationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

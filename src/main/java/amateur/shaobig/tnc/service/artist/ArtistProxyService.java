@@ -6,6 +6,7 @@ import amateur.shaobig.tnc.service.FindService;
 import amateur.shaobig.tnc.service.MergeService;
 import amateur.shaobig.tnc.service.ReadAllService;
 import amateur.shaobig.tnc.service.ReadService;
+import amateur.shaobig.tnc.service.artist.sorting.AlbumTypeYearListArranger;
 import amateur.shaobig.tnc.service.location.LocationService;
 import lombok.AccessLevel;
 import lombok.Getter;

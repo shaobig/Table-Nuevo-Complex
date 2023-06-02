@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.service.artist;
+package amateur.shaobig.tnc.service.artist.sorting;
 
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.service.ListArranger;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-class AlbumTypeYearListArranger implements ListArranger<Album> {
+public class AlbumTypeYearListArranger implements ListArranger<Album> {
 
     @Override
     public List<Album> arrange(List<Album> albums) {
