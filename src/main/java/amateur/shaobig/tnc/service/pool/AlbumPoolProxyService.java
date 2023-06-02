@@ -29,11 +29,11 @@ public class AlbumPoolProxyService implements CreateService<AlbumPool, AlbumPool
     @Override
     public AlbumPool create(AlbumPool albumPool) {
         Artist artist = albumPool.getAlbum().getArtist();
-        if (getLocationService().isFound(artist.getLocation())) {
-            artist.setLocation(getLocationService().merge(artist.getLocation()));
-        }
         if (Objects.nonNull(artist.getId())) {
             albumPool.getAlbum().setArtist(getArtistService().merge(artist));
+        }
+        else if (getLocationService().isFound(artist.getLocation())) {
+            artist.setLocation(getLocationService().merge(artist.getLocation()));
         }
         return getAlbumPoolService().create(albumPool);
     }

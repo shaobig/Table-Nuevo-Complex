@@ -2,7 +2,6 @@ package amateur.shaobig.tnc.service.location;
 
 import amateur.shaobig.tnc.entity.Location;
 import amateur.shaobig.tnc.repository.LocationRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,7 +12,6 @@ import org.mockito.Mockito;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class LocationServiceTest {
 
@@ -24,48 +22,72 @@ public class LocationServiceTest {
     @BeforeEach
     void init() {
         this.locationRepository = Mockito.mock(LocationRepository.class);
+
         this.locationService = new LocationService(locationRepository);
     }
 
     @Test
-    void mergeCheckId() {
-        Location sourceLocation = new Location();
-        Long sourceId = 1L;
-        sourceLocation.setId(sourceId);
+    void mergeCheckCountry() {
+        String sourceCountry = "COUNTRY_NAME";
+        Location sourceLocation = new Location(sourceCountry);
 
         locationService.merge(sourceLocation);
 
-        Long expectedId = 1L;
-        Mockito.verify(locationRepository).getReferenceById(expectedId);
+        String expectedCountry = "COUNTRY_NAME";
+        Mockito.verify(locationRepository).findByCountryAndRegionAndLocality(Mockito.eq(expectedCountry), Mockito.any(), Mockito.any());
     }
 
     @Test
-    void mergeLocationWithoutPrimaryKey() {
-        Location sourceLocation = new Location();
-        Mockito.when(locationRepository.getReferenceById(Mockito.isNull())).thenThrow(IllegalArgumentException.class);
+    void mergeCheckRegion() {
+        String sourceRegion = "REGION_NAME";
+        Location sourceLocation = Mockito.mock(Location.class);
+        Mockito.when(sourceLocation.getRegion()).thenReturn(sourceRegion);
 
-        assertThrows(IllegalArgumentException.class, () -> locationService.merge(sourceLocation));
+        locationService.merge(sourceLocation);
+
+        String expectedRegion = "REGION_NAME";
+        Mockito.verify(locationRepository).findByCountryAndRegionAndLocality(Mockito.any(), Mockito.eq(expectedRegion), Mockito.any());
     }
 
     @Test
-    void mergeLocationNotFound() {
-        Location sourceLocation = new Location();
-        Long sourceId = 1L;
-        sourceLocation.setId(sourceId);
-        Mockito.when(locationRepository.getReferenceById(Mockito.anyLong())).thenThrow(EntityNotFoundException.class);
+    void mergeCheckLocality() {
+        String sourceLocality = "LOCALITY_NAME";
+        Location sourceLocation = Mockito.mock(Location.class);
+        Mockito.when(sourceLocation.getLocality()).thenReturn(sourceLocality);
 
-        assertThrows(EntityNotFoundException.class, () -> locationService.merge(sourceLocation));
+        locationService.merge(sourceLocation);
+
+        String expectedLocality = "LOCALITY_NAME";
+        Mockito.verify(locationRepository).findByCountryAndRegionAndLocality(Mockito.any(), Mockito.any(), Mockito.eq(expectedLocality));
     }
 
-    @Test
-    void merge() {
-        Location sourceRepositoryLocation = new Location(1L, "COUNTRY_NAME");
-        Location sourceLocation = new Location(1L, "COUNTRY_NAME");
-        Mockito.when(locationRepository.getReferenceById(Mockito.any())).thenReturn(sourceRepositoryLocation);
+    static Stream<Arguments> mergeInputData() {
+        Location locationWithCountry = new Location("COUNTRY_NAME");
+        Location repositoryLocationWithCountry = new Location("COUNTRY_NAME");
+        Location locationWithCountryExpected = new Location("COUNTRY_NAME");
+
+        Location locationWithCountryAndRegion = new Location("COUNTRY_NAME", "REGION_NAME", "");
+        Location repositoryLocationWithCountryAndRegion = new Location("COUNTRY_NAME", "REGION_NAME", "");
+        Location locationWithCountryAndRegionExpected = new Location("COUNTRY_NAME", "REGION_NAME", "");
+
+        Location locationWithAllFields = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location repositoryLocationWithAllFields = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location locationWithAllFieldsExpected = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+
+        return Stream.of(
+                Arguments.of(locationWithCountry, repositoryLocationWithCountry, locationWithCountryExpected),
+                Arguments.of(locationWithCountryAndRegion, repositoryLocationWithCountryAndRegion, locationWithCountryAndRegionExpected),
+                Arguments.of(locationWithAllFields, repositoryLocationWithAllFields, locationWithAllFieldsExpected)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource(value = "mergeInputData")
+    void merge(Location sourceLocation, Location sourceRepositoryLocation, Location expected) {
+        Mockito.when(locationRepository.findByCountryAndRegionAndLocality(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(sourceRepositoryLocation);
 
         Location actual = locationService.merge(sourceLocation);
 
-        Location expected = new Location(1L, "COUNTRY_NAME");
         assertEquals(expected, actual);
     }
 
