@@ -28,6 +28,11 @@ public class AlbumPool implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Album album;
 
+    public AlbumPool(Long id, Album album) {
+        this.id = id;
+        this.album = album;
+    }
+
     public AlbumPool(Album album) {
         this.album = album;
     }

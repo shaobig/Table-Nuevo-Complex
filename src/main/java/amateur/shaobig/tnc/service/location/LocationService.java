@@ -18,7 +18,7 @@ public class LocationService implements MergeService<Location>, FindService<Loca
 
     @Override
     public Location merge(Location location) {
-        return getLocationRepository().getReferenceById(location.getId());
+        return getLocationRepository().findByCountryAndRegionAndLocality(location.getCountry(), location.getRegion(), location.getLocality());
     }
 
     @Override

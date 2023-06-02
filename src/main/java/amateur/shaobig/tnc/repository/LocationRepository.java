@@ -9,4 +9,6 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 
     boolean existsByCountryAndRegionAndLocality(String country, String region, String locality);
 
+    Location findByCountryAndRegionAndLocality(String country, String region, String locality);
+
 }

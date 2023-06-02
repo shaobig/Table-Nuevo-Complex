@@ -50,16 +50,35 @@ public class Album implements Serializable {
         this.metadata = new AlbumMetadata(this);
     }
 
+    public Album(Long id, String name, Integer year) {
+        this.id = id;
+        this.name = name;
+        this.year = year;
+    }
+
     public Album(String name, Integer year) {
         this.name = name;
         this.year = year;
         this.type = AlbumType.LP;
     }
 
+    public Album(String name, Integer year, Artist artist) {
+        this.name = name;
+        this.year = year;
+        this.artist = artist;
+    }
+
     public Album(String name, Integer year, AlbumType type) {
         this.name = name;
         this.year = year;
         this.type = type;
+    }
+
+    public Album(Long id, String name, Integer year, Artist artist) {
+        this.id = id;
+        this.name = name;
+        this.year = year;
+        this.artist = artist;
     }
 
     public void setMetadata(AlbumMetadata metadata) {

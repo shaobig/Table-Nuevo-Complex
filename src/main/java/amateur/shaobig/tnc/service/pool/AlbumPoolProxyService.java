@@ -7,8 +7,8 @@ import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.CreateService;
 import amateur.shaobig.tnc.service.DeleteService;
 import amateur.shaobig.tnc.service.ReadAllService;
-import amateur.shaobig.tnc.service.artist.ArtistProxyService;
-import amateur.shaobig.tnc.service.location.LocationProxyService;
+import amateur.shaobig.tnc.service.artist.ArtistService;
+import amateur.shaobig.tnc.service.location.LocationService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,15 +23,17 @@ import java.util.Objects;
 public class AlbumPoolProxyService implements CreateService<AlbumPool, AlbumPool>, ReadAllService<ReadAllAlbumPoolDto>, DeleteService<AlbumPool> {
 
     private final AlbumPoolService albumPoolService;
-    private final ArtistProxyService artistProxyService;
-    private final LocationProxyService locationProxyService;
+    private final LocationService locationService;
+    private final ArtistService artistService;
 
     @Override
     public AlbumPool create(AlbumPool albumPool) {
         Artist artist = albumPool.getAlbum().getArtist();
+        if (getLocationService().isFound(artist.getLocation())) {
+            artist.setLocation(getLocationService().merge(artist.getLocation()));
+        }
         if (Objects.nonNull(artist.getId())) {
-            artist.setLocation(getLocationProxyService().merge(artist.getLocation()));
-            albumPool.getAlbum().setArtist(getArtistProxyService().merge(artist));
+            albumPool.getAlbum().setArtist(getArtistService().merge(artist));
         }
         return getAlbumPoolService().create(albumPool);
     }
