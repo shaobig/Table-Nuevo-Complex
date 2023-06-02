@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ArtistServiceTest {
+class ArtistServiceTest {
 
     private ArtistRepository artistRepository;
 
@@ -159,7 +159,7 @@ public class ArtistServiceTest {
         Mockito.verify(artistRepository).existsByNameAndStatus(Mockito.any(), Mockito.eq(expectedStatus));
     }
 
-    static Stream<Arguments> isFoundInput() {
+    static Stream<Arguments> isFoundInputData() {
         Artist artistWithEmptyName = new Artist("", Mockito.mock(Location.class));
         Artist artistWithName = new Artist("ARTIST_NAME", Mockito.mock(Location.class));
         Artist artistWithNameAndStatus = new Artist("ARTIST_NAME", Mockito.mock(Location.class), ArtistStatus.ACTIVE);
@@ -172,8 +172,8 @@ public class ArtistServiceTest {
     }
 
     @ParameterizedTest
-    @MethodSource(value = "isFoundInput")
-    void input(Artist sourceArtist, boolean expected) {
+    @MethodSource(value = "isFoundInputData")
+    void isFound(Artist sourceArtist, boolean expected) {
         Mockito.when(artistRepository.existsByNameAndStatus(Mockito.any(), Mockito.any())).thenReturn(expected);
 
         boolean actual = artistService.isFound(sourceArtist);

@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ArtistProxyServiceTest {
+class ArtistProxyServiceTest {
 
     private ArtistService artistService;
     private LocationService locationService;
