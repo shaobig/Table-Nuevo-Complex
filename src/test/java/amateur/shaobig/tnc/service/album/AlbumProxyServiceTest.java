@@ -77,7 +77,7 @@ class AlbumProxyServiceTest {
     void readAll(List<ReadAllAlbumDto> sourceAlbums, List<ReadAllAlbumDto> expected) {
         Mockito.when(albumService.readAll()).thenReturn(sourceAlbums);
 
-        List<ReadAllAlbumDto> actual = albumService.readAll();
+        List<ReadAllAlbumDto> actual = albumProxyService.readAll();
 
         assertEquals(expected, actual);
     }

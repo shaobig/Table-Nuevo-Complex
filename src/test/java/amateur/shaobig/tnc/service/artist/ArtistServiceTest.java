@@ -34,6 +34,25 @@ class ArtistServiceTest {
     }
 
     @Test
+    void createArtistIsNull() {
+        Mockito.when(artistRepository.save(Mockito.isNull())).thenThrow(IllegalArgumentException.class);
+
+        assertThrows(IllegalArgumentException.class, () -> artistService.create(null));
+    }
+
+    @Test
+    void create() {
+        Artist sourceRepositoryArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"), ArtistStatus.ACTIVE);
+        Artist sourceArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"), ArtistStatus.ACTIVE);
+        Mockito.when(artistRepository.save(Mockito.any())).thenReturn(sourceRepositoryArtist);
+
+        Artist actual = artistService.create(sourceArtist);
+
+        Artist expected = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"), ArtistStatus.ACTIVE);
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void readNullId() {
         Mockito.when(artistRepository.findById(Mockito.any())).thenThrow(IllegalArgumentException.class);
 

@@ -35,20 +35,20 @@ class AlbumPoolServiceTest {
 
     @Test
     void createCheckAlbumPool() {
-        AlbumPool sourceAlbumPool = new AlbumPool(new Album("ALBUM_NAME", 1970));
+        AlbumPool sourceAlbumPool = new AlbumPool(new Album("ALBUM_NAME", 0));
 
         albumPoolService.create(sourceAlbumPool);
 
-        AlbumPool expectedAlbumPool = new AlbumPool(new Album("ALBUM_NAME", 1970));
+        AlbumPool expectedAlbumPool = new AlbumPool(new Album("ALBUM_NAME", 0));
         Mockito.verify(albumPoolRepository).save(expectedAlbumPool);
     }
 
     static Stream<Arguments> createInputData() {
-        AlbumPool albumPoolEmpty = new AlbumPool(new Album("", 1970));
-        AlbumPool albumPoolEmptyExpected = new AlbumPool(1L, new Album("", 1970));
+        AlbumPool albumPoolEmpty = new AlbumPool(new Album("", 0));
+        AlbumPool albumPoolEmptyExpected = new AlbumPool(1L, new Album("", 0));
 
-        AlbumPool albumPoolWithName = new AlbumPool(new Album("ALBUM_NAME", 1970));
-        AlbumPool albumPoolWithNameExpected = new AlbumPool(1L, new Album("ALBUM_NAME", 1970));
+        AlbumPool albumPoolWithName = new AlbumPool(new Album("ALBUM_NAME", 0));
+        AlbumPool albumPoolWithNameExpected = new AlbumPool(1L, new Album("ALBUM_NAME", 0));
 
         return Stream.of(
                 Arguments.of(albumPoolEmpty, albumPoolEmptyExpected),
@@ -70,8 +70,8 @@ class AlbumPoolServiceTest {
         List<ReadAllAlbumPoolDto> emptyAlbumPoolListSource = List.of();
         List<ReadAllAlbumPoolDto> emptyAlbumPoolListExpected = List.of();
 
-        List<ReadAllAlbumPoolDto> filledAlbumPoolListSource = List.of(new ReadAllAlbumPoolDto(1L, "ARTIST_NAME", 1L, "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 1970, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
-        List<ReadAllAlbumPoolDto> filledAlbumPoolListExpected = List.of(new ReadAllAlbumPoolDto(1L, "ARTIST_NAME", 1L, "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 1970, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
+        List<ReadAllAlbumPoolDto> filledAlbumPoolListSource = List.of(new ReadAllAlbumPoolDto(1L, "ARTIST_NAME", 1L, "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
+        List<ReadAllAlbumPoolDto> filledAlbumPoolListExpected = List.of(new ReadAllAlbumPoolDto(1L, "ARTIST_NAME", 1L, "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
 
         return Stream.of(
                 Arguments.of(emptyAlbumPoolListSource, emptyAlbumPoolListExpected),
@@ -113,7 +113,7 @@ class AlbumPoolServiceTest {
         Optional<AlbumPool> emptyAlbumPoolExpected = Optional.empty();
         Optional<AlbumPool> albumPoolWithEmptyFieldsExpected = Optional.of(new AlbumPool());
         Optional<AlbumPool> albumPoolWithEmptyAlbumFieldsExpected = Optional.of(new AlbumPool(new Album()));
-        Optional<AlbumPool> filledAlbumPoolExpected = Optional.of(new AlbumPool(new Album("ALBUM_NAME", 1970)));
+        Optional<AlbumPool> filledAlbumPoolExpected = Optional.of(new AlbumPool(new Album("ALBUM_NAME", 0)));
 
         return Stream.of(
                 Arguments.of(emptyAlbumPoolExpected),
