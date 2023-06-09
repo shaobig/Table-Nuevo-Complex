@@ -9,6 +9,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -24,6 +27,24 @@ import java.util.Optional;
 @Table(name = "albums")
 @Getter
 @Setter
+@NamedEntityGraph(
+        name = "readAllAlbumWithSongs",
+        attributeNodes = {
+                @NamedAttributeNode(value = "metadata"),
+                @NamedAttributeNode(value = "artist", subgraph = "readArtistLocation"),
+                @NamedAttributeNode(value = "songs", subgraph = "readSongMetadata")
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "readArtistLocation",
+                        attributeNodes = {@NamedAttributeNode(value = "location")}
+                ),
+                @NamedSubgraph(
+                        name = "readSongMetadata",
+                        attributeNodes = {@NamedAttributeNode(value = "metadata")}
+                )
+        }
+)
 public class Album implements Serializable {
 
     @Id

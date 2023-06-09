@@ -1,6 +1,5 @@
 package amateur.shaobig.tnc.service.album;
 
-import amateur.shaobig.tnc.dto.album.ReadAllAlbumDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.repository.AlbumRepository;
 import amateur.shaobig.tnc.service.ReadAllService;
@@ -16,7 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumService implements ReadService<Optional<Album>>, ReadAllService<ReadAllAlbumDto> {
+public class AlbumService implements ReadService<Optional<Album>>, ReadAllService<Album> {
 
     private final AlbumRepository albumRepository;
 
@@ -26,8 +25,8 @@ public class AlbumService implements ReadService<Optional<Album>>, ReadAllServic
     }
 
     @Override
-    public List<ReadAllAlbumDto> readAll() {
-        return getAlbumRepository().readAll();
+    public List<Album> readAll() {
+        return getAlbumRepository().readAllWithSongs();
     }
 
 }
