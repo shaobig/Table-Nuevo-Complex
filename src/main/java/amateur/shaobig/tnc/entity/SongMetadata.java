@@ -25,7 +25,7 @@ public class SongMetadata implements Serializable {
     @MapsId
     private Song song;
     private SongType type;
-    private byte mark;
+    private int mark;
 
     public SongMetadata() {
         this.type = SongType.DEFAULT;
