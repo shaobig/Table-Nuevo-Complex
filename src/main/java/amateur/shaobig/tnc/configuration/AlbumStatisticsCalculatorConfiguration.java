@@ -13,13 +13,13 @@ import java.math.BigDecimal;
 public class AlbumStatisticsCalculatorConfiguration {
 
     @Bean
-    public AverageCalculator<Integer> integerAverageCalculator(ListSizeCalculator<Integer> listSizeCalculator) {
-        return new AverageCalculator<>(new IntegerSumCalculator(), listSizeCalculator);
+    public AverageCalculator<Integer> integerAverageCalculator(IntegerSumCalculator integerSumCalculator, ListSizeCalculator<Integer> listSizeCalculator) {
+        return new AverageCalculator<>(integerSumCalculator, listSizeCalculator);
     }
 
     @Bean
-    public AverageCalculator<BigDecimal> bigDecimalAverageCalculator(ListSizeCalculator<BigDecimal> listSizeCalculator) {
-        return new AverageCalculator<>(new BigDecimalSumCalculator(), listSizeCalculator);
+    public AverageCalculator<BigDecimal> bigDecimalAverageCalculator(BigDecimalSumCalculator bigDecimalSumCalculator, ListSizeCalculator<BigDecimal> listSizeCalculator) {
+        return new AverageCalculator<>(bigDecimalSumCalculator, listSizeCalculator);
     }
 
 }

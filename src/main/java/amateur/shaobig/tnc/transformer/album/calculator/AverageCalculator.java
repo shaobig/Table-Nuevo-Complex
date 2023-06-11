@@ -15,12 +15,12 @@ public class AverageCalculator<T> implements Calculator<T> {
     private static final int DIVIDING_SCALE = 3;
 
     private final Calculator<T> sumCalculator;
-    private final ListSizeCalculator<T> sizeDivideCalculator;
+    private final ListSizeCalculator<T> listSizeCalculator;
 
     @Override
     public BigDecimal calculate(List<T> marks) {
         return getSumCalculator().calculate(marks)
-                .divide(getSizeDivideCalculator().calculate(marks), DIVIDING_SCALE, RoundingMode.UP);
+                .divide(getListSizeCalculator().calculate(marks), DIVIDING_SCALE, RoundingMode.UP);
     }
 
 }
