@@ -7,6 +7,7 @@ import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.transformer.Transformer;
 import amateur.shaobig.tnc.transformer.album.calculator.BasicAlbumMarkCalculator;
 import amateur.shaobig.tnc.transformer.album.calculator.FullAlbumMarkCalculator;
+import amateur.shaobig.tnc.transformer.album.calculator.RelativeSumFinalAlbumMarkCalculator;
 import amateur.shaobig.tnc.transformer.album.calculator.SumAlbumMarkCalculator;
 import amateur.shaobig.tnc.transformer.album.calculator.AverageAlbumMarkCalculator;
 import lombok.AccessLevel;
@@ -26,6 +27,7 @@ public class AlbumStatisticsDtoTransformer implements Transformer<Album, AlbumSt
     private final BasicAlbumMarkCalculator basicAlbumMarkCalculator;
     private final AverageAlbumMarkCalculator averageAlbumMarkCalculator;
     private final SumAlbumMarkCalculator sumAlbumMarkCalculator;
+    private final RelativeSumFinalAlbumMarkCalculator relativeSumFinalAlbumMarkCalculator;
 
     @Override
     public AlbumStatisticsDto transform(Album album) {
@@ -36,7 +38,8 @@ public class AlbumStatisticsDtoTransformer implements Transformer<Album, AlbumSt
         BigDecimal basicAlbumMark = getBasicAlbumMarkCalculator().calculate(metadataList);
         BigDecimal averageAlbumMark = getAverageAlbumMarkCalculator().calculate(List.of(fullAlbumMark, basicAlbumMark));
         BigDecimal sumAlbumMark = getSumAlbumMarkCalculator().calculate(metadataList);
-        return new AlbumStatisticsDto(fullAlbumMark, basicAlbumMark, averageAlbumMark, sumAlbumMark);
+        BigDecimal finalMark = getRelativeSumFinalAlbumMarkCalculator().calculate(averageAlbumMark, sumAlbumMark);
+        return new AlbumStatisticsDto(fullAlbumMark, basicAlbumMark, averageAlbumMark, sumAlbumMark, finalMark);
     }
 
 }
