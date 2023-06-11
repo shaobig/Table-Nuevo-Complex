@@ -19,8 +19,7 @@ public interface AlbumRepository extends JpaRepository<Album, Long> {
             "WHERE album.id NOT IN (SELECT id FROM AlbumPool albumPool)")
     List<ReadAllAlbumDto> readAll();
 
-    //TODO: Omit the presence checking inside the AlbumPool entity until the album calculator will not be provided
-    @Query("SELECT album FROM Album album")
+    @Query("SELECT album FROM Album album WHERE NOT EXISTS(SELECT 1 FROM AlbumPool albumPool WHERE albumPool.album.id = album.id)")
     @EntityGraph(value = "readAllAlbumWithSongs", type = EntityGraph.EntityGraphType.FETCH)
     List<Album> readAllWithSongs();
 
