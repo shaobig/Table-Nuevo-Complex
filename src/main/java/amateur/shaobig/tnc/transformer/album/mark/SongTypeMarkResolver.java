@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public abstract class SongTypeMarkResolver implements MarkResolver {
+abstract class SongTypeMarkResolver implements MarkResolver {
 
     private SongType songType;
 

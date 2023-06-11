@@ -14,14 +14,14 @@ import java.util.List;
 @Getter(value = AccessLevel.PACKAGE)
 public class FullAlbumMarkCalculator implements Calculator<SongMetadata> {
 
-    private final IntegerDivideCalculator integerDivideCalculator;
+    private final AverageCalculator<Integer> averageCalculator;
 
     @Override
     public BigDecimal calculate(List<SongMetadata> metadataList) {
         List<Integer> marks = metadataList.stream()
                 .map(SongMetadata::getMark)
                 .toList();
-        return getIntegerDivideCalculator().calculate(marks);
+        return getAverageCalculator().calculate(marks);
     }
 
 }

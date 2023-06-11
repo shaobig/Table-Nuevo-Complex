@@ -1,12 +1,9 @@
 package amateur.shaobig.tnc.transformer.album.calculator;
 
-import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.util.List;
 
-@Component
-class BigDecimalSumCalculator implements Calculator<BigDecimal> {
+public class BigDecimalSumCalculator implements Calculator<BigDecimal> {
 
     @Override
     public BigDecimal calculate(List<BigDecimal> marks) {

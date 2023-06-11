@@ -16,11 +16,11 @@ import java.util.List;
 public class BasicAlbumMarkCalculator implements Calculator<SongMetadata> {
 
     private final BasicMarkResolver basicMarkResolver;
-    private final IntegerDivideCalculator integerDivideCalculator;
+    private final AverageCalculator<Integer> averageCalculator;
 
     @Override
     public BigDecimal calculate(List<SongMetadata> metadataList) {
-        return getIntegerDivideCalculator().calculate(getBasicMarkResolver().resolveMarks(metadataList));
+        return getAverageCalculator().calculate(getBasicMarkResolver().resolveMarks(metadataList));
     }
 
 }

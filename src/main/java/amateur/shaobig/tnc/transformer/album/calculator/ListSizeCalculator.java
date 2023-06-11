@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Component
-class ListSizeCalculator<T> implements Calculator<T> {
+public class ListSizeCalculator<T> implements Calculator<T> {
 
     @Override
     public BigDecimal calculate(List<T> inputData) {

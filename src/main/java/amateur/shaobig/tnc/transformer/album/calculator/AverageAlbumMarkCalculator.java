@@ -13,11 +13,11 @@ import java.util.List;
 @Getter(value = AccessLevel.PACKAGE)
 public class AverageAlbumMarkCalculator implements Calculator<BigDecimal> {
 
-    private final BigDecimalDivideCalculator bigDecimalDivideCalculator;
+    private final AverageCalculator<BigDecimal> averageCalculator;
 
     @Override
     public BigDecimal calculate(List<BigDecimal> marks) {
-        return getBigDecimalDivideCalculator().calculate(marks);
+        return getAverageCalculator().calculate(marks);
     }
 
 }
