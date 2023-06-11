@@ -10,7 +10,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-abstract class DivideCalculator<T> implements Calculator<T> {
+abstract class AverageCalculator<T> implements Calculator<T> {
 
     private static final int DIVIDING_SCALE = 3;
 
