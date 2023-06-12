@@ -1,6 +1,5 @@
 package amateur.shaobig.tnc.service.album;
 
-import amateur.shaobig.tnc.dto.album.ReadAllAlbumDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.ReadAllService;
@@ -15,7 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumProxyService implements ReadService<Album>, ReadAllService<ReadAllAlbumDto> {
+public class AlbumProxyService implements ReadService<Album>, ReadAllService<Album> {
 
     private final AlbumService albumService;
 
@@ -26,7 +25,7 @@ public class AlbumProxyService implements ReadService<Album>, ReadAllService<Rea
     }
 
     @Override
-    public List<ReadAllAlbumDto> readAll() {
+    public List<Album> readAll() {
         return getAlbumService().readAll();
     }
 

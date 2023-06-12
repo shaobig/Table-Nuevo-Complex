@@ -25,23 +25,34 @@ public class SongMetadata implements Serializable {
     @MapsId
     private Song song;
     private SongType type;
-    private byte mark;
+    private int mark;
 
     public SongMetadata() {
         this.type = SongType.DEFAULT;
+    }
+
+    public SongMetadata(SongType type, int mark) {
+        this.type = type;
+        this.mark = mark;
+    }
+
+    public SongMetadata(Song song, SongType type, int mark) {
+        this.song = song;
+        this.type = type;
+        this.mark = mark;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SongMetadata metadata = (SongMetadata) o;
-        return mark == metadata.mark && song.equals(metadata.song);
+        SongMetadata that = (SongMetadata) o;
+        return song.equals(that.song);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(song, mark);
+        return Objects.hash(song);
     }
 
 }

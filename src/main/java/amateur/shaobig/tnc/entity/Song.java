@@ -27,14 +27,19 @@ public class Song implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Album album;
     @Column(nullable = false)
     private Integer number;
     @Column(nullable = false)
     private String name;
     @OneToOne(mappedBy = "song", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private SongMetadata metadata;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Album album;
+
+    public Song(String name, Album album) {
+        this.name = name;
+        this.album = album;
+    }
 
     public void setMetadata(SongMetadata metadata) {
         metadata.setSong(this);

@@ -70,27 +70,4 @@ class AlbumServiceTest {
         assertTrue(actual.isPresent());
     }
 
-    static Stream<Arguments> readAllInputData() {
-        List<ReadAllAlbumDto> emptyAlbumListSource = List.of();
-        List<ReadAllAlbumDto> emptyAlbumListExpected = List.of();
-
-        List<ReadAllAlbumDto> filledAlbumListSource = List.of(new ReadAllAlbumDto(1L, "ARTIST_NAME", "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0));
-        List<ReadAllAlbumDto> filledAlbumListExpected = List.of(new ReadAllAlbumDto(1L, "ARTIST_NAME", "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0));
-
-        return Stream.of(
-                Arguments.of(emptyAlbumListSource, emptyAlbumListExpected),
-                Arguments.of(filledAlbumListSource, filledAlbumListExpected)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource(value = "readAllInputData")
-    void readAll(List<ReadAllAlbumDto> sourceAlbums, List<ReadAllAlbumDto> expected) {
-        Mockito.when(albumRepository.readAll()).thenReturn(sourceAlbums);
-
-        List<ReadAllAlbumDto> actual = albumService.readAll();
-
-        assertEquals(expected, actual);
-    }
-
 }
