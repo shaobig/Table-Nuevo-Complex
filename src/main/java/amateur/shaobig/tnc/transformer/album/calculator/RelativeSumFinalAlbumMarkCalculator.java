@@ -15,8 +15,8 @@ public class RelativeSumFinalAlbumMarkCalculator implements FinalAlbumMarkCalcul
     @Override
     public BigDecimal calculate(BigDecimal totalMark, BigDecimal sum) {
         return totalMark
-                .multiply(BigDecimal.ONE.add(sum.divide(SUM_DENOMINATOR, SUM_DIVIDING_SCALE, RoundingMode.UP)))
-                .divide(BigDecimal.ONE, BASIC_DIVIDING_SCALE, RoundingMode.FLOOR);
+                .multiply(BigDecimal.ONE.add(sum.divide(SUM_DENOMINATOR, SUM_DIVIDING_SCALE, RoundingMode.HALF_UP)))
+                .divide(BigDecimal.ONE, BASIC_DIVIDING_SCALE, RoundingMode.HALF_UP);
     }
 
 }

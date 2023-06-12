@@ -20,7 +20,7 @@ public class AverageCalculator<T> implements Calculator<T> {
     @Override
     public BigDecimal calculate(List<T> marks) {
         return getSumCalculator().calculate(marks)
-                .divide(getListSizeCalculator().calculate(marks), DIVIDING_SCALE, RoundingMode.UP);
+                .divide(getListSizeCalculator().calculate(marks), DIVIDING_SCALE, RoundingMode.HALF_UP);
     }
 
 }
