@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.transformer.album.mark;
+package amateur.shaobig.tnc.transformer.album.calculator.mark;
 
 import amateur.shaobig.tnc.entity.SongMetadata;
 import lombok.AccessLevel;
@@ -12,12 +12,12 @@ import java.util.stream.Stream;
 @Getter(value = AccessLevel.PACKAGE)
 public class BasicMarkResolver implements MarkResolver {
 
-    private final FilteredSongTypeMarkResolver filteredSongTypeMarkResolver;
+    private final SongTypeMarkResolver songTypeMarkResolver;
     private final SubtractSongTypeMarkResolver subtractSongTypeMarkResolver;
 
     @Override
     public List<Integer> resolveMarks(List<SongMetadata> metadataList) {
-        return Stream.concat(getFilteredSongTypeMarkResolver().resolveMarks(metadataList).stream(),
+        return Stream.concat(getSongTypeMarkResolver().resolveMarks(metadataList).stream(),
                 getSubtractSongTypeMarkResolver().resolveMarks(metadataList).stream()).toList();
     }
 

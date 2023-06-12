@@ -1,9 +1,9 @@
 package amateur.shaobig.tnc.configuration;
 
 import amateur.shaobig.tnc.entity.enums.SongType;
-import amateur.shaobig.tnc.transformer.album.mark.BasicMarkResolver;
-import amateur.shaobig.tnc.transformer.album.mark.FilteredSongTypeMarkResolver;
-import amateur.shaobig.tnc.transformer.album.mark.SubtractSongTypeMarkResolver;
+import amateur.shaobig.tnc.transformer.album.calculator.mark.BasicMarkResolver;
+import amateur.shaobig.tnc.transformer.album.calculator.mark.SongTypeMarkResolver;
+import amateur.shaobig.tnc.transformer.album.calculator.mark.SubtractSongTypeMarkResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,23 +11,23 @@ import org.springframework.context.annotation.Configuration;
 public class AlbumStatisticsMarkConfiguration {
 
     @Bean
-    public FilteredSongTypeMarkResolver filteredSongTypeDefaultMarkResolver() {
-        return new FilteredSongTypeMarkResolver(SongType.DEFAULT);
+    public SongTypeMarkResolver songTypeDefaultMarkResolver() {
+        return new SongTypeMarkResolver(SongType.DEFAULT);
     }
 
     @Bean
-    public FilteredSongTypeMarkResolver filteredSongTypeCoverMarkResolver() {
-        return new FilteredSongTypeMarkResolver(SongType.COVER);
+    public SongTypeMarkResolver songTypeCoverMarkResolver() {
+        return new SongTypeMarkResolver(SongType.COVER);
     }
 
     @Bean
-    public SubtractSongTypeMarkResolver subtractSongTypeMarkResolver(FilteredSongTypeMarkResolver filteredSongTypeCoverMarkResolver) {
-        return new SubtractSongTypeMarkResolver(filteredSongTypeCoverMarkResolver, 1);
+    public SubtractSongTypeMarkResolver subtractSongTypeMarkResolver(SongTypeMarkResolver songTypeCoverMarkResolver) {
+        return new SubtractSongTypeMarkResolver(songTypeCoverMarkResolver, 1);
     }
 
     @Bean
-    public BasicMarkResolver basicMarkResolver(FilteredSongTypeMarkResolver filteredSongTypeDefaultMarkResolver, SubtractSongTypeMarkResolver subtractSongTypeMarkResolver) {
-        return new BasicMarkResolver(filteredSongTypeDefaultMarkResolver, subtractSongTypeMarkResolver);
+    public BasicMarkResolver basicMarkResolver(SongTypeMarkResolver songTypeDefaultMarkResolver, SubtractSongTypeMarkResolver subtractSongTypeMarkResolver) {
+        return new BasicMarkResolver(songTypeDefaultMarkResolver, subtractSongTypeMarkResolver);
     }
 
 }

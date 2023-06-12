@@ -1,15 +1,18 @@
-package amateur.shaobig.tnc.transformer.album.mark;
+package amateur.shaobig.tnc.transformer.album.calculator.mark;
 
 import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.entity.enums.SongType;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
-public class FilteredSongTypeMarkResolver extends SongTypeMarkResolver {
+@RequiredArgsConstructor
+@Getter(value = AccessLevel.PACKAGE)
+public class SongTypeMarkResolver implements MarkResolver {
 
-    public FilteredSongTypeMarkResolver(SongType songType) {
-        super(songType);
-    }
+    private final SongType songType;
 
     @Override
     public List<Integer> resolveMarks(List<SongMetadata> metadataList) {

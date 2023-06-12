@@ -1,7 +1,7 @@
 package amateur.shaobig.tnc.transformer.album.calculator;
 
 import amateur.shaobig.tnc.entity.SongMetadata;
-import amateur.shaobig.tnc.transformer.album.mark.BasicMarkResolver;
+import amateur.shaobig.tnc.transformer.album.calculator.mark.BasicMarkResolver;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
