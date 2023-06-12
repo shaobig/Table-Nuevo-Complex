@@ -36,6 +36,12 @@ public class SongMetadata implements Serializable {
         this.mark = mark;
     }
 
+    public SongMetadata(Song song, SongType type, int mark) {
+        this.song = song;
+        this.type = type;
+        this.mark = mark;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,7 +1,7 @@
 package amateur.shaobig.tnc.transformer.album.calculator;
 
 import amateur.shaobig.tnc.entity.SongMetadata;
-import amateur.shaobig.tnc.transformer.album.calculator.mark.BasicMarkResolver;
+import amateur.shaobig.tnc.transformer.album.mark.BasicMarkResolver;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +16,11 @@ import java.util.List;
 public class SumAlbumMarkCalculator implements Calculator<SongMetadata> {
 
     private final BasicMarkResolver basicMarkResolver;
-    private final IntegerSumCalculator sumCalculator;
+    private final IntegerSumCalculator integerSumCalculator;
 
     @Override
     public BigDecimal calculate(List<SongMetadata> metadataList) {
-        return getSumCalculator().calculate(getBasicMarkResolver().resolveMarks(metadataList));
+        return getIntegerSumCalculator().calculate(getBasicMarkResolver().resolveMarks(metadataList));
     }
 
 }

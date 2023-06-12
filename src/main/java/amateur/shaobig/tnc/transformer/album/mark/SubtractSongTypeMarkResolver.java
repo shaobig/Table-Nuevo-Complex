@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.transformer.album.calculator.mark;
+package amateur.shaobig.tnc.transformer.album.mark;
 
 import amateur.shaobig.tnc.entity.SongMetadata;
 import lombok.AccessLevel;

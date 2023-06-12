@@ -1,9 +1,9 @@
 package amateur.shaobig.tnc.configuration;
 
 import amateur.shaobig.tnc.entity.enums.SongType;
-import amateur.shaobig.tnc.transformer.album.calculator.mark.BasicMarkResolver;
-import amateur.shaobig.tnc.transformer.album.calculator.mark.SongTypeMarkResolver;
-import amateur.shaobig.tnc.transformer.album.calculator.mark.SubtractSongTypeMarkResolver;
+import amateur.shaobig.tnc.transformer.album.mark.BasicMarkResolver;
+import amateur.shaobig.tnc.transformer.album.mark.SongTypeMarkResolver;
+import amateur.shaobig.tnc.transformer.album.mark.SubtractSongTypeMarkResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
