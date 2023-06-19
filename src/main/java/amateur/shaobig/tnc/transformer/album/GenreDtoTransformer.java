@@ -1,6 +1,6 @@
 package amateur.shaobig.tnc.transformer.album;
 
-import amateur.shaobig.tnc.dto.album.GenreDto;
+import amateur.shaobig.tnc.dto.genre.GenreDto;
 import amateur.shaobig.tnc.entity.Genre;
 import amateur.shaobig.tnc.transformer.Transformer;
 import org.springframework.stereotype.Component;

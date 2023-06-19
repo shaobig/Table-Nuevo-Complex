@@ -3,6 +3,7 @@ package amateur.shaobig.tnc.service.album;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.ReadAllService;
+import amateur.shaobig.tnc.service.ReadFullService;
 import amateur.shaobig.tnc.service.ReadService;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,12 +15,18 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumProxyService implements ReadService<Album>, ReadAllService<Album> {
+public class AlbumProxyService implements ReadService<Album>, ReadFullService<Album>, ReadAllService<Album> {
 
     private final AlbumService albumService;
 
     @Override
     public Album read(Long id) {
+        return getAlbumService().read(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Can't find the album with the id = %d", id)));
+    }
+
+    @Override
+    public Album readFull(Long id) {
         return getAlbumService().read(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Can't find the album with the id = %d", id)));
     }
