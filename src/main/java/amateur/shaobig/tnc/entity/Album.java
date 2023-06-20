@@ -57,13 +57,13 @@ public class Album implements Serializable {
     private Integer year;
     @Column(nullable = false)
     private AlbumType type;
-    @OneToOne(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToOne(mappedBy = "album", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private AlbumMetadata metadata;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Artist artist;
-    @OneToMany(mappedBy = "album", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "album", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Genre> genres;
-    @OneToMany(mappedBy = "album", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "album", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Song> songs;
 
     public Album() {

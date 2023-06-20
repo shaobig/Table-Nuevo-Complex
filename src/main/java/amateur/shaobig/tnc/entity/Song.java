@@ -31,7 +31,7 @@ public class Song implements Serializable {
     private Integer number;
     @Column(nullable = false)
     private String name;
-    @OneToOne(mappedBy = "song", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToOne(mappedBy = "song", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private SongMetadata metadata;
     @ManyToOne(fetch = FetchType.LAZY)
     private Album album;

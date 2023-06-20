@@ -32,10 +32,10 @@ public class Artist implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Location location;
     private ArtistStatus status;
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.PERSIST)
     private List<Album> albums;
 
     public Artist(Long id, String name, Location location) {

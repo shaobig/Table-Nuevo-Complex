@@ -7,7 +7,7 @@ import amateur.shaobig.tnc.entity.enums.AlbumType;
 
 import java.util.List;
 
-public record ReadFullAlbumDto(Long Id, Integer number, String name, Integer year, AlbumType type,
+public record ReadFullAlbumDto(Long id, Integer number, String name, Integer year, AlbumType type,
                                AlbumMetadataDto metadata, ArtistDto artist, List<GenreDto> genres,
                                List<SongDto> songs) {
 }
