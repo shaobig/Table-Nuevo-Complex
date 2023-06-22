@@ -9,6 +9,6 @@ import java.io.Serializable;
 public interface FindRestController<E extends Serializable> {
 
     @PostMapping(path = "/exist")
-    ResponseEntity<Boolean> find(@RequestBody E entity);
+    ResponseEntity<Void> find(@RequestBody E entity);
 
 }

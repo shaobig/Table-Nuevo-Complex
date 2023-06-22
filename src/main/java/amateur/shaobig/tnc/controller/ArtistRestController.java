@@ -35,7 +35,7 @@ public class ArtistRestController implements ReadRestController<ReadArtistDto>, 
     }
 
     @Override
-    public ResponseEntity<Boolean> find(Artist artist) {
+    public ResponseEntity<Void> find(Artist artist) {
         HttpStatus status = getArtistDtoService().isFound(artist) ? HttpStatus.FOUND : HttpStatus.NOT_FOUND;
         return ResponseEntity.status(status).build();
     }
