@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import java.util.Optional;
 @Entity
 @Table(name = "artists")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Artist implements Serializable {
@@ -32,9 +34,9 @@ public class Artist implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String name;
+    private ArtistStatus status;
     @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Location location;
-    private ArtistStatus status;
     @OneToMany(mappedBy = "artist", cascade = CascadeType.PERSIST)
     private List<Album> albums;
 
