@@ -17,6 +17,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 import java.util.List;
@@ -45,6 +46,7 @@ import java.util.Optional;
                 )
         }
 )
+@DynamicUpdate
 public class Album implements Serializable {
 
     @Id

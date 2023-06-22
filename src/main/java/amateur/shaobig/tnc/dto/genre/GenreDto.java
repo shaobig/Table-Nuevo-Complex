@@ -1,3 +1,3 @@
 package amateur.shaobig.tnc.dto.genre;
 
-public record GenreDto(String name, boolean isMinor) {}
+public record GenreDto(Long id, String name, boolean isMinor) {}

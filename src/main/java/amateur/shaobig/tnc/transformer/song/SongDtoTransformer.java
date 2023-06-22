@@ -17,7 +17,7 @@ public class SongDtoTransformer implements Transformer<Song, SongDto> {
 
     @Override
     public SongDto transform(Song song) {
-        return new SongDto(song.getNumber(), song.getName(), getSongMetadataDtoTransformer().transform(song.getMetadata()));
+        return new SongDto(song.getId(), song.getNumber(), song.getName(), getSongMetadataDtoTransformer().transform(song.getMetadata()));
     }
 
 }

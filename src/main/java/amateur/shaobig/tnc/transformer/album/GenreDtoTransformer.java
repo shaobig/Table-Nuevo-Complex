@@ -10,7 +10,7 @@ public class GenreDtoTransformer implements Transformer<Genre, GenreDto> {
 
     @Override
     public GenreDto transform(Genre genre) {
-        return new GenreDto(genre.getName(), genre.isMinor());
+        return new GenreDto(genre.getId(), genre.getName(), genre.isMinor());
     }
 
 }
