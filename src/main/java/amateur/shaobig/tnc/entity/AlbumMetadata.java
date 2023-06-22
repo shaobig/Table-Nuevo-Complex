@@ -21,11 +21,11 @@ public class AlbumMetadata implements Serializable {
 
     @Id
     private Long id;
+    private LocalDateTime time;
+    private boolean isRecommendation;
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private Album album;
-    private LocalDateTime time;
-    private boolean isRecommendation;
 
     public AlbumMetadata() {
         this.time = LocalDateTime.now();
@@ -34,6 +34,12 @@ public class AlbumMetadata implements Serializable {
     public AlbumMetadata(Album album) {
         this.time = LocalDateTime.now();
         this.album = album;
+    }
+
+    public AlbumMetadata(Long id, LocalDateTime time, boolean isRecommendation) {
+        this.id = id;
+        this.time = time;
+        this.isRecommendation = isRecommendation;
     }
 
     public void setIsRecommendation(boolean isRecommendation) {

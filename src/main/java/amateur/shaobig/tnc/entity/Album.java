@@ -104,6 +104,14 @@ public class Album implements Serializable {
         this.artist = artist;
     }
 
+    public Album(int number, String name, Integer year, AlbumType type, AlbumMetadata metadata) {
+        this.number = number;
+        this.name = name;
+        this.year = year;
+        this.type = type;
+        this.metadata = metadata;
+    }
+
     public void setMetadata(AlbumMetadata metadata) {
         metadata.setAlbum(this);
         this.metadata = metadata;

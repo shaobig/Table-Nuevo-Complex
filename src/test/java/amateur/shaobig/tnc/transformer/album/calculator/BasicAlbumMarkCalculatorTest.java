@@ -35,11 +35,11 @@ class BasicAlbumMarkCalculatorTest {
 
     @Test
     void calculateResolveMarksInputArgument() {
-        List<SongMetadata> sourceMarks = List.of(new SongMetadata(new Song("", new Album("", 1970)), SongType.DEFAULT, 1));
+        List<SongMetadata> sourceMarks = List.of(new SongMetadata(SongType.DEFAULT, 1, new Song("", new Album("", 1970))));
 
         basicAlbumMarkCalculator.calculate(sourceMarks);
 
-        List<SongMetadata> expected = List.of(new SongMetadata(new Song("", new Album("", 1970)), SongType.DEFAULT, 1));
+        List<SongMetadata> expected = List.of(new SongMetadata(SongType.DEFAULT, 1, new Song("", new Album("", 1970))));
         Mockito.verify(basicMarkResolver).resolveMarks(expected);
     }
 

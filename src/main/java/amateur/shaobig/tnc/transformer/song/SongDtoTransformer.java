@@ -3,6 +3,7 @@ package amateur.shaobig.tnc.transformer.song;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.transformer.Transformer;
+import amateur.shaobig.tnc.transformer.song.metadata.SongMetadataDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,5 @@
 package amateur.shaobig.tnc.transformer.artist;
 
-import amateur.shaobig.tnc.dto.artist.ArtistDto;
 import amateur.shaobig.tnc.dto.artist.ReadAllArtistDto;
 import amateur.shaobig.tnc.dto.artist.location.LocationDto;
 import amateur.shaobig.tnc.entity.Artist;

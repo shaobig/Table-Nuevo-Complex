@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.transformer.album;
+package amateur.shaobig.tnc.transformer.album.genre;
 
 import amateur.shaobig.tnc.dto.genre.GenreDto;
 import amateur.shaobig.tnc.entity.Genre;

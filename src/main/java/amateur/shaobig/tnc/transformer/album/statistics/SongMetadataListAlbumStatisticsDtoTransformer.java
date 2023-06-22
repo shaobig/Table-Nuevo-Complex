@@ -1,8 +1,6 @@
-package amateur.shaobig.tnc.transformer.album;
+package amateur.shaobig.tnc.transformer.album.statistics;
 
 import amateur.shaobig.tnc.dto.album.AlbumStatisticsDto;
-import amateur.shaobig.tnc.entity.Album;
-import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.transformer.Transformer;
 import amateur.shaobig.tnc.transformer.album.calculator.AverageAlbumMarkCalculator;
@@ -21,7 +19,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumStatisticsDtoTransformer implements Transformer<Album, AlbumStatisticsDto> {
+class SongMetadataListAlbumStatisticsDtoTransformer implements Transformer<List<SongMetadata>, AlbumStatisticsDto> {
 
     private final FullAlbumMarkCalculator fullAlbumMarkCalculator;
     private final BasicAlbumMarkCalculator basicAlbumMarkCalculator;
@@ -30,10 +28,7 @@ public class AlbumStatisticsDtoTransformer implements Transformer<Album, AlbumSt
     private final RelativeSumFinalAlbumMarkCalculator relativeSumFinalAlbumMarkCalculator;
 
     @Override
-    public AlbumStatisticsDto transform(Album album) {
-        List<SongMetadata> metadataList = album.getSongs().stream()
-                .map(Song::getMetadata)
-                .toList();
+    public AlbumStatisticsDto transform(List<SongMetadata> metadataList) {
         BigDecimal fullAlbumMark = getFullAlbumMarkCalculator().calculate(metadataList);
         BigDecimal basicAlbumMark = getBasicAlbumMarkCalculator().calculate(metadataList);
         BigDecimal averageAlbumMark = getAverageAlbumMarkCalculator().calculate(List.of(fullAlbumMark, basicAlbumMark));

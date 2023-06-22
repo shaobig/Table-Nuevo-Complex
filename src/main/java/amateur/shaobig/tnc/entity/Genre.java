@@ -25,11 +25,17 @@ public class Genre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Album album;
     @Column(nullable = false, length = 32)
     private String name;
     private boolean isMinor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Album album;
+
+    public Genre(Long id, String name, boolean isMinor) {
+        this.id = id;
+        this.name = name;
+        this.isMinor = isMinor;
+    }
 
     public void setIsMinor(boolean minor) {
         isMinor = minor;

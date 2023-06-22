@@ -4,6 +4,7 @@ import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.transformer.Transformer;
+import amateur.shaobig.tnc.transformer.album.metadata.AlbumMetadataDtoTransformer;
 import amateur.shaobig.tnc.transformer.song.SongDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;

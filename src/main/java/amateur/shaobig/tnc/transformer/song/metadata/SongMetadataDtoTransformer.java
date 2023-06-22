@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.transformer.song;
+package amateur.shaobig.tnc.transformer.song.metadata;
 
 import amateur.shaobig.tnc.dto.song.SongMetadataDto;
 import amateur.shaobig.tnc.entity.SongMetadata;
