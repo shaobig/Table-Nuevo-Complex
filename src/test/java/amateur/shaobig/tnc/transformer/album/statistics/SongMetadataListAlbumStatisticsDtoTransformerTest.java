@@ -2,8 +2,11 @@ package amateur.shaobig.tnc.transformer.album.statistics;
 
 import amateur.shaobig.tnc.dto.album.AlbumStatisticsDto;
 import amateur.shaobig.tnc.entity.Album;
+import amateur.shaobig.tnc.entity.AlbumMetadata;
+import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.entity.SongMetadata;
+import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.entity.enums.SongType;
 import amateur.shaobig.tnc.transformer.album.calculator.AverageAlbumMarkCalculator;
 import amateur.shaobig.tnc.transformer.album.calculator.BasicAlbumMarkCalculator;
@@ -42,31 +45,31 @@ class SongMetadataListAlbumStatisticsDtoTransformerTest {
 
     @Test
     void transformCheckFullAlbumMarkCalculator() {
-        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song("", new Album("", 0))));
+        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song(1L, 0, "SONG_NAME", new SongMetadata(), new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()))));
         Mockito.when(fullAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
         Mockito.when(basicAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
 
         songMetadataListAlbumStatisticsDtoTransformer.transform(sourceSongMetadataList);
 
-        List<SongMetadata> expectedSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song("", new Album("", 0))));
+        List<SongMetadata> expectedSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song(1L, 0, "SONG_NAME", new SongMetadata(), new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()))));
         Mockito.verify(fullAlbumMarkCalculator).calculate(expectedSongMetadataList);
     }
 
     @Test
     void transformCheckBasicAlbumMarkCalculator() {
-        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song("", new Album("", 0))));
+        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song(1L, 0, "SONG_NAME", new SongMetadata(), new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()))));
         Mockito.when(fullAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
         Mockito.when(basicAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
 
         songMetadataListAlbumStatisticsDtoTransformer.transform(sourceSongMetadataList);
 
-        List<SongMetadata> expectedSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song("", new Album("", 0))));
+        List<SongMetadata> expectedSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song(1L, 0, "SONG_NAME", new SongMetadata(), new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()))));
         Mockito.verify(basicAlbumMarkCalculator).calculate(expectedSongMetadataList);
     }
 
     @Test
     void transformCheckAverageAlbumMarkCalculator() {
-        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1));
+        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()));
         Mockito.when(fullAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
         Mockito.when(basicAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
 
@@ -78,19 +81,19 @@ class SongMetadataListAlbumStatisticsDtoTransformerTest {
 
     @Test
     void transformCheckSumAlbumMarkCalculator() {
-        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song("", new Album("", 0))));
+        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song(1L, 0, "SONG_NAME", new SongMetadata(), new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()))));
         Mockito.when(fullAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
         Mockito.when(basicAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
 
         songMetadataListAlbumStatisticsDtoTransformer.transform(sourceSongMetadataList);
 
-        List<SongMetadata> expectedSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song("", new Album("", 0))));
+        List<SongMetadata> expectedSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song(1L, 0, "SONG_NAME", new SongMetadata(), new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()))));
         Mockito.verify(sumAlbumMarkCalculator).calculate(expectedSongMetadataList);
     }
 
     @Test
     void transformCheckTotalMark() {
-        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1));
+        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()));
         Mockito.when(fullAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
         Mockito.when(basicAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
         Mockito.when(averageAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
@@ -103,7 +106,7 @@ class SongMetadataListAlbumStatisticsDtoTransformerTest {
 
     @Test
     void transformCheckSumAlbumMark() {
-        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1));
+        List<SongMetadata> sourceSongMetadataList = List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()));
         Mockito.when(fullAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
         Mockito.when(basicAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);
         Mockito.when(sumAlbumMarkCalculator.calculate(Mockito.anyList())).thenReturn(BigDecimal.ONE);

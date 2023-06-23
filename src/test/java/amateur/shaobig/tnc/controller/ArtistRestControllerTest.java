@@ -71,11 +71,11 @@ class ArtistRestControllerTest {
 
     @Test
     void findCheckArtist() {
-        Artist sourceArtist = new Artist("ARTIST_NAME", new Location("", "", ""));
+        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "", "", ""), List.of());;
 
         artistRestController.find(sourceArtist);
 
-        Artist expectedArtist = new Artist("ARTIST_NAME", new Location("", "", ""));
+        Artist expectedArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "", "", ""), List.of());;
         Mockito.verify(artistDtoService).isFound(expectedArtist);
     }
 

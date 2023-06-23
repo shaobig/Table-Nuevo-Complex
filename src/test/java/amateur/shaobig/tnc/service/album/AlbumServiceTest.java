@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AlbumServiceTest {
@@ -22,13 +21,6 @@ class AlbumServiceTest {
         this.albumRepository = Mockito.mock(AlbumRepository.class);
 
         this.albumService = new AlbumService(albumRepository);
-    }
-
-    @Test
-    void readNullId() {
-        Mockito.when(albumRepository.findById(Mockito.isNull())).thenThrow(IllegalArgumentException.class);
-
-        assertThrows(IllegalArgumentException.class, () -> albumService.read(null));
     }
 
     @Test

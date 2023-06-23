@@ -7,7 +7,9 @@ import amateur.shaobig.tnc.dto.album.ReadAllAlbumPoolDto;
 import amateur.shaobig.tnc.dto.pool.CreateAlbumPoolDto;
 import amateur.shaobig.tnc.dto.pool.DeleteAlbumPoolDto;
 import amateur.shaobig.tnc.entity.Album;
+import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.AlbumPool;
+import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.service.pool.AlbumPoolDtoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,11 +38,11 @@ class AlbumPoolRestControllerTest {
 
     @Test
     void createCheckAlbumPool() {
-        AlbumPool sourceAlbumPool = new AlbumPool(new Album("ALBUM_NAME", 0));
+        AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
         albumPoolRestController.create(sourceAlbumPool);
 
-        AlbumPool expectedAlbumPool = new AlbumPool(new Album("ALBUM_NAME", 0));
+        AlbumPool expectedAlbumPool = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
         Mockito.verify(albumPoolDtoService).create(expectedAlbumPool);
     }
 

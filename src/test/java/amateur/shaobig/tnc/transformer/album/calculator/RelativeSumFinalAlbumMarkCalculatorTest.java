@@ -21,10 +21,11 @@ class RelativeSumFinalAlbumMarkCalculatorTest {
 
     static Stream<Arguments> calculateInputData() {
         return Stream.of(
-                Arguments.of(new BigDecimal("0.000"), BigDecimal.valueOf(0), new BigDecimal("0.000")),
-                Arguments.of(new BigDecimal("1.000"), BigDecimal.valueOf(1), new BigDecimal("1.001")),
-                Arguments.of(new BigDecimal("1.334"), BigDecimal.valueOf(3), new BigDecimal("1.338")),
-                Arguments.of(new BigDecimal("1.667"), BigDecimal.valueOf(5), new BigDecimal("1.675"))
+                Arguments.of(new BigDecimal("1.000"), new BigDecimal("1"), new BigDecimal("1.001")),
+                Arguments.of(new BigDecimal("1.334"), new BigDecimal("3"), new BigDecimal("1.338")),
+                Arguments.of(new BigDecimal("1.667"), new BigDecimal("5"), new BigDecimal("1.675")),
+                Arguments.of(new BigDecimal("2.000"), new BigDecimal("2"), new BigDecimal("2.004")),
+                Arguments.of(new BigDecimal("2.000"), new BigDecimal("20"), new BigDecimal("2.040"))
         );
     }
 

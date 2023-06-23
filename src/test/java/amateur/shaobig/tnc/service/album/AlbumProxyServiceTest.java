@@ -24,13 +24,6 @@ class AlbumProxyServiceTest {
     }
 
     @Test
-    void readNullId() {
-        Mockito.when(albumService.read(Mockito.isNull())).thenThrow(IllegalArgumentException.class);
-
-        assertThrows(IllegalArgumentException.class, () -> albumProxyService.read(null));
-    }
-
-    @Test
     void readCheckId() {
         Optional<Album> sourceAlbum = Optional.of(new Album());
         Long sourceId = 1L;

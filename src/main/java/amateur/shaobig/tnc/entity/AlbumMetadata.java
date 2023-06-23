@@ -6,7 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -15,6 +17,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "album_metadata")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class AlbumMetadata implements Serializable {
@@ -26,21 +30,6 @@ public class AlbumMetadata implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private Album album;
-
-    public AlbumMetadata() {
-        this.time = LocalDateTime.now();
-    }
-
-    public AlbumMetadata(Album album) {
-        this.time = LocalDateTime.now();
-        this.album = album;
-    }
-
-    public AlbumMetadata(Long id, LocalDateTime time, boolean isRecommendation) {
-        this.id = id;
-        this.time = time;
-        this.isRecommendation = isRecommendation;
-    }
 
     public void setIsRecommendation(boolean isRecommendation) {
         this.isRecommendation = isRecommendation;

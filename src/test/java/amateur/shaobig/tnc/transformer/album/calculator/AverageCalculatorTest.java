@@ -29,11 +29,12 @@ class AverageCalculatorTest {
 
     static Stream<Arguments> calculateInputData() {
         return Stream.of(
-                Arguments.of(List.of(1), BigDecimal.ONE, BigDecimal.ONE, new BigDecimal("1.000")),
-                Arguments.of(List.of(1, 1, 3), BigDecimal.valueOf(5), BigDecimal.valueOf(3), new BigDecimal("1.667")),
-                Arguments.of(List.of(1, 2, 3), BigDecimal.valueOf(6), BigDecimal.valueOf(3), new BigDecimal("2.000")),
-                Arguments.of(List.of(1, 2, 3, 4), BigDecimal.valueOf(10), BigDecimal.valueOf(4), new BigDecimal("2.500")),
-                Arguments.of(List.of(1, 2, 3, 4, 5), BigDecimal.valueOf(15), BigDecimal.valueOf(5), new BigDecimal("3.000"))
+                Arguments.of(List.of(1), new BigDecimal("1"), new BigDecimal("1"), new BigDecimal("1.000")),
+                Arguments.of(List.of(1, 1), new BigDecimal("2"), new BigDecimal("2"), new BigDecimal("1.000")),
+                Arguments.of(List.of(1, 1, 3), new BigDecimal("5"), new BigDecimal("3"), new BigDecimal("1.667")),
+                Arguments.of(List.of(1, 2, 3), new BigDecimal("6"), new BigDecimal("3"), new BigDecimal("2.000")),
+                Arguments.of(List.of(1, 2, 3, 4), new BigDecimal("10"), new BigDecimal("4"), new BigDecimal("2.500")),
+                Arguments.of(List.of(1, 2, 3, 4, 5), new BigDecimal("15"), new BigDecimal("5"), new BigDecimal("3.000"))
         );
     }
 

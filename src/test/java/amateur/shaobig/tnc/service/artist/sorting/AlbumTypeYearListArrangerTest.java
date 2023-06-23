@@ -1,6 +1,8 @@
 package amateur.shaobig.tnc.service.artist.sorting;
 
 import amateur.shaobig.tnc.entity.Album;
+import amateur.shaobig.tnc.entity.AlbumMetadata;
+import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,38 +27,37 @@ class AlbumTypeYearListArrangerTest {
         List<Album> emptyAlbumList = List.of();
         List<Album> emptyAlbumListExpected = List.of();
 
-        List<Album> albumListContainingAlbumTypeInAscendingOrder = List.of(new Album("", 0, AlbumType.LP),
-                new Album("", 0, AlbumType.EP), new Album("", 0, AlbumType.COMPILATION));
-        List<Album> albumListContainingAlbumTypeInAscendingOrderExpected = List.of(new Album("", 0, AlbumType.LP),
-                new Album("", 0, AlbumType.EP), new Album("", 0, AlbumType.COMPILATION));
+        List<Album> albumListArrangedByTypeInAscendantOrder = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 0, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.COVER, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        List<Album> albumListArrangedByTypeInAscendantOrderExpected = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 0, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.COVER, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
-        List<Album> albumListContainingAlbumTypeInDescendingOrder = List.of(new Album("", 0, AlbumType.COMPILATION),
-                new Album("", 0, AlbumType.EP), new Album("", 0, AlbumType.LP));
-        List<Album> albumListContainingAlbumTypeInDescendingOrderExpected = List.of(new Album("", 0, AlbumType.LP),
-                new Album("", 0, AlbumType.EP), new Album("", 0, AlbumType.COMPILATION));
+        List<Album> albumListArrangedByTypeInDescendantOrder = List.of(new Album(1L, 0, "", 0, AlbumType.COVER, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 0, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        List<Album> albumListArrangedByTypeInDescendantOrderExpected = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 0, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.COVER, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
-        List<Album> albumListContainingYearAndAlbumTypeInAscendingOrder = List.of(new Album("", 1, AlbumType.LP),
-                new Album("", 2, AlbumType.EP), new Album("", 3, AlbumType.COMPILATION));
-        List<Album> albumListContainingYearAndAlbumTypeInAscendingOrderExpected = List.of(new Album("", 1, AlbumType.LP),
-                new Album("", 2, AlbumType.EP), new Album("", 3, AlbumType.COMPILATION));
+        List<Album> albumListArrangedByTypeInMixedOrder = List.of(new Album(1L, 0, "", 0, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.COVER, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        List<Album> albumListArrangedByTypeInMixedOrderExpected = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 0, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.COVER, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
-        List<Album> albumListContainingYearAndAlbumTypeInDescendingOrder = List.of(new Album("", 3, AlbumType.COMPILATION),
-                new Album("", 2, AlbumType.EP), new Album("", 1, AlbumType.LP));
-        List<Album> albumListContainingYearAndAlbumTypeInDescendingOrderExpected = List.of(new Album("", 1, AlbumType.LP),
-                new Album("", 2, AlbumType.EP), new Album("", 3, AlbumType.COMPILATION));
+        List<Album> albumListArrangedByTheSameTypeAndYearInAscendantOrder = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 0, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.COVER, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        List<Album> albumListArrangedByTheSameTypeAndYearInAscendantOrderExpected = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 0, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.COVER, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
-        List<Album> albumListContainingTheSameYearTwice = List.of(new Album("", 1, AlbumType.EP),
-                new Album("", 2, AlbumType.LP), new Album("", 1, AlbumType.COMPILATION));
-        List<Album> albumListContainingTheSameYearTwiceExpected = List.of(new Album("", 2, AlbumType.LP),
-                new Album("", 1, AlbumType.EP), new Album("", 1, AlbumType.COMPILATION));
+        List<Album> albumListArrangedByTheSameTypeAndYearInDescendantOrder = List.of(new Album(1L, 0, "", 2, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 1, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        List<Album> albumListArrangedByTheSameTypeAndYearInDescendantOrderExpected = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 1, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 2, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+
+        List<Album> albumListArrangedByTheSameTypeAndYearInMixedOrder = List.of(new Album(1L, 0, "", 2, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 1, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        List<Album> albumListArrangedByTheSameTypeAndYearInMixedOrderExpected = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 1, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 2, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+
+        List<Album> albumListWithMatchedYear = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 1, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 1, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        List<Album> albumListWithMatchedYearExpected = List.of(new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(2L, 0, "", 1, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(3L, 0, "", 1, AlbumType.EP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
         return Stream.of(
                 Arguments.of(emptyAlbumList, emptyAlbumListExpected),
-                Arguments.of(albumListContainingAlbumTypeInAscendingOrder, albumListContainingAlbumTypeInAscendingOrderExpected),
-                Arguments.of(albumListContainingAlbumTypeInDescendingOrder, albumListContainingAlbumTypeInDescendingOrderExpected),
-                Arguments.of(albumListContainingYearAndAlbumTypeInAscendingOrder, albumListContainingYearAndAlbumTypeInAscendingOrderExpected),
-                Arguments.of(albumListContainingYearAndAlbumTypeInDescendingOrder, albumListContainingYearAndAlbumTypeInDescendingOrderExpected),
-                Arguments.of(albumListContainingTheSameYearTwice, albumListContainingTheSameYearTwiceExpected)
+                Arguments.of(albumListArrangedByTypeInAscendantOrder, albumListArrangedByTypeInAscendantOrderExpected),
+                Arguments.of(albumListArrangedByTypeInDescendantOrder, albumListArrangedByTypeInDescendantOrderExpected),
+                Arguments.of(albumListArrangedByTypeInMixedOrder, albumListArrangedByTypeInMixedOrderExpected),
+                Arguments.of(albumListArrangedByTheSameTypeAndYearInAscendantOrder, albumListArrangedByTheSameTypeAndYearInAscendantOrderExpected),
+                Arguments.of(albumListArrangedByTheSameTypeAndYearInDescendantOrder, albumListArrangedByTheSameTypeAndYearInDescendantOrderExpected),
+                Arguments.of(albumListArrangedByTheSameTypeAndYearInMixedOrder, albumListArrangedByTheSameTypeAndYearInMixedOrderExpected),
+                Arguments.of(albumListArrangedByTheSameTypeAndYearInMixedOrder, albumListArrangedByTheSameTypeAndYearInMixedOrderExpected),
+                Arguments.of(albumListWithMatchedYear, albumListWithMatchedYearExpected)
         );
     }
 

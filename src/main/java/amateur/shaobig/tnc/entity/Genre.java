@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "genres")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Genre implements Serializable {
@@ -30,12 +32,6 @@ public class Genre implements Serializable {
     private boolean isMinor;
     @ManyToOne(fetch = FetchType.LAZY)
     private Album album;
-
-    public Genre(Long id, String name, boolean isMinor) {
-        this.id = id;
-        this.name = name;
-        this.isMinor = isMinor;
-    }
 
     public void setIsMinor(boolean minor) {
         isMinor = minor;

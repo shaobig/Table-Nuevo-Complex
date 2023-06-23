@@ -40,7 +40,7 @@ class ArtistDtoTransformerTest {
     @Test
     void transform() {
         LocationDto sourceLocationDto = new LocationDto(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME"), List.of());
+        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(), List.of());
         Mockito.when(locationDtoTransformer.transform(Mockito.any())).thenReturn(sourceLocationDto);
 
         ArtistDto actual = artistDtoTransformer.transform(sourceArtist);

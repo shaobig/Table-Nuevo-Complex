@@ -15,7 +15,9 @@ import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -26,6 +28,8 @@ import java.util.Optional;
 
 @Entity
 @Table(name = "albums")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @NamedEntityGraph(
@@ -67,50 +71,6 @@ public class Album implements Serializable {
     private List<Genre> genres;
     @OneToMany(mappedBy = "album", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Song> songs;
-
-    public Album() {
-        this.type = AlbumType.LP;
-        this.metadata = new AlbumMetadata(this);
-    }
-
-    public Album(Long id, String name, Integer year) {
-        this.id = id;
-        this.name = name;
-        this.year = year;
-    }
-
-    public Album(String name, Integer year) {
-        this.name = name;
-        this.year = year;
-        this.type = AlbumType.LP;
-    }
-
-    public Album(String name, Integer year, Artist artist) {
-        this.name = name;
-        this.year = year;
-        this.artist = artist;
-    }
-
-    public Album(String name, Integer year, AlbumType type) {
-        this.name = name;
-        this.year = year;
-        this.type = type;
-    }
-
-    public Album(Long id, String name, Integer year, Artist artist) {
-        this.id = id;
-        this.name = name;
-        this.year = year;
-        this.artist = artist;
-    }
-
-    public Album(int number, String name, Integer year, AlbumType type, AlbumMetadata metadata) {
-        this.number = number;
-        this.name = name;
-        this.year = year;
-        this.type = type;
-        this.metadata = metadata;
-    }
 
     public void setMetadata(AlbumMetadata metadata) {
         metadata.setAlbum(this);

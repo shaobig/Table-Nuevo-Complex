@@ -35,29 +35,10 @@ public class Artist implements Serializable {
     @Column(nullable = false)
     private String name;
     private ArtistStatus status;
-    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Location location;
     @OneToMany(mappedBy = "artist", cascade = CascadeType.PERSIST)
     private List<Album> albums;
-
-    public Artist(Long id, String name, Location location) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.status = ArtistStatus.ACTIVE;
-    }
-
-    public Artist(String name, Location location) {
-        this.name = name;
-        this.location = location;
-        this.status = ArtistStatus.ACTIVE;
-    }
-
-    public Artist(String name, Location location, ArtistStatus status) {
-        this.name = name;
-        this.location = location;
-        this.status = status;
-    }
 
     public void setAlbums(List<Album> albums) {
         Optional.ofNullable(albums)

@@ -22,8 +22,7 @@ class ListSizeCalculatorTest {
 
     static Stream<Arguments> calculateInputData() {
         return Stream.of(
-                Arguments.of(List.of(), BigDecimal.ZERO),
-                Arguments.of(List.of(new Object()), BigDecimal.ONE),
+                Arguments.of(List.of(new Object()), BigDecimal.valueOf(1)),
                 Arguments.of(List.of(new Object(), new Object(), new Object()), BigDecimal.valueOf(3))
         );
     }

@@ -7,13 +7,13 @@ import amateur.shaobig.tnc.service.MergeService;
 import amateur.shaobig.tnc.service.ReadAllService;
 import amateur.shaobig.tnc.service.ReadService;
 import amateur.shaobig.tnc.service.artist.sorting.AlbumTypeYearListArranger;
-import amateur.shaobig.tnc.service.location.LocationService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +21,6 @@ import java.util.List;
 public class ArtistProxyService implements ReadService<Artist>, ReadAllService<Artist>, MergeService<Artist>, FindService<Artist> {
 
     private final ArtistService artistService;
-    private final LocationService locationService;
     private final AlbumTypeYearListArranger albumTypeYearListArranger;
 
     @Override
@@ -44,7 +43,10 @@ public class ArtistProxyService implements ReadService<Artist>, ReadAllService<A
 
     @Override
     public boolean isFound(Artist artist) {
-        return getArtistService().isFound(artist) && getLocationService().isFound(artist.getLocation());
+        if (Objects.isNull(artist.getId())) {
+            return false;
+        }
+        return getArtistService().isFound(artist);
     }
 
 }

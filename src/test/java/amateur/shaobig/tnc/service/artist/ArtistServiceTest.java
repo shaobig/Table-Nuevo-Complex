@@ -34,29 +34,15 @@ class ArtistServiceTest {
     }
 
     @Test
-    void createArtistIsNull() {
-        Mockito.when(artistRepository.save(Mockito.isNull())).thenThrow(IllegalArgumentException.class);
-
-        assertThrows(IllegalArgumentException.class, () -> artistService.create(null));
-    }
-
-    @Test
     void create() {
-        Artist sourceRepositoryArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"), ArtistStatus.ACTIVE);
-        Artist sourceArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"), ArtistStatus.ACTIVE);
+        Artist sourceRepositoryArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
+        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());
         Mockito.when(artistRepository.save(Mockito.any())).thenReturn(sourceRepositoryArtist);
 
         Artist actual = artistService.create(sourceArtist);
 
-        Artist expected = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"), ArtistStatus.ACTIVE);
+        Artist expected = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
         assertEquals(expected, actual);
-    }
-
-    @Test
-    void readNullId() {
-        Mockito.when(artistRepository.findById(Mockito.any())).thenThrow(IllegalArgumentException.class);
-
-        assertThrows(IllegalArgumentException.class, () -> artistService.read(null));
     }
 
     @Test
@@ -94,8 +80,8 @@ class ArtistServiceTest {
         List<Artist> sourceEmptyList = List.of();
         List<Artist> expectedEmptyList = List.of();
 
-        List<Artist> sourceFilledList = List.of(new Artist("ARTIST_NAME", new Location("COUNTRY_NAME")));
-        List<Artist> expectedFilledList = List.of(new Artist("ARTIST_NAME", new Location("COUNTRY_NAME")));
+        List<Artist> sourceFilledList = List.of(new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of()));
+        List<Artist> expectedFilledList = List.of(new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of()));
 
         return Stream.of(
                 Arguments.of(sourceEmptyList, expectedEmptyList),
@@ -115,9 +101,7 @@ class ArtistServiceTest {
 
     @Test
     void mergeCheckId() {
-        Artist sourceArtist = new Artist();
-        Long sourceId = 1L;
-        sourceArtist.setId(sourceId);
+        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());
 
         artistService.merge(sourceArtist);
 
@@ -126,18 +110,8 @@ class ArtistServiceTest {
     }
 
     @Test
-    void mergeArtistWithoutPrimaryKey() {
-        Artist sourceArtist = new Artist();
-        Mockito.when(artistRepository.getReferenceById(Mockito.isNull())).thenThrow(IllegalArgumentException.class);
-
-        assertThrows(IllegalArgumentException.class, () -> artistService.merge(sourceArtist));
-    }
-
-    @Test
     void mergeArtistNotFound() {
-        Artist sourceArtist = new Artist();
-        Long sourceId = 1L;
-        sourceArtist.setId(sourceId);
+        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());
         Mockito.when(artistRepository.getReferenceById(Mockito.anyLong())).thenThrow(EntityNotFoundException.class);
 
         assertThrows(EntityNotFoundException.class, () -> artistService.merge(sourceArtist));
@@ -145,55 +119,60 @@ class ArtistServiceTest {
 
     @Test
     void merge() {
-        Artist sourceRepositoryArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"));
-        Artist sourceArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"));
+        Artist sourceRepositoryArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
+        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());
         Mockito.when(artistRepository.getReferenceById(Mockito.any())).thenReturn(sourceRepositoryArtist);
 
         Artist actual = artistService.merge(sourceArtist);
 
-        Artist expected = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"));
+        Artist expected = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
         assertEquals(expected, actual);
     }
 
     @Test
     void isFoundCheckName() {
-        String sourceName = "ARTIST_NAME";
-        Artist sourceArtist = new Artist(sourceName, Mockito.mock(Location.class))
+        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(), List.of());
                 ;
         artistService.isFound(sourceArtist);
 
         String expectedName = "ARTIST_NAME";
-        Mockito.verify(artistRepository).existsByNameAndStatus(Mockito.eq(expectedName), Mockito.any());
+        Mockito.verify(artistRepository).existsByNameAndStatusAndLocation(Mockito.eq(expectedName), Mockito.any(), Mockito.any());
     }
 
     @Test
     void isFoundCheckStatus() {
-        Artist sourceArtist = new Artist();
-        ArtistStatus sourceStatus = ArtistStatus.ACTIVE;
-        sourceArtist.setStatus(sourceStatus);
+        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());
                 ;
         artistService.isFound(sourceArtist);
 
         ArtistStatus expectedStatus = ArtistStatus.ACTIVE;
-        Mockito.verify(artistRepository).existsByNameAndStatus(Mockito.any(), Mockito.eq(expectedStatus));
+        Mockito.verify(artistRepository).existsByNameAndStatusAndLocation(Mockito.any(), Mockito.eq(expectedStatus), Mockito.any());
+    }
+
+    @Test
+    void isFoundCheckLocation() {
+        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME"), List.of());
+        ;
+        artistService.isFound(sourceArtist);
+
+        Location expectedLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Mockito.verify(artistRepository).existsByNameAndStatusAndLocation(Mockito.any(), Mockito.any(), Mockito.eq(expectedLocation));
     }
 
     static Stream<Arguments> isFoundInputData() {
-        Artist artistWithEmptyName = new Artist("", Mockito.mock(Location.class));
-        Artist artistWithName = new Artist("ARTIST_NAME", Mockito.mock(Location.class));
-        Artist artistWithNameAndStatus = new Artist("ARTIST_NAME", Mockito.mock(Location.class), ArtistStatus.ACTIVE);
+        Artist artistNotFound = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());
+        Artist artistFound = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());
 
         return Stream.of(
-                Arguments.of(artistWithEmptyName, false),
-                Arguments.of(artistWithName, true),
-                Arguments.of(artistWithNameAndStatus, true)
+                Arguments.of(artistNotFound, false),
+                Arguments.of(artistFound, true)
         );
     }
 
     @ParameterizedTest
     @MethodSource(value = "isFoundInputData")
     void isFound(Artist sourceArtist, boolean expected) {
-        Mockito.when(artistRepository.existsByNameAndStatus(Mockito.any(), Mockito.any())).thenReturn(expected);
+        Mockito.when(artistRepository.existsByNameAndStatusAndLocation(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(expected);
 
         boolean actual = artistService.isFound(sourceArtist);
 

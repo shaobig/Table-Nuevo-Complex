@@ -18,11 +18,11 @@ class LocationDtoTransformerTest {
 
     @Test
     void transform() {
-        Location sourceLocation = new Location(1L, "LOCATION_COUNTRY", "LOCATION_REGION", "LOCATION_LOCALITY");
+        Location sourceLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
 
         LocationDto actual = locationDtoTransformer.transform(sourceLocation);
 
-        LocationDto expected = new LocationDto(1L, "LOCATION_COUNTRY", "LOCATION_REGION", "LOCATION_LOCALITY");
+        LocationDto expected = new LocationDto(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
         assertEquals(expected, actual);
     }
 

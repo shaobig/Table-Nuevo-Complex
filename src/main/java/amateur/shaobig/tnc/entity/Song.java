@@ -38,25 +38,6 @@ public class Song implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Album album;
 
-    public Song(String name, Album album) {
-        this.name = name;
-        this.album = album;
-        this.number = 0;
-    }
-
-    public Song(Integer number, String name, SongMetadata metadata) {
-        this.number = number;
-        this.name = name;
-        this.metadata = metadata;
-    }
-
-    public Song(Long id, Integer number, String name, SongMetadata metadata) {
-        this.id = id;
-        this.number = number;
-        this.name = name;
-        this.metadata = metadata;
-    }
-
     public void setMetadata(SongMetadata metadata) {
         metadata.setSong(this);
         this.metadata = metadata;

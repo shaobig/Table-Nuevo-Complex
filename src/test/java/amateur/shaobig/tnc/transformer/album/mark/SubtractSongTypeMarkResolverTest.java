@@ -1,5 +1,6 @@
 package amateur.shaobig.tnc.transformer.album.mark;
 
+import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.entity.enums.SongType;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,12 +31,10 @@ class SubtractSongTypeMarkResolverTest {
 
     static Stream<Arguments> resolveMarksInputData() {
         return Stream.of(
-                Arguments.of(List.of(), List.of(), List.of()),
-                Arguments.of(List.of(new SongMetadata(SongType.DEFAULT, 1)), List.of(1), List.of(0)),
-                Arguments.of(List.of(new SongMetadata(SongType.DEFAULT, 1), new SongMetadata(SongType.DEFAULT, 2), new SongMetadata(SongType.DEFAULT, 3)), List.of(1, 2, 3), List.of(0, 1, 2)),
-                Arguments.of(List.of(new SongMetadata(SongType.DEFAULT, 1), new SongMetadata(SongType.DEFAULT, 2), new SongMetadata(SongType.INSTRUMENTAL, 3)), List.of(1, 2), List.of(0, 1)),
-                Arguments.of(List.of(new SongMetadata(SongType.INSTRUMENTAL, 1), new SongMetadata(SongType.INSTRUMENTAL, 2), new SongMetadata(SongType.INSTRUMENTAL, 3)), List.of(), List.of()),
-                Arguments.of(List.of(new SongMetadata(SongType.INSTRUMENTAL, 1), new SongMetadata(SongType.COVER, 2), new SongMetadata(SongType.INSTRUMENTAL, 3)), List.of(), List.of())
+                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song())), List.of(1), List.of(0)),
+                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.DEFAULT, 2, new Song()), new SongMetadata(1L, SongType.DEFAULT, 3, new Song())), List.of(1, 2, 3), List.of(0, 1, 2)),
+                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.INSTRUMENTAL, 2, new Song())), List.of(1), List.of(0)),
+                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.INSTRUMENTAL, 2, new Song()), new SongMetadata(1L, SongType.COVER, 3, new Song())), List.of(1, 3), List.of(0, 2))
         );
     }
 

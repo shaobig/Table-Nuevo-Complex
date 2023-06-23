@@ -28,8 +28,7 @@ class LocationServiceTest {
 
     @Test
     void mergeCheckCountry() {
-        String sourceCountry = "COUNTRY_NAME";
-        Location sourceLocation = new Location(sourceCountry);
+        Location sourceLocation = new Location(1L, "COUNTRY_NAME", "", "");
 
         locationService.merge(sourceLocation);
 
@@ -39,9 +38,7 @@ class LocationServiceTest {
 
     @Test
     void mergeCheckRegion() {
-        String sourceRegion = "REGION_NAME";
-        Location sourceLocation = Mockito.mock(Location.class);
-        Mockito.when(sourceLocation.getRegion()).thenReturn(sourceRegion);
+        Location sourceLocation = new Location(1L, "", "REGION_NAME", "");
 
         locationService.merge(sourceLocation);
 
@@ -51,9 +48,7 @@ class LocationServiceTest {
 
     @Test
     void mergeCheckLocality() {
-        String sourceLocality = "LOCALITY_NAME";
-        Location sourceLocation = Mockito.mock(Location.class);
-        Mockito.when(sourceLocation.getLocality()).thenReturn(sourceLocality);
+        Location sourceLocation = new Location(1L, "", "", "LOCALITY_NAME");
 
         locationService.merge(sourceLocation);
 
@@ -62,21 +57,16 @@ class LocationServiceTest {
     }
 
     static Stream<Arguments> mergeInputData() {
-        Location locationWithCountry = new Location("COUNTRY_NAME");
-        Location repositoryLocationWithCountry = new Location("COUNTRY_NAME");
-        Location locationWithCountryExpected = new Location("COUNTRY_NAME");
+        Location locationWithCountry = new Location(1L, "COUNTRY_NAME", "", "");
+        Location repositoryLocationWithCountry = new Location(1L, "COUNTRY_NAME", "", "");
+        Location locationWithCountryExpected = new Location(1L, "COUNTRY_NAME", "", "");
 
-        Location locationWithCountryAndRegion = new Location("COUNTRY_NAME", "REGION_NAME", "");
-        Location repositoryLocationWithCountryAndRegion = new Location("COUNTRY_NAME", "REGION_NAME", "");
-        Location locationWithCountryAndRegionExpected = new Location("COUNTRY_NAME", "REGION_NAME", "");
-
-        Location locationWithAllFields = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-        Location repositoryLocationWithAllFields = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-        Location locationWithAllFieldsExpected = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location locationWithAllFields = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location repositoryLocationWithAllFields = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location locationWithAllFieldsExpected = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
 
         return Stream.of(
                 Arguments.of(locationWithCountry, repositoryLocationWithCountry, locationWithCountryExpected),
-                Arguments.of(locationWithCountryAndRegion, repositoryLocationWithCountryAndRegion, locationWithCountryAndRegionExpected),
                 Arguments.of(locationWithAllFields, repositoryLocationWithAllFields, locationWithAllFieldsExpected)
         );
     }
@@ -93,8 +83,7 @@ class LocationServiceTest {
 
     @Test
     void isFoundCheckCountry() {
-        String sourceCountry = "COUNTRY_NAME";
-        Location sourceLocation = new Location(sourceCountry);
+        Location sourceLocation = new Location(1L, "COUNTRY_NAME", "", "");
 
         locationService.isFound(sourceLocation);
 
@@ -104,9 +93,7 @@ class LocationServiceTest {
 
     @Test
     void isFoundCheckRegion() {
-        Location sourceLocation = new Location();
-        String sourceRegion = "REGION_NAME";
-        sourceLocation.setRegion(sourceRegion);
+        Location sourceLocation = new Location(1L, "", "REGION_NAME", "");
 
         locationService.isFound(sourceLocation);
 
@@ -116,9 +103,7 @@ class LocationServiceTest {
 
     @Test
     void isFoundCheckLocality() {
-        Location sourceLocation = new Location();
-        String sourceLocality = "LOCALITY_NAME";
-        sourceLocation.setLocality(sourceLocality);
+        Location sourceLocation = new Location(1L, "", "", "LOCALITY_NAME");
 
         locationService.isFound(sourceLocation);
 
@@ -127,14 +112,12 @@ class LocationServiceTest {
     }
 
     static Stream<Arguments> isFoundInput() {
-        Location locationWithNecessaryFields = new Location("COUNTRY_NAME");
-        Location locationWithAllFields = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_REGION");
-        Location locationWithOptionalEmptyFields = new Location("COUNTRY_NAME", "", "");
+        Location notFoundLocation = new Location();
+        Location foundLocation = new Location();
 
         return Stream.of(
-                Arguments.of(locationWithNecessaryFields, false),
-                Arguments.of(locationWithAllFields, true),
-                Arguments.of(locationWithOptionalEmptyFields, true)
+                Arguments.of(notFoundLocation, false),
+                Arguments.of(foundLocation, true)
         );
     }
 

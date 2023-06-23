@@ -7,7 +7,7 @@ import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.CreateService;
 import amateur.shaobig.tnc.service.DeleteService;
 import amateur.shaobig.tnc.service.ReadAllService;
-import amateur.shaobig.tnc.service.artist.ArtistService;
+import amateur.shaobig.tnc.service.artist.ArtistProxyService;
 import amateur.shaobig.tnc.service.location.LocationService;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -24,13 +23,13 @@ public class AlbumPoolProxyService implements CreateService<AlbumPool, AlbumPool
 
     private final AlbumPoolService albumPoolService;
     private final LocationService locationService;
-    private final ArtistService artistService;
+    private final ArtistProxyService artistProxyService;
 
     @Override
     public AlbumPool create(AlbumPool albumPool) {
         Artist artist = albumPool.getAlbum().getArtist();
-        if (Objects.nonNull(artist.getId())) {
-            albumPool.getAlbum().setArtist(getArtistService().merge(artist));
+        if (getArtistProxyService().isFound(artist)) {
+            albumPool.getAlbum().setArtist(getArtistProxyService().merge(artist));
         }
         else if (getLocationService().isFound(artist.getLocation())) {
             artist.setLocation(getLocationService().merge(artist.getLocation()));
