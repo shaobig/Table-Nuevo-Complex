@@ -42,12 +42,12 @@ public class Genre implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return album.equals(genre.album) && name.equals(genre.name);
+        return isMinor == genre.isMinor && name.equals(genre.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(album, name);
+        return Objects.hash(name, isMinor);
     }
 
 }

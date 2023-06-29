@@ -24,15 +24,15 @@ import java.util.stream.Collectors;
 @Getter(value = AccessLevel.PACKAGE)
 public class ReadFullAlbumDtoTransformer implements Transformer<Album, ReadFullAlbumDto> {
 
-    private final ArtistDtoTransformer artistDtoTransformer;
     private final AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
+    private final ArtistDtoTransformer artistDtoTransformer;
     private final GenreDtoTransformer genreDtoTransformer;
     private final SongDtoTransformer songDtoTransformer;
 
     @Override
     public ReadFullAlbumDto transform(Album album) {
-        ArtistDto artist = getArtistDtoTransformer().transform(album.getArtist());
         AlbumMetadataDto albumMetadata = getAlbumMetadataDtoTransformer().transform(album.getMetadata());
+        ArtistDto artist = getArtistDtoTransformer().transform(album.getArtist());
         List<GenreDto> genres = album.getGenres().stream()
                 .map(getGenreDtoTransformer()::transform)
                 .toList();

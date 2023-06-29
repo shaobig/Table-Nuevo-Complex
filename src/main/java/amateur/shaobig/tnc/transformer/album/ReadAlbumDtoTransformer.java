@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 @Getter(value = AccessLevel.PACKAGE)
 public class ReadAlbumDtoTransformer implements Transformer<Album, ReadAlbumDto> {
 
-    private final AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
     private final SongDtoTransformer songDtoTransformer;
+    private final AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
 
     @Override
     public ReadAlbumDto transform(Album album) {

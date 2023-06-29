@@ -34,7 +34,7 @@ class SongDtoTransformerTest {
     @Test
     void transformCheckSongMetadata() {
         SongMetadata sourceSongMetadata = new SongMetadata(1L, SongType.DEFAULT, 1, new Song(1L, 0, "SONG_NAME", new SongMetadata(), new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of())));
-        Song sourceSong = new Song(1L, 0,"", sourceSongMetadata, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        Song sourceSong = new Song(1L, 0, "", sourceSongMetadata, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
         songDtoTransformer.transform(sourceSong);
 
@@ -44,7 +44,7 @@ class SongDtoTransformerTest {
 
     @Test
     void transform() {
-        Song sourceSong = new Song(1L, 0,"SONG_NAME", new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        Song sourceSong = new Song(1L, 0, "SONG_NAME", new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
         SongMetadataDto sourceSongMetadataDto = new SongMetadataDto(SongType.DEFAULT, 1);
         Mockito.when(songMetadataDtoTransformer.transform(Mockito.any())).thenReturn(sourceSongMetadataDto);
 

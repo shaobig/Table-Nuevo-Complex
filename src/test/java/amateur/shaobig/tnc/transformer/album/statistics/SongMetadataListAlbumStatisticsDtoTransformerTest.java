@@ -116,7 +116,7 @@ class SongMetadataListAlbumStatisticsDtoTransformerTest {
         BigDecimal expectedSumAlbumMark = BigDecimal.ONE;
         Mockito.verify(relativeSumFinalAlbumMarkCalculator).calculate(Mockito.any(), Mockito.eq(expectedSumAlbumMark));
     }
-    
+
     @Test
     void transform() {
         List<SongMetadata> sourceSongMetadataList = List.of();
@@ -131,5 +131,5 @@ class SongMetadataListAlbumStatisticsDtoTransformerTest {
         AlbumStatisticsDto expected = new AlbumStatisticsDto(BigDecimal.valueOf(1), BigDecimal.valueOf(2), BigDecimal.valueOf(3), BigDecimal.valueOf(4), BigDecimal.valueOf(5));
         assertEquals(expected, actual);
     }
-    
+
 }
