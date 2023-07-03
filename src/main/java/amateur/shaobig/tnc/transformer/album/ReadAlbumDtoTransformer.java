@@ -4,6 +4,7 @@ import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.transformer.Transformer;
+import amateur.shaobig.tnc.transformer.album.metadata.AlbumMetadataDtoTransformer;
 import amateur.shaobig.tnc.transformer.song.SongDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,8 +19,8 @@ import java.util.stream.Collectors;
 @Getter(value = AccessLevel.PACKAGE)
 public class ReadAlbumDtoTransformer implements Transformer<Album, ReadAlbumDto> {
 
-    private final AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
     private final SongDtoTransformer songDtoTransformer;
+    private final AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
 
     @Override
     public ReadAlbumDto transform(Album album) {

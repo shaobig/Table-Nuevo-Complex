@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "genres")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Genre implements Serializable {
@@ -25,14 +27,14 @@ public class Genre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Album album;
     @Column(nullable = false, length = 32)
     private String name;
-    private boolean isMinor;
+    private boolean isMajor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Album album;
 
-    public void setIsMinor(boolean minor) {
-        isMinor = minor;
+    public void setIsMajor(boolean isMajor) {
+        this.isMajor = isMajor;
     }
 
     @Override
@@ -40,12 +42,12 @@ public class Genre implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return album.equals(genre.album) && name.equals(genre.name);
+        return isMajor == genre.isMajor && name.equals(genre.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(album, name);
+        return Objects.hash(name, isMajor);
     }
 
 }

@@ -7,7 +7,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -15,32 +17,19 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "song_metadata")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class SongMetadata implements Serializable {
 
     @Id
     private Long id;
+    private SongType type;
+    private int mark;
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     private Song song;
-    private SongType type;
-    private int mark;
-
-    public SongMetadata() {
-        this.type = SongType.DEFAULT;
-    }
-
-    public SongMetadata(SongType type, int mark) {
-        this.type = type;
-        this.mark = mark;
-    }
-
-    public SongMetadata(Song song, SongType type, int mark) {
-        this.song = song;
-        this.type = type;
-        this.mark = mark;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -2,6 +2,9 @@ package amateur.shaobig.tnc.controller;
 
 import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
 import amateur.shaobig.tnc.dto.album.ReadAllAlbumWithSongsDto;
+import amateur.shaobig.tnc.dto.album.ReadFullAlbumDto;
+import amateur.shaobig.tnc.dto.album.UpdateAlbumDto;
+import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.service.album.AlbumDtoService;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +20,7 @@ import java.util.List;
 @RequestMapping(path = "/album")
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumRestController implements ReadRestController<ReadAlbumDto>, ReadAllRestController<ReadAllAlbumWithSongsDto> {
+public class AlbumRestController implements ReadRestController<ReadAlbumDto>, ReadFullRestController<ReadFullAlbumDto>, ReadAllRestController<ReadAllAlbumWithSongsDto>, UpdateRestController<Album, UpdateAlbumDto> {
 
     private final AlbumDtoService albumDtoService;
 
@@ -28,9 +31,21 @@ public class AlbumRestController implements ReadRestController<ReadAlbumDto>, Re
     }
 
     @Override
+    public ResponseEntity<ReadFullAlbumDto> readFull(Long id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(getAlbumDtoService().readFull(id));
+    }
+
+    @Override
     public ResponseEntity<List<ReadAllAlbumWithSongsDto>> readAll() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(getAlbumDtoService().readAll());
+    }
+
+    @Override
+    public ResponseEntity<UpdateAlbumDto> update(Album album) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(getAlbumDtoService().update(album));
     }
 
 }

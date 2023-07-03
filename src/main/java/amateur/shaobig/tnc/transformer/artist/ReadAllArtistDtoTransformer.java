@@ -1,9 +1,9 @@
 package amateur.shaobig.tnc.transformer.artist;
 
 import amateur.shaobig.tnc.dto.artist.ReadAllArtistDto;
-import amateur.shaobig.tnc.dto.artist.location.LocationDto;
 import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.transformer.Transformer;
+import amateur.shaobig.tnc.transformer.artist.location.LocationDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +18,7 @@ public class ReadAllArtistDtoTransformer implements Transformer<Artist, ReadAllA
 
     @Override
     public ReadAllArtistDto transform(Artist artist) {
-        LocationDto location = getLocationDtoTransformer().transform(artist.getLocation());
-        return new ReadAllArtistDto(artist.getId(), artist.getName(), artist.getStatus(), location);
+        return new ReadAllArtistDto(artist.getId(), artist.getName(), artist.getStatus(), getLocationDtoTransformer().transform(artist.getLocation()));
     }
 
 }

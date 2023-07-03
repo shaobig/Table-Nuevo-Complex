@@ -3,6 +3,7 @@ package amateur.shaobig.tnc.transformer.song;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.transformer.Transformer;
+import amateur.shaobig.tnc.transformer.song.metadata.SongMetadataDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class SongDtoTransformer implements Transformer<Song, SongDto> {
 
     @Override
     public SongDto transform(Song song) {
-        return new SongDto(song.getNumber(), song.getName(), getSongMetadataDtoTransformer().transform(song.getMetadata()));
+        return new SongDto(song.getId(), song.getNumber(), song.getName(), getSongMetadataDtoTransformer().transform(song.getMetadata()));
     }
 
 }

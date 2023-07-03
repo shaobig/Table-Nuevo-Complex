@@ -6,6 +6,7 @@ import amateur.shaobig.tnc.dto.artist.location.LocationDto;
 import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.transformer.Transformer;
 import amateur.shaobig.tnc.transformer.album.ReadAlbumDtoTransformer;
+import amateur.shaobig.tnc.transformer.artist.location.LocationDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

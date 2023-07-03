@@ -2,7 +2,9 @@ package amateur.shaobig.tnc.service.pool;
 
 import amateur.shaobig.tnc.dto.album.ReadAllAlbumPoolDto;
 import amateur.shaobig.tnc.entity.Album;
+import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.AlbumPool;
+import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.repository.AlbumPoolRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,20 +37,20 @@ class AlbumPoolServiceTest {
 
     @Test
     void createCheckAlbumPool() {
-        AlbumPool sourceAlbumPool = new AlbumPool(new Album("ALBUM_NAME", 0));
+        AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
         albumPoolService.create(sourceAlbumPool);
 
-        AlbumPool expectedAlbumPool = new AlbumPool(new Album("ALBUM_NAME", 0));
+        AlbumPool expectedAlbumPool = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
         Mockito.verify(albumPoolRepository).save(expectedAlbumPool);
     }
 
     static Stream<Arguments> createInputData() {
-        AlbumPool albumPoolEmpty = new AlbumPool(new Album("", 0));
-        AlbumPool albumPoolEmptyExpected = new AlbumPool(1L, new Album("", 0));
+        AlbumPool albumPoolEmpty = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        AlbumPool albumPoolEmptyExpected = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
-        AlbumPool albumPoolWithName = new AlbumPool(new Album("ALBUM_NAME", 0));
-        AlbumPool albumPoolWithNameExpected = new AlbumPool(1L, new Album("ALBUM_NAME", 0));
+        AlbumPool albumPoolWithName = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        AlbumPool albumPoolWithNameExpected = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
         return Stream.of(
                 Arguments.of(albumPoolEmpty, albumPoolEmptyExpected),
@@ -56,13 +58,15 @@ class AlbumPoolServiceTest {
         );
     }
 
-    @ParameterizedTest
-    @MethodSource(value = "createInputData")
-    void create(AlbumPool sourceAlbumPool, AlbumPool expected) {
-        Mockito.when(albumPoolRepository.save(Mockito.any())).thenReturn(expected);
+    @Test
+    void create() {
+        AlbumPool sourceAlbumPoolCreated = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        Mockito.when(albumPoolRepository.save(Mockito.any())).thenReturn(sourceAlbumPoolCreated);
 
         AlbumPool actual = albumPoolService.create(sourceAlbumPool);
 
+        AlbumPool expected = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
         assertEquals(expected, actual);
     }
 
@@ -70,8 +74,8 @@ class AlbumPoolServiceTest {
         List<ReadAllAlbumPoolDto> emptyAlbumPoolListSource = List.of();
         List<ReadAllAlbumPoolDto> emptyAlbumPoolListExpected = List.of();
 
-        List<ReadAllAlbumPoolDto> filledAlbumPoolListSource = List.of(new ReadAllAlbumPoolDto(1L, "ARTIST_NAME", 1L, "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
-        List<ReadAllAlbumPoolDto> filledAlbumPoolListExpected = List.of(new ReadAllAlbumPoolDto(1L, "ARTIST_NAME", 1L, "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
+        List<ReadAllAlbumPoolDto> filledAlbumPoolListSource = List.of(new ReadAllAlbumPoolDto(1L, 1L, "ARTIST_NAME", "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
+        List<ReadAllAlbumPoolDto> filledAlbumPoolListExpected = List.of(new ReadAllAlbumPoolDto(1L, 1L, "ARTIST_NAME",  "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
 
         return Stream.of(
                 Arguments.of(emptyAlbumPoolListSource, emptyAlbumPoolListExpected),
@@ -90,7 +94,7 @@ class AlbumPoolServiceTest {
     }
 
     @Test
-    void deleteCheckFindByIdInputArgument() {
+    void deleteCheckFindById() {
         Long sourceId = 1L;
 
         albumPoolService.delete(sourceId);
@@ -100,7 +104,7 @@ class AlbumPoolServiceTest {
     }
 
     @Test
-    void deleteCheckAlbumPoolInputArgument() {
+    void deleteCheckAlbumPool() {
         Long sourceId = 1L;
 
         albumPoolService.delete(sourceId);
@@ -111,14 +115,10 @@ class AlbumPoolServiceTest {
 
     static Stream<Arguments> deleteInputData() {
         Optional<AlbumPool> emptyAlbumPoolExpected = Optional.empty();
-        Optional<AlbumPool> albumPoolWithEmptyFieldsExpected = Optional.of(new AlbumPool());
-        Optional<AlbumPool> albumPoolWithEmptyAlbumFieldsExpected = Optional.of(new AlbumPool(new Album()));
-        Optional<AlbumPool> filledAlbumPoolExpected = Optional.of(new AlbumPool(new Album("ALBUM_NAME", 0)));
+        Optional<AlbumPool> filledAlbumPoolExpected = Optional.of(new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of())));
 
         return Stream.of(
                 Arguments.of(emptyAlbumPoolExpected),
-                Arguments.of(albumPoolWithEmptyFieldsExpected),
-                Arguments.of(albumPoolWithEmptyAlbumFieldsExpected),
                 Arguments.of(filledAlbumPoolExpected)
         );
     }

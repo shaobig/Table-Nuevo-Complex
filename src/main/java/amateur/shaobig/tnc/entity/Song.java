@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "songs")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Song implements Serializable {
@@ -31,15 +33,10 @@ public class Song implements Serializable {
     private Integer number;
     @Column(nullable = false)
     private String name;
-    @OneToOne(mappedBy = "song", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToOne(mappedBy = "song", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private SongMetadata metadata;
     @ManyToOne(fetch = FetchType.LAZY)
     private Album album;
-
-    public Song(String name, Album album) {
-        this.name = name;
-        this.album = album;
-    }
 
     public void setMetadata(SongMetadata metadata) {
         metadata.setSong(this);

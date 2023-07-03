@@ -1,5 +1,6 @@
 package amateur.shaobig.tnc.dto.album;
 
+import amateur.shaobig.tnc.dto.genre.GenreDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 

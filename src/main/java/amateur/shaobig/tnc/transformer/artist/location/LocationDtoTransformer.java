@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.transformer.artist;
+package amateur.shaobig.tnc.transformer.artist.location;
 
 import amateur.shaobig.tnc.dto.artist.location.LocationDto;
 import amateur.shaobig.tnc.entity.Location;

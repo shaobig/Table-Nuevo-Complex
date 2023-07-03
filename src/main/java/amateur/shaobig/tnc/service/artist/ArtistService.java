@@ -44,7 +44,7 @@ public class ArtistService implements CreateService<Artist, Artist>, ReadService
 
     @Override
     public boolean isFound(Artist artist) {
-        return getArtistRepository().existsByNameAndStatus(artist.getName(), artist.getStatus());
+        return getArtistRepository().existsByNameAndStatusAndLocation(artist.getName(), artist.getStatus(), artist.getLocation());
     }
 
 }

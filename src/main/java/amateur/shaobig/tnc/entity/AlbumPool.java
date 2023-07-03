@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "album_pool")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class AlbumPool implements Serializable {
@@ -27,15 +29,6 @@ public class AlbumPool implements Serializable {
     private Long id;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Album album;
-
-    public AlbumPool(Long id, Album album) {
-        this.id = id;
-        this.album = album;
-    }
-
-    public AlbumPool(Album album) {
-        this.album = album;
-    }
 
     @Override
     public boolean equals(Object o) {

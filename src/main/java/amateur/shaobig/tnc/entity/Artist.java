@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import java.util.Optional;
 @Entity
 @Table(name = "artists")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Artist implements Serializable {
@@ -32,30 +34,11 @@ public class Artist implements Serializable {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Location location;
     private ArtistStatus status;
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Location location;
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.PERSIST)
     private List<Album> albums;
-
-    public Artist(Long id, String name, Location location) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.status = ArtistStatus.ACTIVE;
-    }
-
-    public Artist(String name, Location location) {
-        this.name = name;
-        this.location = location;
-        this.status = ArtistStatus.ACTIVE;
-    }
-
-    public Artist(String name, Location location, ArtistStatus status) {
-        this.name = name;
-        this.location = location;
-        this.status = status;
-    }
 
     public void setAlbums(List<Album> albums) {
         Optional.ofNullable(albums)

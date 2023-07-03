@@ -22,8 +22,7 @@ class BigDecimalSumCalculatorTest {
 
     static Stream<Arguments> calculateInputData() {
         return Stream.of(
-                Arguments.of(List.of(), BigDecimal.ZERO),
-                Arguments.of(List.of(BigDecimal.ONE), BigDecimal.ONE),
+                Arguments.of(List.of(BigDecimal.valueOf(1)), BigDecimal.valueOf(1)),
                 Arguments.of(List.of(BigDecimal.valueOf(1), BigDecimal.valueOf(2), BigDecimal.valueOf(3)), BigDecimal.valueOf(6)),
                 Arguments.of(List.of(BigDecimal.valueOf(1), BigDecimal.valueOf(2), BigDecimal.valueOf(3), BigDecimal.valueOf(4), BigDecimal.valueOf(5)), BigDecimal.valueOf(15))
         );

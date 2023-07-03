@@ -27,10 +27,11 @@ class AverageAlbumMarkCalculatorTest {
 
     static Stream<Arguments> calculateInputData() {
         return Stream.of(
-                Arguments.of(List.of(BigDecimal.valueOf(1)), new BigDecimal("1.000"), new BigDecimal("1.000")),
-                Arguments.of(List.of(BigDecimal.valueOf(1), BigDecimal.valueOf(2)), new BigDecimal("1.500"), new BigDecimal("1.500")),
-                Arguments.of(List.of(BigDecimal.valueOf(1), BigDecimal.valueOf(1), BigDecimal.valueOf(3)), new BigDecimal("1.667"), new BigDecimal("1.667")),
-                Arguments.of(List.of(BigDecimal.valueOf(1), BigDecimal.valueOf(4)), new BigDecimal("2.500"), new BigDecimal("2.500"))
+                Arguments.of(List.of(new BigDecimal("1")), new BigDecimal("1.000"), new BigDecimal("1.000")),
+                Arguments.of(List.of(new BigDecimal("1"), new BigDecimal("1")), new BigDecimal("1.000"), new BigDecimal("1.000")),
+                Arguments.of(List.of(new BigDecimal("1"), new BigDecimal("2")), new BigDecimal("1.500"), new BigDecimal("1.500")),
+                Arguments.of(List.of(new BigDecimal("1"), new BigDecimal("1"), new BigDecimal("3")), new BigDecimal("1.667"), new BigDecimal("1.667")),
+                Arguments.of(List.of(new BigDecimal("1"), new BigDecimal("4")), new BigDecimal("2.500"), new BigDecimal("2.500"))
         );
     }
 

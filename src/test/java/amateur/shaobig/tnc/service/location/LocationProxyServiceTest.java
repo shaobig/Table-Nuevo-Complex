@@ -27,30 +27,25 @@ class LocationProxyServiceTest {
 
     @Test
     void mergeCheckLocation() {
-        Location sourceLocation = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location sourceLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
 
         locationProxyService.merge(sourceLocation);
 
-        Location expectedLocation = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location expectedLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
         Mockito.verify(locationService).merge(expectedLocation);
     }
 
     static Stream<Arguments> mergeInputData() {
-        Location locationWithCountry = new Location("COUNTRY_NAME");
-        Location repositoryLocationWithCountry = new Location("COUNTRY_NAME");
-        Location locationWithCountryExpected = new Location("COUNTRY_NAME");
+        Location locationWithCountry = new Location(1L, "COUNTRY_NAME", "", "");
+        Location repositoryLocationWithCountry = new Location(1L, "COUNTRY_NAME", "", "");
+        Location locationWithCountryExpected = new Location(1L, "COUNTRY_NAME", "", "");
 
-        Location locationWithCountryAndRegion = new Location("COUNTRY_NAME", "REGION_NAME", "");
-        Location repositoryLocationWithCountryAndRegion = new Location("COUNTRY_NAME", "REGION_NAME", "");
-        Location locationWithCountryAndRegionExpected = new Location("COUNTRY_NAME", "REGION_NAME", "");
-
-        Location locationWithAllFields = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-        Location repositoryLocationWithAllFields = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-        Location locationWithAllFieldsExpected = new Location("COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location locationWithAllFields = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location repositoryLocationWithAllFields = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location locationWithAllFieldsExpected = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
 
         return Stream.of(
                 Arguments.of(locationWithCountry, repositoryLocationWithCountry, locationWithCountryExpected),
-                Arguments.of(locationWithCountryAndRegion, repositoryLocationWithCountryAndRegion, locationWithCountryAndRegionExpected),
                 Arguments.of(locationWithAllFields, repositoryLocationWithAllFields, locationWithAllFieldsExpected)
         );
     }

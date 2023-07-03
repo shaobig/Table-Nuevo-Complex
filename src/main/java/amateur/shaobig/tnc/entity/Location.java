@@ -31,21 +31,6 @@ public class Location implements Serializable {
     private String region;
     private String locality;
 
-    public Location(String country) {
-        this.country = country;
-    }
-
-    public Location(Long id, String country) {
-        this.id = id;
-        this.country = country;
-    }
-
-    public Location(String country, String region, String locality) {
-        this.country = country;
-        this.region = region;
-        this.locality = locality;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

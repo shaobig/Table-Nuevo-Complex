@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.transformer.album;
+package amateur.shaobig.tnc.transformer.album.metadata;
 
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.entity.AlbumMetadata;

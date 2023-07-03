@@ -2,10 +2,12 @@ package amateur.shaobig.tnc.transformer.album;
 
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.CreateAlbumDto;
-import amateur.shaobig.tnc.dto.album.GenreDto;
+import amateur.shaobig.tnc.dto.genre.GenreDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.transformer.Transformer;
+import amateur.shaobig.tnc.transformer.album.genre.GenreDtoTransformer;
+import amateur.shaobig.tnc.transformer.album.metadata.AlbumMetadataDtoTransformer;
 import amateur.shaobig.tnc.transformer.song.SongDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;

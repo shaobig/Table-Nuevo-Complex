@@ -1,8 +1,10 @@
 package amateur.shaobig.tnc.service.artist;
 
 import amateur.shaobig.tnc.entity.Album;
+import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.Location;
+import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.entity.enums.ArtistStatus;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.artist.sorting.AlbumTypeYearListArranger;
@@ -35,7 +37,7 @@ class ArtistProxyServiceTest {
         this.locationService = Mockito.mock(LocationService.class);
         this.albumTypeYearListArranger = Mockito.mock(AlbumTypeYearListArranger.class);
 
-        this.artistProxyService = new ArtistProxyService(artistService, locationService, albumTypeYearListArranger);
+        this.artistProxyService = new ArtistProxyService(artistService, albumTypeYearListArranger);
     }
 
     @Test
@@ -48,33 +50,28 @@ class ArtistProxyServiceTest {
     }
 
     @Test
-    void readListArrangeInputArgument() {
-        Optional<Artist> sourceArtist = Optional.of(new Artist());
-        List<Album> sourceAlbums = List.of(new Album("ALBUM_NAME", 0), new Album("ALBUM_NAME_2", 0));
-        sourceArtist.get().setAlbums(sourceAlbums);
+    void readCheckArrangedAlbums() {
+        List<Album> sourceAlbums = List.of(new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(1L, 0, "ALBUM_NAME_2", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        Optional<Artist> sourceArtist = Optional.of(new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), sourceAlbums));
         Long sourceId = 1L;
         Mockito.when(artistService.read(Mockito.anyLong())).thenReturn(sourceArtist);
 
         artistProxyService.read(sourceId);
 
-        List<Album> expectedAlbums = List.of(new Album("ALBUM_NAME", 0), new Album("ALBUM_NAME_2", 0));
+        List<Album> expectedAlbums = List.of(new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(1L, 0, "ALBUM_NAME_2", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
         Mockito.verify(albumTypeYearListArranger).arrange(expectedAlbums);
     }
 
     static Stream<Arguments> readInput() {
-        Optional<Artist> artistWithEmptyNames = Optional.of(new Artist("", new Location("")));
-        Artist artistWithEmptyNamesExpected = new Artist("", new Location(""));
+        Optional<Artist> artistWithEmptyNames = Optional.of(new Artist(1L, "", ArtistStatus.ACTIVE, new Location(1L, "", "", ""), List.of()));
+        Artist artistWithEmptyNamesExpected = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(1L, "", "", ""), List.of());
 
-        Optional<Artist> artistWithNameAndLocation = Optional.of(new Artist("ARTIST_NAME", new Location("LOCATION_NAME")));
-        Artist artistWithNameAndLocationExpected = new Artist("ARTIST_NAME", new Location("LOCATION_NAME"));
-
-        Optional<Artist> artistWithNameAndLocationAndStatus = Optional.of(new Artist("ARTIST_NAME", new Location("LOCATION_NAME"), ArtistStatus.ACTIVE));
-        Artist artistWithNameAndLocationAndStatusExpected = new Artist("ARTIST_NAME", new Location("LOCATION_NAME"), ArtistStatus.ACTIVE);
+        Optional<Artist> artistWithNameAndLocation = Optional.of(new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME"), List.of()));
+        Artist artistWithNameAndLocationExpected = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME"), List.of());
 
         return Stream.of(
                 Arguments.of(artistWithEmptyNames, artistWithEmptyNamesExpected),
-                Arguments.of(artistWithNameAndLocation, artistWithNameAndLocationExpected),
-                Arguments.of(artistWithNameAndLocationAndStatus, artistWithNameAndLocationAndStatusExpected)
+                Arguments.of(artistWithNameAndLocation, artistWithNameAndLocationExpected)
         );
     }
 
@@ -93,8 +90,8 @@ class ArtistProxyServiceTest {
         List<Artist> sourceEmptyList = List.of();
         List<Artist> expectedEmptyList = List.of();
 
-        List<Artist> sourceFilledList = List.of(new Artist("ARTIST_NAME", new Location("COUNTRY_NAME")));
-        List<Artist> expectedFilledList = List.of(new Artist("ARTIST_NAME", new Location("COUNTRY_NAME")));
+        List<Artist> sourceFilledList = List.of(new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of()));
+        List<Artist> expectedFilledList = List.of(new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of()));
 
         return Stream.of(
                 Arguments.of(sourceEmptyList, expectedEmptyList),
@@ -114,82 +111,66 @@ class ArtistProxyServiceTest {
 
     @Test
     void mergeCheckArtist() {
-        Artist sourceArtist = new Artist("ARTIST_NAME", new Location("LOCATION_NAME"));
-        Long sourceId = 1L;
-        sourceArtist.setId(sourceId);
+        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
 
         artistProxyService.merge(sourceArtist);
 
-        Artist expectedArtist = new Artist("ARTIST_NAME", new Location("LOCATION_NAME"));
+        Artist expectedArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
         Mockito.verify(artistService).merge(expectedArtist);
     }
 
     @Test
     void mergeArtistNotFound() {
         Artist sourceArtist = new Artist();
-        Long sourceId = 1L;
-        sourceArtist.setId(sourceId);
-        Mockito.when(artistService.merge(Mockito.any())).thenThrow(jakarta.persistence.EntityNotFoundException.class);
+        Mockito.when(artistService.merge(Mockito.any())).thenThrow(EntityNotFoundException.class);
 
-        assertThrows(jakarta.persistence.EntityNotFoundException.class, () -> artistProxyService.merge(sourceArtist));
+        assertThrows(EntityNotFoundException.class, () -> artistProxyService.merge(sourceArtist));
     }
 
     @Test
     void merge() {
-        Artist sourceRepositoryArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"));
-        Artist sourceArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"));
+        Artist sourceRepositoryArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
+        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
         Mockito.when(artistService.merge(Mockito.any())).thenReturn(sourceRepositoryArtist);
 
         Artist actual = artistProxyService.merge(sourceArtist);
 
-        Artist expected = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"));
+        Artist expected = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
         assertEquals(expected, actual);
     }
 
     @Test
-    void isFoundCheckArtistServiceInputArgument() {
-        Artist sourceArtist = new Artist("ARTIST_NAME", new Location(""));
+    void isFoundCheckArtist() {
+        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
 
         artistProxyService.isFound(sourceArtist);
 
-        Artist expectedArtist = new Artist("ARTIST_NAME", new Location(""));
+        Artist expectedArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
         Mockito.verify(artistService).isFound(expectedArtist);
     }
 
     @Test
-    void isFoundLocationWasNotChecked() {
-        Artist sourceArtist = new Artist("", new Location("COUNTRY_NAME"));
-        Mockito.when(artistService.isFound(Mockito.any())).thenReturn(false);
+    void isFoundArtistFoundNoInteractionsWithLocationService() {
+        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());;
+        Mockito.when(artistService.isFound(Mockito.any())).thenReturn(true);
 
         artistProxyService.isFound(sourceArtist);
 
         Mockito.verifyNoInteractions(locationService);
     }
 
-    @Test
-    void isFoundCheckLocationServiceInputArgument() {
-        Artist sourceArtist = new Artist("", new Location("COUNTRY_NAME"));
-        Mockito.when(artistService.isFound(Mockito.any())).thenReturn(true);
-
-        artistProxyService.isFound(sourceArtist);
-
-        Location expectedLocation = new Location("COUNTRY_NAME");
-        Mockito.verify(locationService).isFound(expectedLocation);
-    }
-
     static Stream<Arguments> isFoundInputData() {
         return Stream.of(
-                Arguments.of(true, true, true),
-                Arguments.of(true, false, false),
+                Arguments.of(false, false, false),
                 Arguments.of(false, true, false),
-                Arguments.of(false, false, false)
+                Arguments.of(true, true, true)
         );
     }
 
     @ParameterizedTest
     @MethodSource(value = "isFoundInputData")
     void isFound(boolean isArtistFound, boolean isLocationFound, boolean expected) {
-        Artist sourceArtist = new Artist("ARTIST_NAME", new Location("COUNTRY_NAME"));
+        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());;
         Mockito.when(artistService.isFound(Mockito.any())).thenReturn(isArtistFound);
         Mockito.when(locationService.isFound(Mockito.any())).thenReturn(isLocationFound);
 

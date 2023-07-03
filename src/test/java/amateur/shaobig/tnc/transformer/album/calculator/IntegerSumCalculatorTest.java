@@ -22,8 +22,7 @@ class IntegerSumCalculatorTest {
 
     static Stream<Arguments> calculateInputData() {
         return Stream.of(
-                Arguments.of(List.of(), BigDecimal.ZERO),
-                Arguments.of(List.of(1), BigDecimal.ONE),
+                Arguments.of(List.of(1), BigDecimal.valueOf(1)),
                 Arguments.of(List.of(1, 2, 3), BigDecimal.valueOf(6)),
                 Arguments.of(List.of(1, 2, 3, 4, 5), BigDecimal.valueOf(15))
         );

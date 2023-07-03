@@ -12,7 +12,7 @@ import java.util.List;
 public interface AlbumPoolRepository extends JpaRepository<AlbumPool, Long> {
 
     @Query("SELECT new amateur.shaobig.tnc.dto.album.ReadAllAlbumPoolDto(" +
-            "pool.album.id, pool.album.artist.name, pool.album.artist.id, pool.album.artist.location.country, pool.album.name, pool.album.type, pool.album.year, pool.album.metadata.time) " +
+            "pool.album.id, pool.album.artist.id, pool.album.artist.name, pool.album.artist.location.country, pool.album.name, pool.album.type, pool.album.year, pool.album.metadata.time) " +
             "FROM AlbumPool pool")
     List<ReadAllAlbumPoolDto> readAll();
 
