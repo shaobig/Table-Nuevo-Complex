@@ -7,6 +7,7 @@ import amateur.shaobig.tnc.entity.AlbumPool;
 import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
+import amateur.shaobig.tnc.service.album.AlbumProxyService;
 import amateur.shaobig.tnc.service.artist.ArtistProxyService;
 import amateur.shaobig.tnc.service.location.LocationService;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,18 +29,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class AlbumPoolProxyServiceTest {
 
     private AlbumPoolService albumPoolService;
-    private LocationService locationService;
-    private ArtistProxyService artistProxyService;
+    private AlbumProxyService albumProxyService;
 
     private AlbumPoolProxyService albumPoolProxyService;
 
     @BeforeEach
     void init() {
+        this.albumProxyService = Mockito.mock(AlbumProxyService.class);
         this.albumPoolService = Mockito.mock(AlbumPoolService.class);
-        this.locationService = Mockito.mock(LocationService.class);
-        this.artistProxyService = Mockito.mock(ArtistProxyService.class);
 
-        this.albumPoolProxyService = new AlbumPoolProxyService(albumPoolService, locationService, artistProxyService);
+        this.albumPoolProxyService = new AlbumPoolProxyService(albumPoolService, albumProxyService);
     }
 
     static Stream<Arguments> readAllInputData() {
