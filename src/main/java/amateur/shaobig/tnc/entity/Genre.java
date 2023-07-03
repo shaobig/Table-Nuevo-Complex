@@ -29,12 +29,12 @@ public class Genre implements Serializable {
     private Long id;
     @Column(nullable = false, length = 32)
     private String name;
-    private boolean isMinor;
+    private boolean isMajor;
     @ManyToOne(fetch = FetchType.LAZY)
     private Album album;
 
-    public void setIsMinor(boolean minor) {
-        isMinor = minor;
+    public void setIsMajor(boolean isMajor) {
+        this.isMajor = isMajor;
     }
 
     @Override
@@ -42,12 +42,12 @@ public class Genre implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return isMinor == genre.isMinor && name.equals(genre.name);
+        return isMajor == genre.isMajor && name.equals(genre.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, isMinor);
+        return Objects.hash(name, isMajor);
     }
 
 }
