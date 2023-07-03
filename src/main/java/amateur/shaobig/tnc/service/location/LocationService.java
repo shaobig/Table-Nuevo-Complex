@@ -2,6 +2,7 @@ package amateur.shaobig.tnc.service.location;
 
 import amateur.shaobig.tnc.entity.Location;
 import amateur.shaobig.tnc.repository.LocationRepository;
+import amateur.shaobig.tnc.service.CreateService;
 import amateur.shaobig.tnc.service.FindService;
 import amateur.shaobig.tnc.service.MergeService;
 import lombok.AccessLevel;
@@ -12,9 +13,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class LocationService implements MergeService<Location>, FindService<Location> {
+public class LocationService implements CreateService<Location, Location>, MergeService<Location>, FindService<Location> {
 
     private final LocationRepository locationRepository;
+
+    @Override
+    public Location create(Location location) {
+        return getLocationRepository().save(location);
+    }
 
     @Override
     public Location merge(Location location) {

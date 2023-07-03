@@ -5,9 +5,7 @@ import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.AlbumPool;
 import amateur.shaobig.tnc.entity.Artist;
-import amateur.shaobig.tnc.entity.Location;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
-import amateur.shaobig.tnc.entity.enums.ArtistStatus;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.artist.ArtistProxyService;
 import amateur.shaobig.tnc.service.location.LocationService;
@@ -42,71 +40,6 @@ class AlbumPoolProxyServiceTest {
         this.artistProxyService = Mockito.mock(ArtistProxyService.class);
 
         this.albumPoolProxyService = new AlbumPoolProxyService(albumPoolService, locationService, artistProxyService);
-    }
-
-    @Test
-    void createArtistIsFound() {
-        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "", "", ""), List.of());
-        AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), sourceArtist, List.of(), List.of()));
-
-        albumPoolProxyService.create(sourceAlbumPool);
-
-        Artist expectedArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "", "", ""), List.of());
-        Mockito.verify(artistProxyService).isFound(expectedArtist);
-    }
-
-    @Test
-    void createLocationIsFound() {
-        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME"), List.of());
-        AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), sourceArtist, List.of(), List.of()));
-        Mockito.when(artistProxyService.isFound(Mockito.any())).thenReturn(false);
-
-        albumPoolProxyService.create(sourceAlbumPool);
-
-        Location expectedLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-        Mockito.verify(locationService).isFound(expectedLocation);
-    }
-
-    @Test
-    void createMergeArtist() {
-        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-        AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), sourceArtist, List.of(), List.of()));
-        Mockito.when(artistProxyService.isFound(Mockito.any())).thenReturn(true);
-
-        albumPoolProxyService.create(sourceAlbumPool);
-
-        Artist expectedArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-        Mockito.verify(artistProxyService).merge(expectedArtist);
-    }
-
-    static Stream<Arguments> createInputData() {
-        AlbumPool albumPoolArtistNotFoundCreated = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
-        AlbumPool albumPoolArtistNotFoundExpected = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
-
-        AlbumPool albumPoolArtistNotFoundAndLocationFoundCreated = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
-        AlbumPool albumPoolArtistNotFoundAndLocationFoundExpected = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
-
-        AlbumPool albumPoolArtistFoundCreated = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
-        AlbumPool albumPoolArtistFoundExpected = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
-
-        return Stream.of(
-                Arguments.of(false, false, albumPoolArtistNotFoundCreated, albumPoolArtistNotFoundExpected),
-                Arguments.of(false, true, albumPoolArtistNotFoundAndLocationFoundCreated, albumPoolArtistNotFoundAndLocationFoundExpected),
-                Arguments.of(true, true, albumPoolArtistFoundCreated, albumPoolArtistFoundExpected)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource(value = "createInputData")
-    void create(boolean isArtistFound, boolean isLocationFound, AlbumPool sourceCreatedAlbumPool, AlbumPool expected) {
-        AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(1L, "", ArtistStatus.ACTIVE, new Location(1L, "", "", ""), List.of()), List.of(), List.of()));
-        Mockito.when(artistProxyService.isFound(Mockito.any())).thenReturn(isArtistFound);
-        Mockito.when(locationService.isFound(Mockito.any())).thenReturn(isLocationFound);
-        Mockito.when(albumPoolService.create(Mockito.any())).thenReturn(sourceCreatedAlbumPool);
-
-        AlbumPool actual = albumPoolProxyService.create(sourceAlbumPool);
-
-        assertEquals(expected, actual);
     }
 
     static Stream<Arguments> readAllInputData() {

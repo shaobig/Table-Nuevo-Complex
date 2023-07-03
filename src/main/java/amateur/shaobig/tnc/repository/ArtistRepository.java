@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ArtistRepository extends JpaRepository<Artist, Long> {
 
-    boolean existsByNameAndStatus(String name, ArtistStatus status);
-
     boolean existsByNameAndStatusAndLocation(String name, ArtistStatus status, Location location);
+
+    Artist findByNameAndStatusAndLocation(String name, ArtistStatus status, Location location);
 
 }

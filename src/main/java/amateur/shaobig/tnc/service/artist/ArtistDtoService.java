@@ -2,8 +2,6 @@ package amateur.shaobig.tnc.service.artist;
 
 import amateur.shaobig.tnc.dto.artist.ReadAllArtistDto;
 import amateur.shaobig.tnc.dto.artist.ReadArtistDto;
-import amateur.shaobig.tnc.entity.Artist;
-import amateur.shaobig.tnc.service.FindService;
 import amateur.shaobig.tnc.service.ReadAllService;
 import amateur.shaobig.tnc.service.ReadService;
 import amateur.shaobig.tnc.transformer.artist.ReadAllArtistDtoTransformer;
@@ -20,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class ArtistDtoService implements ReadService<ReadArtistDto>, ReadAllService<ReadAllArtistDto>, FindService<Artist> {
+public class ArtistDtoService implements ReadService<ReadArtistDto>, ReadAllService<ReadAllArtistDto> {
 
     private final ReadArtistDtoTransformer readArtistDtoTransformer;
     private final ReadAllArtistDtoTransformer readAllArtistDtoTransformer;
@@ -37,11 +35,6 @@ public class ArtistDtoService implements ReadService<ReadArtistDto>, ReadAllServ
                 .map(getReadAllArtistDtoTransformer()::transform)
                 .sorted(Comparator.comparing(ReadAllArtistDto::name))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean isFound(Artist artist) {
-        return getArtistProxyService().isFound(artist);
     }
 
 }

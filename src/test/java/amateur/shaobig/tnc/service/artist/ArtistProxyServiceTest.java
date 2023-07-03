@@ -8,7 +8,7 @@ import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.entity.enums.ArtistStatus;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.artist.sorting.AlbumTypeYearListArranger;
-import amateur.shaobig.tnc.service.location.LocationService;
+import amateur.shaobig.tnc.service.location.LocationProxyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class ArtistProxyServiceTest {
 
     private ArtistService artistService;
-    private LocationService locationService;
+    private LocationProxyService locationProxyService;
     private AlbumTypeYearListArranger albumTypeYearListArranger;
 
     private ArtistProxyService artistProxyService;
@@ -34,10 +34,10 @@ class ArtistProxyServiceTest {
     @BeforeEach
     void init() {
         this.artistService = Mockito.mock(ArtistService.class);
-        this.locationService = Mockito.mock(LocationService.class);
+        this.locationProxyService = Mockito.mock(LocationProxyService.class);
         this.albumTypeYearListArranger = Mockito.mock(AlbumTypeYearListArranger.class);
 
-        this.artistProxyService = new ArtistProxyService(artistService, albumTypeYearListArranger);
+        this.artistProxyService = new ArtistProxyService(artistService, locationProxyService, albumTypeYearListArranger);
     }
 
     @Test
@@ -105,76 +105,6 @@ class ArtistProxyServiceTest {
         Mockito.when(artistService.readAll()).thenReturn(sourceArtists);
 
         List<Artist> actual = artistProxyService.readAll();
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void mergeCheckArtist() {
-        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-
-        artistProxyService.merge(sourceArtist);
-
-        Artist expectedArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-        Mockito.verify(artistService).merge(expectedArtist);
-    }
-
-    @Test
-    void mergeArtistNotFound() {
-        Artist sourceArtist = new Artist();
-        Mockito.when(artistService.merge(Mockito.any())).thenThrow(EntityNotFoundException.class);
-
-        assertThrows(EntityNotFoundException.class, () -> artistProxyService.merge(sourceArtist));
-    }
-
-    @Test
-    void merge() {
-        Artist sourceRepositoryArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-        Mockito.when(artistService.merge(Mockito.any())).thenReturn(sourceRepositoryArtist);
-
-        Artist actual = artistProxyService.merge(sourceArtist);
-
-        Artist expected = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void isFoundCheckArtist() {
-        Artist sourceArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-
-        artistProxyService.isFound(sourceArtist);
-
-        Artist expectedArtist = new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of());
-        Mockito.verify(artistService).isFound(expectedArtist);
-    }
-
-    @Test
-    void isFoundArtistFoundNoInteractionsWithLocationService() {
-        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());;
-        Mockito.when(artistService.isFound(Mockito.any())).thenReturn(true);
-
-        artistProxyService.isFound(sourceArtist);
-
-        Mockito.verifyNoInteractions(locationService);
-    }
-
-    static Stream<Arguments> isFoundInputData() {
-        return Stream.of(
-                Arguments.of(false, false, false),
-                Arguments.of(false, true, false),
-                Arguments.of(true, true, true)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource(value = "isFoundInputData")
-    void isFound(boolean isArtistFound, boolean isLocationFound, boolean expected) {
-        Artist sourceArtist = new Artist(1L, "", ArtistStatus.ACTIVE, new Location(), List.of());;
-        Mockito.when(artistService.isFound(Mockito.any())).thenReturn(isArtistFound);
-        Mockito.when(locationService.isFound(Mockito.any())).thenReturn(isLocationFound);
-
-        boolean actual = artistProxyService.isFound(sourceArtist);
 
         assertEquals(expected, actual);
     }

@@ -2,7 +2,6 @@ package amateur.shaobig.tnc.service.pool;
 
 import amateur.shaobig.tnc.dto.album.ReadAllAlbumPoolDto;
 import amateur.shaobig.tnc.entity.AlbumPool;
-import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.CreateService;
 import amateur.shaobig.tnc.service.DeleteService;
@@ -27,13 +26,7 @@ public class AlbumPoolProxyService implements CreateService<AlbumPool, AlbumPool
 
     @Override
     public AlbumPool create(AlbumPool albumPool) {
-        Artist artist = albumPool.getAlbum().getArtist();
-        if (getArtistProxyService().isFound(artist)) {
-            albumPool.getAlbum().setArtist(getArtistProxyService().merge(artist));
-        }
-        else if (getLocationService().isFound(artist.getLocation())) {
-            artist.setLocation(getLocationService().merge(artist.getLocation()));
-        }
+        albumPool.getAlbum().setArtist(getArtistProxyService().create(albumPool.getAlbum().getArtist()));
         return getAlbumPoolService().create(albumPool);
     }
 

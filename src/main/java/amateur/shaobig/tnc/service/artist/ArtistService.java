@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class ArtistService implements CreateService<Artist, Artist>, ReadService<Optional<Artist>>, ReadAllService<Artist>, MergeService<Artist>, FindService<Artist> {
+public class ArtistService implements CreateService<Artist, Artist>, ReadService<Optional<Artist>>, ReadAllService<Artist>, FindService<Artist>, MergeService<Artist> {
 
     private final ArtistRepository artistRepository;
 
@@ -38,13 +38,13 @@ public class ArtistService implements CreateService<Artist, Artist>, ReadService
     }
 
     @Override
-    public Artist merge(Artist artist) {
-        return getArtistRepository().getReferenceById(artist.getId());
+    public boolean isFound(Artist artist) {
+        return getArtistRepository().existsByNameAndStatusAndLocation(artist.getName(), artist.getStatus(), artist.getLocation());
     }
 
     @Override
-    public boolean isFound(Artist artist) {
-        return getArtistRepository().existsByNameAndStatusAndLocation(artist.getName(), artist.getStatus(), artist.getLocation());
+    public Artist merge(Artist artist) {
+        return getArtistRepository().findByNameAndStatusAndLocation(artist.getName(), artist.getStatus(), artist.getLocation());
     }
 
 }
