@@ -6,14 +6,10 @@ import amateur.shaobig.tnc.entity.enums.ArtistStatus;
 import amateur.shaobig.tnc.repository.ArtistRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -72,29 +68,6 @@ class ArtistServiceTest {
         Optional<Artist> actual = artistService.read(sourceId);
 
         assertTrue(actual.isPresent());
-    }
-
-    static Stream<Arguments> readAllInput() {
-        List<Artist> sourceEmptyList = List.of();
-        List<Artist> expectedEmptyList = List.of();
-
-        List<Artist> sourceFilledList = List.of(new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of()));
-        List<Artist> expectedFilledList = List.of(new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(1L, "COUNTRY_NAME", "", ""), List.of()));
-
-        return Stream.of(
-                Arguments.of(sourceEmptyList, expectedEmptyList),
-                Arguments.of(sourceFilledList, expectedFilledList)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource(value = "readAllInput")
-    void readAll(List<Artist> sourceArtists, List<Artist> expected) {
-        Mockito.when(artistRepository.findAll()).thenReturn(sourceArtists);
-
-        List<Artist> actual = artistService.readAll();
-
-        assertEquals(expected, actual);
     }
 
 }

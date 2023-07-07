@@ -8,8 +8,6 @@ import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.album.AlbumProxyService;
-import amateur.shaobig.tnc.service.artist.ArtistProxyService;
-import amateur.shaobig.tnc.service.location.LocationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

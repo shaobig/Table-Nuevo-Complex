@@ -1,6 +1,5 @@
 package amateur.shaobig.tnc.controller;
 
-import amateur.shaobig.tnc.dto.artist.ReadAllArtistDto;
 import amateur.shaobig.tnc.dto.artist.ReadArtistDto;
 import amateur.shaobig.tnc.dto.artist.location.LocationDto;
 import amateur.shaobig.tnc.entity.enums.ArtistStatus;
@@ -48,18 +47,6 @@ class ArtistRestControllerTest {
 
         ReadArtistDto expectedResponseBody = new ReadArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "", "", ""), List.of());
         ResponseEntity<ReadArtistDto> expected = ResponseEntity.status(HttpStatus.OK).body(expectedResponseBody);
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void readAll() {
-        List<ReadAllArtistDto> sourceResponseBody = List.of(new ReadAllArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "", "", "")));
-        Mockito.when(artistDtoService.readAll()).thenReturn(sourceResponseBody);
-
-        ResponseEntity<List<ReadAllArtistDto>> actual = artistRestController.readAll();
-
-        List<ReadAllArtistDto> expectedResponseBody = List.of(new ReadAllArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "", "", "")));
-        ResponseEntity<List<ReadAllArtistDto>> expected = ResponseEntity.status(HttpStatus.OK).body(expectedResponseBody);
         assertEquals(expected, actual);
     }
 
