@@ -2,6 +2,7 @@ package amateur.shaobig.tnc.service.album;
 
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
+import amateur.shaobig.tnc.service.album.sorting.AlbumSongNumberListArranger;
 import amateur.shaobig.tnc.service.artist.ArtistProxyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ class AlbumProxyServiceTest {
 
     private AlbumService albumService;
     private ArtistProxyService artistProxyService;
+    private AlbumSongNumberListArranger albumSongNumberListArranger;
 
     private AlbumProxyService albumProxyService;
 
@@ -22,8 +24,9 @@ class AlbumProxyServiceTest {
     void init() {
         this.albumService = Mockito.mock(AlbumService.class);
         this.artistProxyService = Mockito.mock(ArtistProxyService.class);
+        this.albumSongNumberListArranger = Mockito.mock(AlbumSongNumberListArranger.class);
 
-        this.albumProxyService = new AlbumProxyService(albumService, artistProxyService);
+        this.albumProxyService = new AlbumProxyService(albumService, artistProxyService, albumSongNumberListArranger);
     }
 
     @Test

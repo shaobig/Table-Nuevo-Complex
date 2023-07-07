@@ -1,19 +1,18 @@
 package amateur.shaobig.tnc.service.album;
 
 import amateur.shaobig.tnc.entity.Album;
-import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
 import amateur.shaobig.tnc.service.CreateService;
 import amateur.shaobig.tnc.service.ReadAllService;
 import amateur.shaobig.tnc.service.ReadService;
 import amateur.shaobig.tnc.service.UpdateService;
+import amateur.shaobig.tnc.service.album.sorting.AlbumSongNumberListArranger;
 import amateur.shaobig.tnc.service.artist.ArtistProxyService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -23,6 +22,7 @@ public class AlbumProxyService implements CreateService<Album, Album>, ReadServi
 
     private final AlbumService albumService;
     private final ArtistProxyService artistProxyService;
+    private final AlbumSongNumberListArranger albumSongNumberListArranger;
 
     @Override
     public Album create(Album album) {
@@ -32,8 +32,10 @@ public class AlbumProxyService implements CreateService<Album, Album>, ReadServi
 
     @Override
     public Album read(Long id) {
-        return getAlbumService().read(id)
+        Album album = getAlbumService().read(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Can't find the album with the id = %d", id)));
+        album.setSongs(getAlbumSongNumberListArranger().arrange(album.getSongs()));
+        return album;
     }
 
     @Override

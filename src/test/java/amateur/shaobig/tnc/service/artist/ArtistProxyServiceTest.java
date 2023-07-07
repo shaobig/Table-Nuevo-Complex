@@ -4,6 +4,7 @@ import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.Location;
 import amateur.shaobig.tnc.entity.enums.ArtistStatus;
 import amateur.shaobig.tnc.exception.types.EntityNotFoundException;
+import amateur.shaobig.tnc.service.artist.sorting.ArtistAlbumTypeOrderAndYearListArranger;
 import amateur.shaobig.tnc.service.location.LocationProxyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ class ArtistProxyServiceTest {
 
     private ArtistService artistService;
     private LocationProxyService locationProxyService;
+    private ArtistAlbumTypeOrderAndYearListArranger artistAlbumTypeOrderAndYearListArranger;
 
     private ArtistProxyService artistProxyService;
 
@@ -30,8 +32,9 @@ class ArtistProxyServiceTest {
     void init() {
         this.artistService = Mockito.mock(ArtistService.class);
         this.locationProxyService = Mockito.mock(LocationProxyService.class);
+        this.artistAlbumTypeOrderAndYearListArranger = Mockito.mock(ArtistAlbumTypeOrderAndYearListArranger.class);
 
-        this.artistProxyService = new ArtistProxyService(artistService, locationProxyService);
+        this.artistProxyService = new ArtistProxyService(artistService, locationProxyService, artistAlbumTypeOrderAndYearListArranger);
     }
 
     @Test
