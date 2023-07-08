@@ -33,7 +33,7 @@ public class AlbumService implements CreateService<Album, Album>, ReadService<Op
 
     @Override
     public List<Album> readAll() {
-        return getAlbumRepository().readAllWithSongs();
+        return getAlbumRepository().readAll();
     }
 
     @Override

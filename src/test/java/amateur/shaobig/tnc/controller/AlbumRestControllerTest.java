@@ -3,7 +3,7 @@ package amateur.shaobig.tnc.controller;
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.AlbumStatisticsDto;
 import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
-import amateur.shaobig.tnc.dto.album.ReadAllAlbumWithSongsDto;
+import amateur.shaobig.tnc.dto.album.ReadAllAlbumDto;
 import amateur.shaobig.tnc.dto.album.UpdateAlbumDto;
 import amateur.shaobig.tnc.dto.artist.ArtistDto;
 import amateur.shaobig.tnc.dto.artist.location.LocationDto;
@@ -63,13 +63,13 @@ class AlbumRestControllerTest {
 
     @Test
     void readAll() {
-        List<ReadAllAlbumWithSongsDto> sourceResponseBody = List.of(new ReadAllAlbumWithSongsDto(1L, "", "", "ALBUM_NAME",  AlbumType.LP, 0, new AlbumStatisticsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO)));
+        List<ReadAllAlbumDto> sourceResponseBody = List.of(new ReadAllAlbumDto(1L,  "ALBUM_NAME", AlbumType.LP, 0, 1L, "ARTIST_NAME", "COUNTRY_NAME", new AlbumStatisticsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO)));
         Mockito.when(albumDtoService.readAll()).thenReturn(sourceResponseBody);
 
-        ResponseEntity<List<ReadAllAlbumWithSongsDto>> actual = albumRestController.readAll();
+        ResponseEntity<List<ReadAllAlbumDto>> actual = albumRestController.readAll();
 
-        List<ReadAllAlbumWithSongsDto> expectedResponseBody = List.of(new ReadAllAlbumWithSongsDto(1L, "", "", "ALBUM_NAME",  AlbumType.LP, 0, new AlbumStatisticsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO)));
-        ResponseEntity<List<ReadAllAlbumWithSongsDto>> expected = ResponseEntity.status(HttpStatus.OK).body(expectedResponseBody);
+        List<ReadAllAlbumDto> expectedResponseBody = List.of(new ReadAllAlbumDto(1L,  "ALBUM_NAME", AlbumType.LP, 0, 1L, "ARTIST_NAME", "COUNTRY_NAME", new AlbumStatisticsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO)));
+        ResponseEntity<List<ReadAllAlbumDto>> expected = ResponseEntity.status(HttpStatus.OK).body(expectedResponseBody);
         assertEquals(expected, actual);
     }
 
