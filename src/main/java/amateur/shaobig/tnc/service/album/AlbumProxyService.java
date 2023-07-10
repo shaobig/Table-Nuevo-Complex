@@ -7,6 +7,7 @@ import amateur.shaobig.tnc.service.CreateService;
 import amateur.shaobig.tnc.service.ReadAllService;
 import amateur.shaobig.tnc.service.ReadService;
 import amateur.shaobig.tnc.service.UpdateService;
+import amateur.shaobig.tnc.service.album.genre.AlbumGenreListService;
 import amateur.shaobig.tnc.service.artist.ArtistProxyService;
 import amateur.shaobig.tnc.sorting.ComparatorListArranger;
 import lombok.AccessLevel;
@@ -23,11 +24,13 @@ public class AlbumProxyService implements CreateService<Album, Album>, ReadServi
 
     private final AlbumService albumService;
     private final ArtistProxyService artistProxyService;
+    private final AlbumGenreListService albumGenreListService;
     private final ComparatorListArranger<Song> songComparatorListArranger;
 
     @Override
     public Album create(Album album) {
         album.setArtist(getArtistProxyService().create(album.getArtist()));
+        album.setGenres(getAlbumGenreListService().create(album.getGenres()));
         return getAlbumService().create(album);
     }
 
