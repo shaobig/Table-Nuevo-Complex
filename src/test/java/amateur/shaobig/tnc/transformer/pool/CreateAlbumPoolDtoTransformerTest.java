@@ -2,7 +2,7 @@ package amateur.shaobig.tnc.transformer.pool;
 
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.CreateAlbumDto;
-import amateur.shaobig.tnc.dto.genre.GenreDto;
+import amateur.shaobig.tnc.dto.genre.AlbumGenreDto;
 import amateur.shaobig.tnc.dto.pool.CreateAlbumPoolDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.dto.song.SongMetadataDto;
@@ -50,13 +50,13 @@ class CreateAlbumPoolDtoTransformerTest {
 
     @Test
     void transform() {
-        CreateAlbumDto sourceCreateAlbumDto = new CreateAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new GenreDto(1L, "GENRE_NAME", false)), List.of(new SongDto(1L, 0, "SONG_NAME", new SongMetadataDto(SongType.DEFAULT, 1))));
+        CreateAlbumDto sourceCreateAlbumDto = new CreateAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new AlbumGenreDto(1L, "GENRE_NAME", false)), List.of(new SongDto(1L, 0, "SONG_NAME", new SongMetadataDto(SongType.DEFAULT, 1))));
         AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album());
         Mockito.when(createAlbumDtoTransformer.transform(Mockito.any())).thenReturn(sourceCreateAlbumDto);
 
         CreateAlbumPoolDto actual = createAlbumPoolDtoTransformer.transform(sourceAlbumPool);
 
-        CreateAlbumPoolDto expected = new CreateAlbumPoolDto(new CreateAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new GenreDto(1L, "GENRE_NAME", false)), List.of(new SongDto(1L, 0, "SONG_NAME", new SongMetadataDto(SongType.DEFAULT, 1)))));
+        CreateAlbumPoolDto expected = new CreateAlbumPoolDto(new CreateAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new AlbumGenreDto(1L, "GENRE_NAME", false)), List.of(new SongDto(1L, 0, "SONG_NAME", new SongMetadataDto(SongType.DEFAULT, 1)))));
         assertEquals(expected, actual);
     }
 
