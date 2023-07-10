@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "genres")
+@Table(name = "genres", uniqueConstraints = @UniqueConstraint(name = "unique_genre_name_constraint", columnNames = "name"))
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
