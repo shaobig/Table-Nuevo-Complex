@@ -27,9 +27,9 @@ public class AlbumGenre implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private boolean isMajor;
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Genre genre;
-    private boolean isMajor;
 
     public void setIsMajor(boolean isMajor) {
         this.isMajor = isMajor;

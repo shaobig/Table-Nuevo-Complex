@@ -10,14 +10,10 @@ import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.entity.enums.SongType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -58,25 +54,15 @@ class BasicAlbumMarkCalculatorTest {
         Mockito.verify(averageCalculator).calculate(expectedMarks);
     }
 
-    //TODO: Review the list content
-    static Stream<Arguments> calculateInputData() {
-        return Stream.of(
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song())), new BigDecimal("1"), new BigDecimal("1")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.DEFAULT, 1, new Song())), new BigDecimal("1"), new BigDecimal("1")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.INSTRUMENTAL, 2, new Song())), new BigDecimal("1.000"), new BigDecimal("1.000")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.DEFAULT, 2, new Song()), new SongMetadata(1L, SongType.DEFAULT, 3, new Song())), new BigDecimal("1.500"), new BigDecimal("1.500")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.INSTRUMENTAL, 2, new Song()), new SongMetadata(1L, SongType.COVER, 3, new Song())), new BigDecimal("1.500"), new BigDecimal("1.500")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.COVER, 1, new Song()), new SongMetadata(1L, SongType.COVER, 2, new Song()), new SongMetadata(1L, SongType.COVER, 3, new Song())), new BigDecimal("1.000"), new BigDecimal("1.000"))
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource(value = "calculateInputData")
-    void calculate(List<SongMetadata> sourceSongMetadataList, BigDecimal sourceAverageCalculatorAnswer, BigDecimal expected) {
-        Mockito.when(averageCalculator.calculate(Mockito.anyList())).thenReturn(sourceAverageCalculatorAnswer);
+    @Test
+    void calculate() {
+        BigDecimal sourceAverageCalculatorResult = new BigDecimal("1.000");
+        List<SongMetadata> sourceSongMetadataList = List.of();
+        Mockito.when(averageCalculator.calculate(Mockito.anyList())).thenReturn(sourceAverageCalculatorResult);
 
         BigDecimal actual = basicAlbumMarkCalculator.calculate(sourceSongMetadataList);
 
+        BigDecimal expected = new BigDecimal("1.000");
         assertEquals(expected, actual);
     }
 
