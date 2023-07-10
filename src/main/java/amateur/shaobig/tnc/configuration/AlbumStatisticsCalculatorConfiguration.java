@@ -1,9 +1,9 @@
 package amateur.shaobig.tnc.configuration;
 
-import amateur.shaobig.tnc.transformer.album.calculator.AverageCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.BigDecimalSumCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.IntegerSumCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.ListSizeCalculator;
+import amateur.shaobig.tnc.calculator.calculator.AverageCalculator;
+import amateur.shaobig.tnc.calculator.calculator.BigDecimalSumCalculator;
+import amateur.shaobig.tnc.calculator.calculator.IntegerSumCalculator;
+import amateur.shaobig.tnc.calculator.calculator.ListSizeCalculator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

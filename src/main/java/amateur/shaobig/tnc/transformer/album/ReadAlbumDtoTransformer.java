@@ -31,7 +31,7 @@ public class ReadAlbumDtoTransformer implements Transformer<Album, ReadAlbumDto>
     @Override
     public ReadAlbumDto transform(Album album) {
         AlbumMetadataDto albumMetadata = getAlbumMetadataDtoTransformer().transform(album.getMetadata());
-        ArtistDto artist = artistDtoTransformer.transform(album.getArtist());
+        ArtistDto artist = getArtistDtoTransformer().transform(album.getArtist());
         List<GenreDto> genres = album.getGenres().stream()
                 .map(getGenreDtoTransformer()::transform)
                 .toList();

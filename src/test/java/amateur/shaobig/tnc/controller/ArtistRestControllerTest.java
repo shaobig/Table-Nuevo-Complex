@@ -1,7 +1,7 @@
 package amateur.shaobig.tnc.controller;
 
 import amateur.shaobig.tnc.dto.artist.ReadArtistDto;
-import amateur.shaobig.tnc.dto.artist.location.LocationDto;
+import amateur.shaobig.tnc.dto.location.LocationDto;
 import amateur.shaobig.tnc.entity.enums.ArtistStatus;
 import amateur.shaobig.tnc.service.artist.ArtistDtoService;
 import org.junit.jupiter.api.BeforeEach;

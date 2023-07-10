@@ -1,5 +1,10 @@
 package amateur.shaobig.tnc.transformer.album.statistics;
 
+import amateur.shaobig.tnc.calculator.calculator.AverageAlbumMarkCalculator;
+import amateur.shaobig.tnc.calculator.calculator.BasicAlbumMarkCalculator;
+import amateur.shaobig.tnc.calculator.calculator.FullAlbumMarkCalculator;
+import amateur.shaobig.tnc.calculator.calculator.RelativeSumFinalAlbumMarkCalculator;
+import amateur.shaobig.tnc.calculator.calculator.SumAlbumMarkCalculator;
 import amateur.shaobig.tnc.dto.album.AlbumStatisticsDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.entity.AlbumMetadata;
@@ -8,11 +13,6 @@ import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.entity.enums.SongType;
-import amateur.shaobig.tnc.transformer.album.calculator.AverageAlbumMarkCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.BasicAlbumMarkCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.FullAlbumMarkCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.RelativeSumFinalAlbumMarkCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.SumAlbumMarkCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

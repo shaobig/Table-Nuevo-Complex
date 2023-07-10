@@ -4,7 +4,7 @@ import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
 import amateur.shaobig.tnc.dto.artist.ArtistDto;
 import amateur.shaobig.tnc.dto.artist.ReadArtistDto;
-import amateur.shaobig.tnc.dto.artist.location.LocationDto;
+import amateur.shaobig.tnc.dto.location.LocationDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.Artist;
