@@ -24,7 +24,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Entity
 @Table(name = "albums")
@@ -67,8 +66,8 @@ public class Album implements Serializable {
     private AlbumMetadata metadata;
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Artist artist;
-    @OneToMany(mappedBy = "album", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private List<Genre> genres;
+    @OneToMany(mappedBy = "album", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<AlbumGenre> genres;
     @OneToMany(mappedBy = "album", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Song> songs;
 
@@ -77,20 +76,14 @@ public class Album implements Serializable {
         this.metadata = metadata;
     }
 
-    public void setGenres(List<Genre> genres) {
-        Optional.ofNullable(genres)
-                .ifPresent(presentedGenres -> {
-                    presentedGenres.forEach(genre -> genre.setAlbum(this));
-                    this.genres = presentedGenres;
-                });
+    public void setSongs(List<Song> songs) {
+        songs.forEach(song -> song.setAlbum(this));
+        this.songs = songs;
     }
 
-    public void setSongs(List<Song> songs) {
-        Optional.ofNullable(songs)
-                .ifPresent(presentedSongs -> {
-                    presentedSongs.forEach(song -> song.setAlbum(this));
-                    this.songs = presentedSongs;
-                });
+    public void setGenres(List<AlbumGenre> genres) {
+        genres.forEach(genre -> genre.setAlbum(this));
+        this.genres = genres;
     }
 
     @Override
