@@ -27,6 +27,28 @@ class LocationServiceTest {
     }
 
     @Test
+    void createCheckLocation() {
+        Location sourceLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+
+        locationService.create(sourceLocation);
+
+        Location expectedLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Mockito.verify(locationRepository).save(expectedLocation);
+    }
+
+    @Test
+    void create() {
+        Location sourceRepositoryLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location sourceLocation = new Location();
+        Mockito.when(locationRepository.save(Mockito.any())).thenReturn(sourceRepositoryLocation);
+
+        Location actual = locationService.create(sourceLocation);
+
+        Location expected = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void mergeCheckCountry() {
         Location sourceLocation = new Location(1L, "COUNTRY_NAME", "", "");
 
@@ -56,28 +78,15 @@ class LocationServiceTest {
         Mockito.verify(locationRepository).findByCountryAndRegionAndLocality(Mockito.any(), Mockito.any(), Mockito.eq(expectedLocality));
     }
 
-    static Stream<Arguments> mergeInputData() {
-        Location locationWithCountry = new Location(1L, "COUNTRY_NAME", "", "");
-        Location repositoryLocationWithCountry = new Location(1L, "COUNTRY_NAME", "", "");
-        Location locationWithCountryExpected = new Location(1L, "COUNTRY_NAME", "", "");
-
-        Location locationWithAllFields = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-        Location repositoryLocationWithAllFields = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-        Location locationWithAllFieldsExpected = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
-
-        return Stream.of(
-                Arguments.of(locationWithCountry, repositoryLocationWithCountry, locationWithCountryExpected),
-                Arguments.of(locationWithAllFields, repositoryLocationWithAllFields, locationWithAllFieldsExpected)
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource(value = "mergeInputData")
-    void merge(Location sourceLocation, Location sourceRepositoryLocation, Location expected) {
+    @Test
+    void merge() {
+        Location sourceRepositoryLocation = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
+        Location sourceLocation = new Location();
         Mockito.when(locationRepository.findByCountryAndRegionAndLocality(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(sourceRepositoryLocation);
 
         Location actual = locationService.merge(sourceLocation);
 
+        Location expected = new Location(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME");
         assertEquals(expected, actual);
     }
 
@@ -111,19 +120,17 @@ class LocationServiceTest {
         Mockito.verify(locationRepository).existsByCountryAndRegionAndLocality(Mockito.any(), Mockito.any(), Mockito.eq(expectedLocality));
     }
 
-    static Stream<Arguments> isFoundInput() {
-        Location notFoundLocation = new Location();
-        Location foundLocation = new Location();
-
+    static Stream<Arguments> isFoundInputData() {
         return Stream.of(
-                Arguments.of(notFoundLocation, false),
-                Arguments.of(foundLocation, true)
+                Arguments.of(false),
+                Arguments.of(true)
         );
     }
 
     @ParameterizedTest
-    @MethodSource(value = "isFoundInput")
-    void isFound(Location sourceLocation, boolean expected) {
+    @MethodSource(value = "isFoundInputData")
+    void isFound(boolean expected) {
+        Location sourceLocation = new Location();
         Mockito.when(locationRepository.existsByCountryAndRegionAndLocality(Mockito.any(), Mockito.any(), Mockito.any())).thenReturn(expected);
 
         boolean actual = locationService.isFound(sourceLocation);

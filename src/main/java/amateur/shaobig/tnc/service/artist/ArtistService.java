@@ -5,20 +5,18 @@ import amateur.shaobig.tnc.repository.ArtistRepository;
 import amateur.shaobig.tnc.service.CreateService;
 import amateur.shaobig.tnc.service.FindService;
 import amateur.shaobig.tnc.service.MergeService;
-import amateur.shaobig.tnc.service.ReadAllService;
 import amateur.shaobig.tnc.service.ReadService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class ArtistService implements CreateService<Artist, Artist>, ReadService<Optional<Artist>>, ReadAllService<Artist>, MergeService<Artist>, FindService<Artist> {
+public class ArtistService implements CreateService<Artist, Artist>, ReadService<Optional<Artist>>, FindService<Artist>, MergeService<Artist> {
 
     private final ArtistRepository artistRepository;
 
@@ -33,18 +31,13 @@ public class ArtistService implements CreateService<Artist, Artist>, ReadService
     }
 
     @Override
-    public List<Artist> readAll() {
-        return getArtistRepository().findAll();
+    public boolean isFound(Artist artist) {
+        return getArtistRepository().existsByNameAndStatusAndLocation(artist.getName(), artist.getStatus(), artist.getLocation());
     }
 
     @Override
     public Artist merge(Artist artist) {
-        return getArtistRepository().getReferenceById(artist.getId());
-    }
-
-    @Override
-    public boolean isFound(Artist artist) {
-        return getArtistRepository().existsByNameAndStatusAndLocation(artist.getName(), artist.getStatus(), artist.getLocation());
+        return getArtistRepository().findByNameAndStatusAndLocation(artist.getName(), artist.getStatus(), artist.getLocation());
     }
 
 }

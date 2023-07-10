@@ -1,6 +1,6 @@
 package amateur.shaobig.tnc.transformer.artist.location;
 
-import amateur.shaobig.tnc.dto.artist.location.LocationDto;
+import amateur.shaobig.tnc.dto.location.LocationDto;
 import amateur.shaobig.tnc.entity.Location;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

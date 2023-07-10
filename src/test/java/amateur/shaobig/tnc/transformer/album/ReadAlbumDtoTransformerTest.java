@@ -2,18 +2,24 @@ package amateur.shaobig.tnc.transformer.album;
 
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
+import amateur.shaobig.tnc.dto.artist.ArtistDto;
+import amateur.shaobig.tnc.dto.genre.GenreDto;
+import amateur.shaobig.tnc.dto.location.LocationDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.dto.song.SongMetadataDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.Artist;
+import amateur.shaobig.tnc.entity.Genre;
 import amateur.shaobig.tnc.entity.Location;
 import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.entity.enums.ArtistStatus;
 import amateur.shaobig.tnc.entity.enums.SongType;
+import amateur.shaobig.tnc.transformer.album.genre.GenreDtoTransformer;
 import amateur.shaobig.tnc.transformer.album.metadata.AlbumMetadataDtoTransformer;
+import amateur.shaobig.tnc.transformer.artist.ArtistDtoTransformer;
 import amateur.shaobig.tnc.transformer.song.SongDtoTransformer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,17 +35,31 @@ import static org.mockito.Mockito.atLeastOnce;
 
 class ReadAlbumDtoTransformerTest {
 
-    private SongDtoTransformer songDtoTransformer;
     private AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
+    private ArtistDtoTransformer artistDtoTransformer;
+    private GenreDtoTransformer genreDtoTransformer;
+    private SongDtoTransformer songDtoTransformer;
 
     private ReadAlbumDtoTransformer readAlbumDtoTransformer;
 
     @BeforeEach
     void init() {
-        this.songDtoTransformer = Mockito.mock(SongDtoTransformer.class);
         this.albumMetadataDtoTransformer = Mockito.mock(AlbumMetadataDtoTransformer.class);
+        this.artistDtoTransformer = Mockito.mock(ArtistDtoTransformer.class);
+        this.genreDtoTransformer = Mockito.mock(GenreDtoTransformer.class);
+        this.songDtoTransformer = Mockito.mock(SongDtoTransformer.class);
 
-        this.readAlbumDtoTransformer = new ReadAlbumDtoTransformer(songDtoTransformer, albumMetadataDtoTransformer);
+        this.readAlbumDtoTransformer = new ReadAlbumDtoTransformer(albumMetadataDtoTransformer, artistDtoTransformer, genreDtoTransformer, songDtoTransformer);
+    }
+
+    @Test
+    void transformCheckAlbumMetadataDtoTransformer() {
+        Album sourceAlbum = new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(1L, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of())), new Artist(), List.of(), List.of());
+
+        readAlbumDtoTransformer.transform(sourceAlbum);
+
+        AlbumMetadata expectedAlbumMetadata = new AlbumMetadata(1L, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        Mockito.verify(albumMetadataDtoTransformer).transform(expectedAlbumMetadata);
     }
 
     @Test
@@ -57,27 +77,22 @@ class ReadAlbumDtoTransformerTest {
     }
 
     @Test
-    void transformCheckAlbumMetadataDtoTransformer() {
-        Album sourceAlbum = new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(1L, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of())), new Artist(), List.of(), List.of());
-
-        readAlbumDtoTransformer.transform(sourceAlbum);
-
-        AlbumMetadata expectedAlbumMetadata = new AlbumMetadata(1L, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false, new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
-        Mockito.verify(albumMetadataDtoTransformer).transform(expectedAlbumMetadata);
-    }
-
-    @Test
     void transform() {
+        AlbumMetadataDto sourceAlbumMetadataDto = new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false);
+        ArtistDto sourceArtistDto = new ArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME"));
+        GenreDto sourceFirstGenreDto = new GenreDto(1L, "GENRE_NAME_1", true);
+        GenreDto sourceSecondGenreDto = new GenreDto(1L, "GENRE_NAME_2", true);
         SongDto sourceFirstSongDto = new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1));
         SongDto sourceSecondSongDto = new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1));
-        AlbumMetadataDto sourceAlbumMetadataDto = new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false);
-        Album sourceAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(), List.of()), List.of(), List.of(new Song(), new Song()));
-        Mockito.when(songDtoTransformer.transform(Mockito.any())).thenReturn(sourceFirstSongDto).thenReturn(sourceSecondSongDto);
+        Album sourceAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new Location(), List.of()), List.of(new Genre(), new Genre()), List.of(new Song(), new Song()));
         Mockito.when(albumMetadataDtoTransformer.transform(Mockito.any())).thenReturn(sourceAlbumMetadataDto);
+        Mockito.when(artistDtoTransformer.transform(Mockito.any())).thenReturn(sourceArtistDto);
+        Mockito.when(genreDtoTransformer.transform(Mockito.any())).thenReturn(sourceFirstGenreDto).thenReturn(sourceSecondGenreDto);
+        Mockito.when(songDtoTransformer.transform(Mockito.any())).thenReturn(sourceFirstSongDto).thenReturn(sourceSecondSongDto);
 
         ReadAlbumDto actual = readAlbumDtoTransformer.transform(sourceAlbum);
 
-        ReadAlbumDto expected = new ReadAlbumDto(1L, "ARTIST_NAME", 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
+        ReadAlbumDto expected = new ReadAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), new ArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME")), List.of(new GenreDto(1L, "GENRE_NAME_1", true), new GenreDto(1L, "GENRE_NAME_2", true)), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
         assertEquals(expected, actual);
     }
 

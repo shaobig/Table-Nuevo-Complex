@@ -2,8 +2,8 @@ package amateur.shaobig.tnc.service.album;
 
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.repository.AlbumRepository;
+import amateur.shaobig.tnc.service.CreateService;
 import amateur.shaobig.tnc.service.ReadAllService;
-import amateur.shaobig.tnc.service.ReadFullService;
 import amateur.shaobig.tnc.service.ReadService;
 import amateur.shaobig.tnc.service.UpdateService;
 import lombok.AccessLevel;
@@ -17,9 +17,14 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumService implements ReadService<Optional<Album>>, ReadFullService<Optional<Album>>, ReadAllService<Album>, UpdateService<Album, Album> {
+public class AlbumService implements CreateService<Album, Album>, ReadService<Optional<Album>>, ReadAllService<Album>, UpdateService<Album, Album> {
 
     private final AlbumRepository albumRepository;
+
+    @Override
+    public Album create(Album album) {
+        return getAlbumRepository().save(album);
+    }
 
     @Override
     public Optional<Album> read(Long id) {
@@ -27,13 +32,8 @@ public class AlbumService implements ReadService<Optional<Album>>, ReadFullServi
     }
 
     @Override
-    public Optional<Album> readFull(Long id) {
-        return getAlbumRepository().findById(id);
-    }
-
-    @Override
     public List<Album> readAll() {
-        return getAlbumRepository().readAllWithSongs();
+        return getAlbumRepository().readAll();
     }
 
     @Override

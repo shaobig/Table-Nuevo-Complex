@@ -3,11 +3,10 @@ package amateur.shaobig.tnc.controller;
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.AlbumStatisticsDto;
 import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
-import amateur.shaobig.tnc.dto.album.ReadAllAlbumWithSongsDto;
-import amateur.shaobig.tnc.dto.album.ReadFullAlbumDto;
+import amateur.shaobig.tnc.dto.album.ReadAllAlbumDto;
 import amateur.shaobig.tnc.dto.album.UpdateAlbumDto;
 import amateur.shaobig.tnc.dto.artist.ArtistDto;
-import amateur.shaobig.tnc.dto.artist.location.LocationDto;
+import amateur.shaobig.tnc.dto.location.LocationDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.Artist;
@@ -51,50 +50,26 @@ class AlbumRestControllerTest {
 
     @Test
     void read() {
-        ReadAlbumDto sourceResponseBody = new ReadAlbumDto(1L, "", 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.of(0, 1, 1, 0, 0, 0), false), List.of());
+        ReadAlbumDto sourceResponseBody = new ReadAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.of(0, 1, 1, 0, 0, 0), false), new ArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME")), List.of(), List.of());
         Long sourceId = 1L;
         Mockito.when(albumDtoService.read(Mockito.anyLong())).thenReturn(sourceResponseBody);
 
         ResponseEntity<ReadAlbumDto> actual = albumRestController.read(sourceId);
 
-        ReadAlbumDto expectedResponseBody = new ReadAlbumDto(1L, "", 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.of(0, 1, 1, 0, 0, 0), false), List.of());
+        ReadAlbumDto expectedResponseBody = new ReadAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.of(0, 1, 1, 0, 0, 0), false), new ArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME")), List.of(), List.of());
         ResponseEntity<ReadAlbumDto> expected = ResponseEntity.status(HttpStatus.OK).body(expectedResponseBody);
         assertEquals(expected, actual);
     }
 
     @Test
-    void readFullCheckAlbumId() {
-        Long sourceId = 1L;
-
-        albumRestController.readFull(sourceId);
-
-        Long expectedId = 1L;
-        Mockito.verify(albumDtoService).readFull(expectedId);
-    }
-
-    @Test
-    void readFull() {
-        LocalDateTime sourceAlbumMetadataTime = LocalDateTime.now();
-        ReadFullAlbumDto sourceResponseBody = new ReadFullAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(sourceAlbumMetadataTime, false), new ArtistDto(1L, "", ArtistStatus.ACTIVE, new LocationDto(1L, "", "", "")), List.of(), List.of());
-        Long sourceId = 1L;
-        Mockito.when(albumDtoService.readFull(Mockito.anyLong())).thenReturn(sourceResponseBody);
-
-        ResponseEntity<ReadFullAlbumDto> actual = albumRestController.readFull(sourceId);
-
-        ReadFullAlbumDto expectedResponseBody = new ReadFullAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(sourceAlbumMetadataTime, false), new ArtistDto(1L, "", ArtistStatus.ACTIVE, new LocationDto(1L, "", "", "")), List.of(), List.of());
-        ResponseEntity<ReadFullAlbumDto> expected = ResponseEntity.status(HttpStatus.OK).body(expectedResponseBody);
-        assertEquals(expected, actual);
-    }
-
-    @Test
     void readAll() {
-        List<ReadAllAlbumWithSongsDto> sourceResponseBody = List.of(new ReadAllAlbumWithSongsDto(1L, "", "", "ALBUM_NAME",  AlbumType.LP, 0, new AlbumStatisticsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO)));
+        List<ReadAllAlbumDto> sourceResponseBody = List.of(new ReadAllAlbumDto(1L,  "ALBUM_NAME", AlbumType.LP, 0, 1L, "ARTIST_NAME", "COUNTRY_NAME", new AlbumStatisticsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO)));
         Mockito.when(albumDtoService.readAll()).thenReturn(sourceResponseBody);
 
-        ResponseEntity<List<ReadAllAlbumWithSongsDto>> actual = albumRestController.readAll();
+        ResponseEntity<List<ReadAllAlbumDto>> actual = albumRestController.readAll();
 
-        List<ReadAllAlbumWithSongsDto> expectedResponseBody = List.of(new ReadAllAlbumWithSongsDto(1L, "", "", "ALBUM_NAME",  AlbumType.LP, 0, new AlbumStatisticsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO)));
-        ResponseEntity<List<ReadAllAlbumWithSongsDto>> expected = ResponseEntity.status(HttpStatus.OK).body(expectedResponseBody);
+        List<ReadAllAlbumDto> expectedResponseBody = List.of(new ReadAllAlbumDto(1L,  "ALBUM_NAME", AlbumType.LP, 0, 1L, "ARTIST_NAME", "COUNTRY_NAME", new AlbumStatisticsDto(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO)));
+        ResponseEntity<List<ReadAllAlbumDto>> expected = ResponseEntity.status(HttpStatus.OK).body(expectedResponseBody);
         assertEquals(expected, actual);
     }
 

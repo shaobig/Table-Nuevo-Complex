@@ -1,13 +1,13 @@
 package amateur.shaobig.tnc.transformer.album.statistics;
 
+import amateur.shaobig.tnc.calculator.calculator.AverageAlbumMarkCalculator;
+import amateur.shaobig.tnc.calculator.calculator.BasicAlbumMarkCalculator;
+import amateur.shaobig.tnc.calculator.calculator.FullAlbumMarkCalculator;
+import amateur.shaobig.tnc.calculator.calculator.RelativeSumFinalAlbumMarkCalculator;
+import amateur.shaobig.tnc.calculator.calculator.SumAlbumMarkCalculator;
 import amateur.shaobig.tnc.dto.album.AlbumStatisticsDto;
 import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.transformer.Transformer;
-import amateur.shaobig.tnc.transformer.album.calculator.AverageAlbumMarkCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.BasicAlbumMarkCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.FullAlbumMarkCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.RelativeSumFinalAlbumMarkCalculator;
-import amateur.shaobig.tnc.transformer.album.calculator.SumAlbumMarkCalculator;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
