@@ -39,23 +39,57 @@ class AlbumPoolProxyServiceTest {
         this.albumPoolProxyService = new AlbumPoolProxyService(albumPoolService, albumProxyService);
     }
 
-    static Stream<Arguments> readAllInputData() {
-        List<ReadAllAlbumPoolDto> emptyAlbumPoolListSource = List.of();
-        List<ReadAllAlbumPoolDto> emptyAlbumPoolListExpected = List.of();
+    @Test
+    void createCheckAlbum() {
+        AlbumPool sourceAlbumPool = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
 
-        List<ReadAllAlbumPoolDto> filledAlbumPoolListSource = List.of(new ReadAllAlbumPoolDto(1L, 1L, "ARTIST_NAME","COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
-        List<ReadAllAlbumPoolDto> filledAlbumPoolListExpected = List.of(new ReadAllAlbumPoolDto(1L, 1L, "ARTIST_NAME", "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
+        albumPoolProxyService.create(sourceAlbumPool);
+
+        Album expectedAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of());
+        Mockito.verify(albumProxyService).create(expectedAlbum);
+    }
+
+    @Test
+    void createCheckAlbumPool() {
+        Album sourceRepositoryAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of());
+        AlbumPool sourceAlbumPool = new AlbumPool();
+        Mockito.when(albumProxyService.create(Mockito.any())).thenReturn(sourceRepositoryAlbum);
+
+        albumPoolProxyService.create(sourceAlbumPool);
+
+        AlbumPool expectedAlbumPool = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        Mockito.verify(albumPoolService).create(expectedAlbumPool);
+    }
+
+    @Test
+    void create() {
+        AlbumPool sourceRepositoryAlbumPool = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        AlbumPool sourceAlbumPool = new AlbumPool();
+        Mockito.when(albumPoolService.create(Mockito.any())).thenReturn(sourceRepositoryAlbumPool);
+
+        AlbumPool actual = albumPoolProxyService.create(sourceAlbumPool);
+
+        AlbumPool expected = new AlbumPool(1L, new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        assertEquals(expected, actual);
+    }
+
+    static Stream<Arguments> readAllInputData() {
+        List<ReadAllAlbumPoolDto> sourceEmptyAlbumPoolList = List.of();
+        List<ReadAllAlbumPoolDto> sourceEmptyAlbumPoolListExpected = List.of();
+
+        List<ReadAllAlbumPoolDto> sourceFilledAlbumPoolList = List.of(new ReadAllAlbumPoolDto(1L, 1L, "ARTIST_NAME", "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
+        List<ReadAllAlbumPoolDto> sourceFilledAlbumPoolListExpected = List.of(new ReadAllAlbumPoolDto(1L, 1L, "ARTIST_NAME", "COUNTRY_NAME", "ALBUM_NAME", AlbumType.LP, 0, LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC)));
 
         return Stream.of(
-                Arguments.of(emptyAlbumPoolListSource, emptyAlbumPoolListExpected),
-                Arguments.of(filledAlbumPoolListSource, filledAlbumPoolListExpected)
+                Arguments.of(sourceEmptyAlbumPoolList, sourceEmptyAlbumPoolListExpected),
+                Arguments.of(sourceFilledAlbumPoolList, sourceFilledAlbumPoolListExpected)
         );
     }
 
     @ParameterizedTest
     @MethodSource(value = "readAllInputData")
-    void readAll(List<ReadAllAlbumPoolDto> sourceAlbums, List<ReadAllAlbumPoolDto> expected) {
-        Mockito.when(albumPoolService.readAll()).thenReturn(sourceAlbums);
+    void readAll(List<ReadAllAlbumPoolDto> sourceRepositoryAlbums, List<ReadAllAlbumPoolDto> expected) {
+        Mockito.when(albumPoolService.readAll()).thenReturn(sourceRepositoryAlbums);
 
         List<ReadAllAlbumPoolDto> actual = albumPoolProxyService.readAll();
 
@@ -75,7 +109,7 @@ class AlbumPoolProxyServiceTest {
     }
 
     @Test
-    void deleteAlbumPoolNotFound() {
+    void deleteAlbumPoolIsNotFound() {
         Optional<AlbumPool> sourceAlbumPool = Optional.empty();
         Long sourceId = 1L;
         Mockito.when(albumPoolService.delete(Mockito.anyLong())).thenReturn(sourceAlbumPool);

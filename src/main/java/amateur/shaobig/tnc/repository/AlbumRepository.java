@@ -12,7 +12,7 @@ import java.util.List;
 public interface AlbumRepository extends JpaRepository<Album, Long> {
 
     @Query("SELECT album FROM Album album WHERE NOT EXISTS(SELECT 1 FROM AlbumPool albumPool WHERE albumPool.album.id = album.id)")
-    @EntityGraph(value = "readAllAlbumWithSongs", type = EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(value = "readAllAlbum", type = EntityGraph.EntityGraphType.FETCH)
     List<Album> readAll();
 
 }

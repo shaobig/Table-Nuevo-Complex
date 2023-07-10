@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.service;
+package amateur.shaobig.tnc.sorting;
 
 import java.util.List;
 

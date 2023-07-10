@@ -5,7 +5,6 @@ import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.repository.AlbumRepository;
-import org.checkerframework.checker.nullness.Opt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +17,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AlbumServiceTest {
 
@@ -85,8 +83,35 @@ class AlbumServiceTest {
 
     @Test
     void readAll() {
+        List<Album> sourceRepositoryAlbumList = List.of(new Album(1L, 0, "ALBUM_NAME_1", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(1L, 0, "ALBUM_NAME_2", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        Mockito.when(albumRepository.readAll()).thenReturn(sourceRepositoryAlbumList);
 
-        List<Album> actual =
+        List<Album> actual = albumService.readAll();
+
+        List<Album> expected = List.of(new Album(1L, 0, "ALBUM_NAME_1", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()), new Album(1L, 0, "ALBUM_NAME_2", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of()));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void updateCheckAlbum() {
+        Album sourceAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of());
+
+        albumService.update(sourceAlbum);
+
+        Album expectedAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of());
+        Mockito.verify(albumRepository).save(expectedAlbum);
+    }
+
+    @Test
+    void update() {
+        Album sourceRepositoryAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of());
+        Album sourceAlbum = new Album();
+        Mockito.when(albumRepository.save(Mockito.any())).thenReturn(sourceRepositoryAlbum);
+
+        Album actual = albumService.update(sourceAlbum);
+
+        Album expected = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(), List.of());
+        assertEquals(expected, actual);
     }
 
 }

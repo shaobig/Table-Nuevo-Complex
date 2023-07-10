@@ -33,7 +33,7 @@ import java.util.Optional;
 @Getter
 @Setter
 @NamedEntityGraph(
-        name = "readAllAlbumWithSongs",
+        name = "readAllAlbum",
         attributeNodes = {
                 @NamedAttributeNode(value = "metadata"),
                 @NamedAttributeNode(value = "artist", subgraph = "readArtistLocation"),
