@@ -29,7 +29,7 @@ public class AlbumGenreListService implements CreateService<List<AlbumGenre>, Li
     public List<AlbumGenre> update(List<AlbumGenre> albumGenres) {
         return albumGenres.stream()
                 .filter(albumGenre -> Objects.isNull(albumGenre.getId()))
-                .map(getAlbumGenreProxyService()::update)
+                .map(getAlbumGenreProxyService()::create)
                 .toList();
     }
 
