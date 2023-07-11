@@ -31,7 +31,7 @@ public class AlbumGenre implements Serializable {
     private boolean isMajor;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Genre genre;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Album album;
 
     public void setIsMajor(boolean isMajor) {

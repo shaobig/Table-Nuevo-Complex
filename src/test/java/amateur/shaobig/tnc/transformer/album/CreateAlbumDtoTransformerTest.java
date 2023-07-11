@@ -3,6 +3,7 @@ package amateur.shaobig.tnc.transformer.album;
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.CreateAlbumDto;
 import amateur.shaobig.tnc.dto.genre.AlbumGenreDto;
+import amateur.shaobig.tnc.dto.genre.GenreDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.dto.song.SongMetadataDto;
 import amateur.shaobig.tnc.entity.Album;
@@ -14,8 +15,8 @@ import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.entity.enums.SongType;
-import amateur.shaobig.tnc.transformer.album.genre.AlbumGenreDtoTransformer;
 import amateur.shaobig.tnc.transformer.album.metadata.AlbumMetadataDtoTransformer;
+import amateur.shaobig.tnc.transformer.genre.AlbumGenreDtoTransformer;
 import amateur.shaobig.tnc.transformer.song.SongDtoTransformer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -87,8 +88,8 @@ class CreateAlbumDtoTransformerTest {
     @Test
     void transform() {
         AlbumMetadataDto sourceAlbumMetadataDto = new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false);
-        AlbumGenreDto sourceFirstGenre = new AlbumGenreDto(1L, "GENRE_NAME_1", false);
-        AlbumGenreDto sourceSecondGenre = new AlbumGenreDto(1L, "GENRE_NAME_2", false);
+        AlbumGenreDto sourceFirstGenre = new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_1"));
+        AlbumGenreDto sourceSecondGenre = new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_2"));
         SongDto sourceFirstSong = new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1));
         SongDto sourceSecondSong = new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1));
         Album sourceAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(new AlbumGenre(), new AlbumGenre()), List.of(new Song(), new Song()));
@@ -98,7 +99,7 @@ class CreateAlbumDtoTransformerTest {
 
         CreateAlbumDto actual = createAlbumDtoTransformer.transform(sourceAlbum);
 
-        CreateAlbumDto expected = new CreateAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new AlbumGenreDto(1L, "GENRE_NAME_1", false), new AlbumGenreDto(1L, "GENRE_NAME_2", false)), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
+        CreateAlbumDto expected = new CreateAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_1")), new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_2"))), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
         assertEquals(expected, actual);
     }
 
