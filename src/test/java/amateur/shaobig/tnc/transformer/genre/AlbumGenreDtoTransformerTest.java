@@ -1,19 +1,17 @@
-package amateur.shaobig.tnc.transformer.album.genre;
+package amateur.shaobig.tnc.transformer.genre;
 
 import amateur.shaobig.tnc.dto.genre.AlbumGenreDto;
 import amateur.shaobig.tnc.dto.genre.GenreDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.entity.AlbumGenre;
 import amateur.shaobig.tnc.entity.Genre;
-import amateur.shaobig.tnc.transformer.genre.AlbumGenreDtoTransformer;
-import amateur.shaobig.tnc.transformer.genre.GenreDtoTransformer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AlbumAlbumAlbumGenreDtoTransformerTest {
+class AlbumGenreDtoTransformerTest {
 
     private GenreDtoTransformer genreDtoTransformer;
 
@@ -24,6 +22,16 @@ class AlbumAlbumAlbumGenreDtoTransformerTest {
         this.genreDtoTransformer = Mockito.mock(GenreDtoTransformer.class);
 
         this.albumGenreDtoTransformer = new AlbumGenreDtoTransformer(genreDtoTransformer);
+    }
+
+    @Test
+    void transformCheckGenre() {
+        AlbumGenre sourceAlbumGenre = new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME"), new Album());
+
+        albumGenreDtoTransformer.transform(sourceAlbumGenre);
+
+        Genre expectedGenre = new Genre(1L, "GENRE_NAME");
+        Mockito.verify(genreDtoTransformer).transform(expectedGenre);
     }
 
     @Test
