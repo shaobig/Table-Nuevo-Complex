@@ -85,30 +85,26 @@ class AlbumGenreListServiceTest {
 
     static Stream<Arguments> updateInputData() {
         List<AlbumGenre> sourceAlbumGenreListWithInitialisedIdFields = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
-        List<AlbumGenre> sourceAlbumGenreListWithInitialisedIdFieldsExpected = List.of();
-
         List<AlbumGenre> sourceAlbumGenreListWithOneNullIdField = List.of(new AlbumGenre(null, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
-        List<AlbumGenre> sourceAlbumGenreListWithOneNullIdFieldExpected = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()));
-
         List<AlbumGenre> sourceAlbumGenreListWithNullIdFields = List.of(new AlbumGenre(null, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(null, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
-        List<AlbumGenre> sourceAlbumGenreListWithNullIdFieldsExpected = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
 
         return Stream.of(
-                Arguments.of(sourceAlbumGenreListWithInitialisedIdFields, sourceAlbumGenreListWithInitialisedIdFieldsExpected, 0),
-                Arguments.of(sourceAlbumGenreListWithOneNullIdField, sourceAlbumGenreListWithOneNullIdFieldExpected, 1),
-                Arguments.of(sourceAlbumGenreListWithNullIdFields, sourceAlbumGenreListWithNullIdFieldsExpected, 2)
+                Arguments.of(sourceAlbumGenreListWithInitialisedIdFields),
+                Arguments.of(sourceAlbumGenreListWithOneNullIdField),
+                Arguments.of(sourceAlbumGenreListWithNullIdFields)
         );
     }
 
     @ParameterizedTest
     @MethodSource(value = "updateInputData")
-    void update(List<AlbumGenre> sourceAlbumGenreList, List<AlbumGenre> expected) {
+    void update(List<AlbumGenre> sourceAlbumGenreList) {
         AlbumGenre sourceFirstAlbumGenre = new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album());
         AlbumGenre sourceSecondAlbumGenre = new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album());
         Mockito.when(albumGenreProxyService.create(Mockito.any())).thenReturn(sourceFirstAlbumGenre).thenReturn(sourceSecondAlbumGenre);
 
         List<AlbumGenre> actual = albumGenreListService.update(sourceAlbumGenreList);
 
+        List<AlbumGenre> expected = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
         assertEquals(expected, actual);
     }
 

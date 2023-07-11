@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +28,12 @@ public class AlbumGenreListService implements CreateService<List<AlbumGenre>, Li
 
     @Override
     public List<AlbumGenre> update(List<AlbumGenre> albumGenres) {
-        return albumGenres.stream()
+        List<AlbumGenre> newAlbumGenres = albumGenres.stream()
                 .filter(albumGenre -> Objects.isNull(albumGenre.getId()))
                 .map(getAlbumGenreProxyService()::create)
+                .toList();
+        return Stream.concat(albumGenres.stream(), newAlbumGenres.stream())
+                .distinct()
                 .toList();
     }
 
