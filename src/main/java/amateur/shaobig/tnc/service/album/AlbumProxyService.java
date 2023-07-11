@@ -49,6 +49,7 @@ public class AlbumProxyService implements CreateService<Album, Album>, ReadServi
 
     @Override
     public Album update(Album album) {
+        album.setGenres(getAlbumGenreListService().update(album.getGenres()));
         return getAlbumService().update(album);
     }
 
