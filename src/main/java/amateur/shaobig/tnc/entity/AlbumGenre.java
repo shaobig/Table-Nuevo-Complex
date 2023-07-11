@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,8 @@ public class AlbumGenre implements Serializable {
     private boolean isMajor;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Genre genre;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Album album;
 
     public void setIsMajor(boolean isMajor) {
         this.isMajor = isMajor;

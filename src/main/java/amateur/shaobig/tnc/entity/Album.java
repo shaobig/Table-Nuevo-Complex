@@ -66,7 +66,7 @@ public class Album implements Serializable {
     private AlbumMetadata metadata;
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Artist artist;
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "album", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<AlbumGenre> genres;
     @OneToMany(mappedBy = "album", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private List<Song> songs;
@@ -74,6 +74,11 @@ public class Album implements Serializable {
     public void setMetadata(AlbumMetadata metadata) {
         metadata.setAlbum(this);
         this.metadata = metadata;
+    }
+
+    public void setGenres(List<AlbumGenre> genres) {
+        genres.forEach(genre -> genre.setAlbum(this));
+        this.genres = genres;
     }
 
     public void setSongs(List<Song> songs) {

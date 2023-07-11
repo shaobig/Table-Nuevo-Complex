@@ -12,13 +12,12 @@ import org.springframework.stereotype.Service;
 @Getter(value = AccessLevel.PACKAGE)
 public class AlbumGenreProxyService implements CreateService<AlbumGenre, AlbumGenre> {
 
-    private final AlbumGenreService albumGenreService;
     private final GenreProxyService genreProxyService;
 
     @Override
     public AlbumGenre create(AlbumGenre albumGenre) {
         albumGenre.setGenre(getGenreProxyService().create(albumGenre.getGenre()));
-        return getAlbumGenreService().create(albumGenre);
+        return albumGenre;
     }
 
 }

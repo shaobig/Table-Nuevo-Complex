@@ -58,7 +58,7 @@ class CreateAlbumDtoTransformerTest {
 
     @Test
     void transformCheckGenres() {
-        List<AlbumGenre> sourceAlbumGenres = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1")), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2")));
+        List<AlbumGenre> sourceAlbumGenres = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
         Album sourceAlbum = new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), sourceAlbumGenres, List.of());
 
         ArgumentCaptor<AlbumGenre> genreArgumentCaptor = ArgumentCaptor.forClass(AlbumGenre.class);
@@ -66,7 +66,7 @@ class CreateAlbumDtoTransformerTest {
         Mockito.verify(albumGenreDtoTransformer, atLeastOnce()).transform(genreArgumentCaptor.capture());
         List<AlbumGenre> actual = genreArgumentCaptor.getAllValues();
 
-        List<AlbumGenre> expected = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1")), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2")));
+        List<AlbumGenre> expected = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
         assertEquals(expected, actual);
     }
 

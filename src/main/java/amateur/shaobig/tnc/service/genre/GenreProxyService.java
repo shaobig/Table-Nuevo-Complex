@@ -16,7 +16,7 @@ public class GenreProxyService implements CreateService<Genre, Genre> {
 
     @Override
     public Genre create(Genre genre) {
-        return getGenreService().isFound(genre) ? getGenreService().merge(genre) :getGenreService().create(genre);
+        return getGenreService().isFound(genre) ? getGenreService().merge(genre) : getGenreService().create(genre);
     }
 
 }

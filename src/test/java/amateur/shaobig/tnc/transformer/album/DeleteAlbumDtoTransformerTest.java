@@ -57,14 +57,14 @@ class DeleteAlbumDtoTransformerTest {
 
     @Test
     void transformCheckGenreDtoTransformer() {
-        Album sourceAlbum = new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1")), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"))), List.of());
+        Album sourceAlbum = new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album())), List.of());
 
         deleteAlbumDtoTransformer.transform(sourceAlbum);
         ArgumentCaptor<AlbumGenre> genreArgumentCaptor = ArgumentCaptor.forClass(AlbumGenre.class);
         Mockito.verify(albumGenreDtoTransformer, Mockito.atLeastOnce()).transform(genreArgumentCaptor.capture());
         List<AlbumGenre> actual = genreArgumentCaptor.getAllValues();
 
-        List<AlbumGenre> expected = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1")), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2")));
+        List<AlbumGenre> expected = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
         assertEquals(expected, actual);
     }
 
