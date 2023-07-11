@@ -93,7 +93,7 @@ class ReadAlbumDtoTransformerTest {
 
         ReadAlbumDto actual = readAlbumDtoTransformer.transform(sourceAlbum);
 
-        ReadAlbumDto expected = new ReadAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), new ArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME")), List.of(new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_1")), new AlbumGenreDto(1L, false, new GenreDto(1L, "GENRE_NAME_2"))), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
+        ReadAlbumDto expected = new ReadAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), new ArtistDto(1L, "ARTIST_NAME", ArtistStatus.ACTIVE, new LocationDto(1L, "COUNTRY_NAME", "REGION_NAME", "LOCALITY_NAME")), List.of(new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_1")), new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_2"))), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
         assertEquals(expected, actual);
     }
 

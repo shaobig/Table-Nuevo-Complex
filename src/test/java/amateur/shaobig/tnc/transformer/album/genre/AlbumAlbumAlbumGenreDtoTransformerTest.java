@@ -28,7 +28,9 @@ class AlbumAlbumAlbumGenreDtoTransformerTest {
 
     @Test
     void transform() {
-        AlbumGenre sourceAlbumGenre = new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME"), new Album());
+        GenreDto sourceGenreDto = new GenreDto(1L, "GENRE_NAME");
+        AlbumGenre sourceAlbumGenre = new AlbumGenre(1L, true, new Genre(), new Album());
+        Mockito.when(genreDtoTransformer.transform(Mockito.any())).thenReturn(sourceGenreDto);
 
         AlbumGenreDto actual = albumGenreDtoTransformer.transform(sourceAlbumGenre);
 

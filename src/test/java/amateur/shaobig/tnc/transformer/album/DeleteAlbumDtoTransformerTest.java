@@ -96,7 +96,7 @@ class DeleteAlbumDtoTransformerTest {
 
         DeleteAlbumDto actual = deleteAlbumDtoTransformer.transform(sourceAlbum);
 
-        DeleteAlbumDto expected = new DeleteAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_1")), new AlbumGenreDto(1L, false, new GenreDto(1L, "GENRE_NAME_2"))), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
+        DeleteAlbumDto expected = new DeleteAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_1")), new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_2"))), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
         assertEquals(expected, actual);
     }
 
