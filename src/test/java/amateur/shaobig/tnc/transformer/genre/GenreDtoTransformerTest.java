@@ -1,7 +1,6 @@
-package amateur.shaobig.tnc.transformer.album.genre;
+package amateur.shaobig.tnc.transformer.genre;
 
 import amateur.shaobig.tnc.dto.genre.GenreDto;
-import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.entity.Genre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,11 +18,11 @@ class GenreDtoTransformerTest {
 
     @Test
     void transform() {
-        Genre sourceGenre = new Genre(1L, "GENRE_NAME", false, new Album());
+        Genre sourceGenre = new Genre(1L, "GENRE_NAME");
 
         GenreDto actual = genreDtoTransformer.transform(sourceGenre);
 
-        GenreDto expected = new GenreDto(1L, "GENRE_NAME", false);
+        GenreDto expected = new GenreDto(1L, "GENRE_NAME");
         assertEquals(expected, actual);
     }
 

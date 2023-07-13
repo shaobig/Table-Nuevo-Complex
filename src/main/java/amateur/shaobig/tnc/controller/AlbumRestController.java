@@ -1,7 +1,7 @@
 package amateur.shaobig.tnc.controller;
 
 import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
-import amateur.shaobig.tnc.dto.album.ReadAllAlbumDto;
+import amateur.shaobig.tnc.dto.album.ReadAllAlbumsDto;
 import amateur.shaobig.tnc.dto.album.UpdateAlbumDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.service.album.AlbumDtoService;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(path = "/album")
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumRestController implements ReadRestController<ReadAlbumDto>, ReadAllRestController<ReadAllAlbumDto>, UpdateRestController<Album, UpdateAlbumDto> {
+public class AlbumRestController implements ReadRestController<ReadAlbumDto>, ReadAllRestController<ReadAllAlbumsDto>, UpdateRestController<Album, UpdateAlbumDto> {
 
     private final AlbumDtoService albumDtoService;
 
@@ -30,7 +30,7 @@ public class AlbumRestController implements ReadRestController<ReadAlbumDto>, Re
     }
 
     @Override
-    public ResponseEntity<List<ReadAllAlbumDto>> readAll() {
+    public ResponseEntity<List<ReadAllAlbumsDto>> readAll() {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(getAlbumDtoService().readAll());
     }

@@ -60,19 +60,20 @@ class SumAlbumMarkCalculatorTest {
 
     static Stream<Arguments> calculateInputData() {
         return Stream.of(
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song())), new BigDecimal("1"), new BigDecimal("1")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.DEFAULT, 1, new Song())), new BigDecimal("1"), new BigDecimal("1")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.INSTRUMENTAL, 2, new Song())), new BigDecimal("1.000"), new BigDecimal("1.000")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.DEFAULT, 2, new Song()), new SongMetadata(1L, SongType.DEFAULT, 3, new Song())), new BigDecimal("1.500"), new BigDecimal("1.500")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.DEFAULT, 1, new Song()), new SongMetadata(1L, SongType.INSTRUMENTAL, 2, new Song()), new SongMetadata(1L, SongType.COVER, 3, new Song())), new BigDecimal("1.500"), new BigDecimal("1.500")),
-                Arguments.of(List.of(new SongMetadata(1L, SongType.COVER, 1, new Song()), new SongMetadata(1L, SongType.COVER, 2, new Song()), new SongMetadata(1L, SongType.COVER, 3, new Song())), new BigDecimal("1.000"), new BigDecimal("1.000"))
+                Arguments.of(new BigDecimal("1"), new BigDecimal("1")),
+                Arguments.of(new BigDecimal("1"), new BigDecimal("1")),
+                Arguments.of(new BigDecimal("1.000"), new BigDecimal("1.000")),
+                Arguments.of(new BigDecimal("1.500"), new BigDecimal("1.500")),
+                Arguments.of(new BigDecimal("1.500"), new BigDecimal("1.500")),
+                Arguments.of(new BigDecimal("1.000"), new BigDecimal("1.000"))
         );
     }
 
     @ParameterizedTest
     @MethodSource(value = "calculateInputData")
-    void calculate(List<SongMetadata> sourceSongMetadataList, BigDecimal sourceCalculatorAnswer, BigDecimal expected) {
-        Mockito.when(integerSumCalculator.calculate(Mockito.anyList())).thenReturn(sourceCalculatorAnswer);
+    void calculate(BigDecimal sourceCalculatorResult, BigDecimal expected) {
+        List<SongMetadata> sourceSongMetadataList = List.of();
+        Mockito.when(integerSumCalculator.calculate(Mockito.anyList())).thenReturn(sourceCalculatorResult);
 
         BigDecimal actual = sumAlbumMarkCalculator.calculate(sourceSongMetadataList);
 

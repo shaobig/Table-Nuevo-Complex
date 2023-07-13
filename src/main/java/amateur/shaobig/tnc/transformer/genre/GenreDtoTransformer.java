@@ -1,4 +1,4 @@
-package amateur.shaobig.tnc.transformer.album.genre;
+package amateur.shaobig.tnc.transformer.genre;
 
 import amateur.shaobig.tnc.dto.genre.GenreDto;
 import amateur.shaobig.tnc.entity.Genre;
@@ -10,7 +10,7 @@ public class GenreDtoTransformer implements Transformer<Genre, GenreDto> {
 
     @Override
     public GenreDto transform(Genre genre) {
-        return new GenreDto(genre.getId(), genre.getName(), genre.isMajor());
+        return new GenreDto(genre.getId(), genre.getName());
     }
 
 }

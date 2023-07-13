@@ -2,12 +2,12 @@ package amateur.shaobig.tnc.transformer.album;
 
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.CreateAlbumDto;
-import amateur.shaobig.tnc.dto.genre.GenreDto;
+import amateur.shaobig.tnc.dto.genre.AlbumGenreDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.transformer.Transformer;
-import amateur.shaobig.tnc.transformer.album.genre.GenreDtoTransformer;
 import amateur.shaobig.tnc.transformer.album.metadata.AlbumMetadataDtoTransformer;
+import amateur.shaobig.tnc.transformer.genre.AlbumGenreDtoTransformer;
 import amateur.shaobig.tnc.transformer.song.SongDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,14 +23,14 @@ import java.util.stream.Collectors;
 public class CreateAlbumDtoTransformer implements Transformer<Album, CreateAlbumDto> {
 
     private final AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
-    private final GenreDtoTransformer genreDtoTransformer;
+    private final AlbumGenreDtoTransformer albumGenreDtoTransformer;
     private final SongDtoTransformer songDtoTransformer;
 
     @Override
     public CreateAlbumDto transform(Album album) {
         AlbumMetadataDto albumMetadata = getAlbumMetadataDtoTransformer().transform(album.getMetadata());
-        List<GenreDto> genres = album.getGenres().stream()
-                .map(genre -> getGenreDtoTransformer().transform(genre))
+        List<AlbumGenreDto> genres = album.getGenres().stream()
+                .map(genre -> getAlbumGenreDtoTransformer().transform(genre))
                 .collect(Collectors.toList());
         List<SongDto> songs = album.getSongs().stream()
                 .map(song -> getSongDtoTransformer().transform(song))

@@ -1,14 +1,14 @@
 package amateur.shaobig.tnc.service.album;
 
 import amateur.shaobig.tnc.dto.album.ReadAlbumDto;
-import amateur.shaobig.tnc.dto.album.ReadAllAlbumDto;
+import amateur.shaobig.tnc.dto.album.ReadAllAlbumsDto;
 import amateur.shaobig.tnc.dto.album.UpdateAlbumDto;
 import amateur.shaobig.tnc.entity.Album;
 import amateur.shaobig.tnc.service.ReadAllService;
 import amateur.shaobig.tnc.service.ReadService;
 import amateur.shaobig.tnc.service.UpdateService;
 import amateur.shaobig.tnc.transformer.album.ReadAlbumDtoTransformer;
-import amateur.shaobig.tnc.transformer.album.ReadAllAlbumDtoTransformer;
+import amateur.shaobig.tnc.transformer.album.ReadAllAlbumsDtoTransformer;
 import amateur.shaobig.tnc.transformer.album.UpdateAlbumDtoTransformer;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,10 +20,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
-public class AlbumDtoService implements ReadService<ReadAlbumDto>, ReadAllService<ReadAllAlbumDto>, UpdateService<Album, UpdateAlbumDto> {
+public class AlbumDtoService implements ReadService<ReadAlbumDto>, ReadAllService<ReadAllAlbumsDto>, UpdateService<Album, UpdateAlbumDto> {
 
     private final ReadAlbumDtoTransformer readAlbumDtoTransformer;
-    private final ReadAllAlbumDtoTransformer readAllAlbumDtoTransformer;
+    private final ReadAllAlbumsDtoTransformer readAllAlbumsDtoTransformer;
     private final UpdateAlbumDtoTransformer updateAlbumDtoTransformer;
     private final AlbumProxyService albumProxyService;
 
@@ -33,9 +33,9 @@ public class AlbumDtoService implements ReadService<ReadAlbumDto>, ReadAllServic
     }
 
     @Override
-    public List<ReadAllAlbumDto> readAll() {
+    public List<ReadAllAlbumsDto> readAll() {
         return getAlbumProxyService().readAll().stream()
-                .map(getReadAllAlbumDtoTransformer()::transform)
+                .map(getReadAllAlbumsDtoTransformer()::transform)
                 .toList();
     }
 

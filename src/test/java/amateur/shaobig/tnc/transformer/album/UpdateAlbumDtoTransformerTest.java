@@ -2,10 +2,12 @@ package amateur.shaobig.tnc.transformer.album;
 
 import amateur.shaobig.tnc.dto.album.AlbumMetadataDto;
 import amateur.shaobig.tnc.dto.album.UpdateAlbumDto;
+import amateur.shaobig.tnc.dto.genre.AlbumGenreDto;
 import amateur.shaobig.tnc.dto.genre.GenreDto;
 import amateur.shaobig.tnc.dto.song.SongDto;
 import amateur.shaobig.tnc.dto.song.SongMetadataDto;
 import amateur.shaobig.tnc.entity.Album;
+import amateur.shaobig.tnc.entity.AlbumGenre;
 import amateur.shaobig.tnc.entity.AlbumMetadata;
 import amateur.shaobig.tnc.entity.Artist;
 import amateur.shaobig.tnc.entity.Genre;
@@ -13,8 +15,8 @@ import amateur.shaobig.tnc.entity.Song;
 import amateur.shaobig.tnc.entity.SongMetadata;
 import amateur.shaobig.tnc.entity.enums.AlbumType;
 import amateur.shaobig.tnc.entity.enums.SongType;
-import amateur.shaobig.tnc.transformer.album.genre.GenreDtoTransformer;
 import amateur.shaobig.tnc.transformer.album.metadata.AlbumMetadataDtoTransformer;
+import amateur.shaobig.tnc.transformer.genre.AlbumGenreDtoTransformer;
 import amateur.shaobig.tnc.transformer.song.SongDtoTransformer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +33,7 @@ import static org.mockito.Mockito.atLeastOnce;
 class UpdateAlbumDtoTransformerTest {
 
     private AlbumMetadataDtoTransformer albumMetadataDtoTransformer;
-    private GenreDtoTransformer genreDtoTransformer;
+    private AlbumGenreDtoTransformer albumGenreDtoTransformer;
     private SongDtoTransformer songDtoTransformer;
 
     private UpdateAlbumDtoTransformer updateAlbumDtoTransformer;
@@ -39,10 +41,10 @@ class UpdateAlbumDtoTransformerTest {
     @BeforeEach
     void init() {
         this.albumMetadataDtoTransformer = Mockito.mock(AlbumMetadataDtoTransformer.class);
-        this.genreDtoTransformer = Mockito.mock(GenreDtoTransformer.class);
+        this.albumGenreDtoTransformer = Mockito.mock(AlbumGenreDtoTransformer.class);
         this.songDtoTransformer = Mockito.mock(SongDtoTransformer.class);
 
-        this.updateAlbumDtoTransformer = new UpdateAlbumDtoTransformer(albumMetadataDtoTransformer, genreDtoTransformer, songDtoTransformer);
+        this.updateAlbumDtoTransformer = new UpdateAlbumDtoTransformer(albumMetadataDtoTransformer, albumGenreDtoTransformer, songDtoTransformer);
     }
 
     @Test
@@ -57,15 +59,15 @@ class UpdateAlbumDtoTransformerTest {
 
     @Test
     void transformCheckGenres() {
-        List<Genre> sourceGenres = List.of(new Genre(1L, "GENRE_NAME_1", false, new Album()), new Genre(1L, "GENRE_NAME_2", false, new Album()));
-        Album sourceAlbum = new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), sourceGenres, List.of());
+        List<AlbumGenre> sourceAlbumGenres = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
+        Album sourceAlbum = new Album(1L, 0, "", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), sourceAlbumGenres, List.of());
 
-        ArgumentCaptor<Genre> genreArgumentCaptor = ArgumentCaptor.forClass(Genre.class);
+        ArgumentCaptor<AlbumGenre> genreArgumentCaptor = ArgumentCaptor.forClass(AlbumGenre.class);
         updateAlbumDtoTransformer.transform(sourceAlbum);
-        Mockito.verify(genreDtoTransformer, atLeastOnce()).transform(genreArgumentCaptor.capture());
-        List<Genre> actual = genreArgumentCaptor.getAllValues();
+        Mockito.verify(albumGenreDtoTransformer, atLeastOnce()).transform(genreArgumentCaptor.capture());
+        List<AlbumGenre> actual = genreArgumentCaptor.getAllValues();
 
-        List<Genre> expected = List.of(new Genre(1L, "GENRE_NAME_1", false, new Album()), new Genre(1L, "GENRE_NAME_2", false, new Album()));
+        List<AlbumGenre> expected = List.of(new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_1"), new Album()), new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME_2"), new Album()));
         assertEquals(expected, actual);
     }
 
@@ -86,18 +88,18 @@ class UpdateAlbumDtoTransformerTest {
     @Test
     void transform() {
         AlbumMetadataDto sourceAlbumMetadataDto = new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false);
-        GenreDto sourceFirstGenre = new GenreDto(1L, "GENRE_NAME_1", false);
-        GenreDto sourceSecondGenre = new GenreDto(1L, "GENRE_NAME_2", false);
+        AlbumGenreDto sourceFirstGenre = new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_1"));
+        AlbumGenreDto sourceSecondGenre = new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_2"));
         SongDto sourceFirstSong = new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1));
         SongDto sourceSecondSong = new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1));
-        Album sourceAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(new Genre(), new Genre()), List.of(new Song(), new Song()));
+        Album sourceAlbum = new Album(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadata(), new Artist(), List.of(new AlbumGenre(), new AlbumGenre()), List.of(new Song(), new Song()));
         Mockito.when(albumMetadataDtoTransformer.transform(Mockito.any())).thenReturn(sourceAlbumMetadataDto);
-        Mockito.when(genreDtoTransformer.transform(Mockito.any())).thenReturn(sourceFirstGenre).thenReturn(sourceSecondGenre);
+        Mockito.when(albumGenreDtoTransformer.transform(Mockito.any())).thenReturn(sourceFirstGenre).thenReturn(sourceSecondGenre);
         Mockito.when(songDtoTransformer.transform(Mockito.any())).thenReturn(sourceFirstSong).thenReturn(sourceSecondSong);
 
         UpdateAlbumDto actual = updateAlbumDtoTransformer.transform(sourceAlbum);
 
-        UpdateAlbumDto expected = new UpdateAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new GenreDto(1L, "GENRE_NAME_1", false), new GenreDto(1L, "GENRE_NAME_2", false)), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
+        UpdateAlbumDto expected = new UpdateAlbumDto(1L, 0, "ALBUM_NAME", 0, AlbumType.LP, new AlbumMetadataDto(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), false), List.of(new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_1")), new AlbumGenreDto(1L, true, new GenreDto(1L, "GENRE_NAME_2"))), List.of(new SongDto(1L, 0, "SONG_NAME_1", new SongMetadataDto(SongType.DEFAULT, 1)), new SongDto(1L, 0, "SONG_NAME_2", new SongMetadataDto(SongType.DEFAULT, 1))));
         assertEquals(expected, actual);
     }
 
