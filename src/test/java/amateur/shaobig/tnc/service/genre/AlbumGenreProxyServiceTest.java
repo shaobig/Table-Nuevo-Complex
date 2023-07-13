@@ -44,4 +44,26 @@ class AlbumGenreProxyServiceTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void updateCheckGenre() {
+        AlbumGenre sourceAlbumGenre = new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME"), new Album());
+
+        albumGenreProxyService.update(sourceAlbumGenre);
+
+        Genre expectedGenre = new Genre(1L, "GENRE_NAME");
+        Mockito.verify(genreProxyService).create(expectedGenre);
+    }
+
+    @Test
+    void update() {
+        Genre sourceGenre = new Genre(1L, "GENRE_NAME");
+        AlbumGenre sourceAlbumGenre = new AlbumGenre(1L, true, new Genre(), new Album());
+        Mockito.when(genreProxyService.create(Mockito.any())).thenReturn(sourceGenre);
+
+        AlbumGenre actual = albumGenreProxyService.update(sourceAlbumGenre);
+
+        AlbumGenre expected = new AlbumGenre(1L, true, new Genre(1L, "GENRE_NAME"), new Album());
+        assertEquals(expected, actual);
+    }
+
 }
