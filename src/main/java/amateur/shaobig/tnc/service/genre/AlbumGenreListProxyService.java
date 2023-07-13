@@ -9,14 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
 @Getter(value = AccessLevel.PACKAGE)
 public class AlbumGenreListProxyService implements CreateService<List<AlbumGenre>, List<AlbumGenre>>, UpdateService<List<AlbumGenre>, List<AlbumGenre>> {
 
-    private final AlbumGenreListService albumGenreListService;
     private final AlbumGenreProxyService albumGenreProxyService;
 
     @Override
@@ -28,8 +26,8 @@ public class AlbumGenreListProxyService implements CreateService<List<AlbumGenre
 
     @Override
     public List<AlbumGenre> update(List<AlbumGenre> albumGenres) {
-        return Stream.concat(albumGenres.stream(), getAlbumGenreListService().update(albumGenres).stream())
-                .distinct()
+        return albumGenres.stream()
+                .map(getAlbumGenreProxyService()::update)
                 .toList();
     }
 
