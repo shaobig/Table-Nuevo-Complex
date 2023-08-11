@@ -1,6 +1,6 @@
 # Table Nuevo Complex
 
-The Table Nuevo Complex or TNC is a multicomponent server application providing a set of instruments for the music analysis. The system propagates the idea of the evaluation of music as a way to discover, analyse and arrange the different sides of the music world; determine own favourite artists and their releases and expand the boundaries of the surrounding being. The functional objective was the lack of the functionality in terms of the used instruments.
+The Table Nuevo Complex or TNC is a multicomponent server application which provides a set of instruments for the music analysis. The system propagates the idea of the evaluation of music as a way to discover, analyse and arrange the different sides of the music world; determine own favourite artists and their releases and expand the boundaries of the surrounding being. The functional objective was the lack of the functionality in terms of the used instruments.
 
 ## Basic tools
 
