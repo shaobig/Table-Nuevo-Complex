@@ -4,12 +4,12 @@ The Table Nuevo Complex or TNC is a multicomponent server application providing 
 
 ## Basic tools
 
-- A summary table containing all the albums;
+- A summary table with the album data;
 - An album pool which stores a set of albums that have not been rated yet;
 - An artist and an album browser. It displays all the basic information about either.
 
 ## Technologies
-- Java 17. The record objects are the greatest thing on the whole Earth;
+- Java 17. The record object is the greatest thing on Earth;
 - Spring frameworks id est Spring Core, Spring Boot, Spring WEB MVC and Spring Data JPA;
 - Hibernate as a one of the most popular JPA implementations;
 - JUnit and Mockito. The more quality tests you provide the clearer the documentation becomes;
