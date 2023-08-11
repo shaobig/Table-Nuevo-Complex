@@ -1,19 +1,21 @@
 # Table Nuevo Complex
 
-This application is an utility which provides the basic set of instruments for music analysing based on a complex estimating system
+The **Table Nuevo Complex** or **TNC** is a multicomponent server application which provides a set of instruments for the music analysis. The system propagates the idea of the evaluation of music as a way to discover, analyse and arrange the different sides of the music world; determine own favourite artists and their releases and expand the boundaries of the surrounding being. The functional objective was the lack of the functionality in terms of the used instruments.
 
-## Basic instruments
+## Basic tools
 
-- Summary table
-- Journal with marks
+- A summary table with the album data;
+- An album pool which stores a set of albums that have not been rated yet;
+- An artist and an album browser. It displays all the basic information about either.
 
-1. A summary table basically contains all the relevant information related with the music collections. According to the last format the table should contain at least the following information:
-   - Collection name
-   - Artist name
-   - Release year
-   - Average mark
-   - Assessment date
-   - _Sum mark_
+## Technologies
+- **Java 17**. The record object is the greatest thing on Earth;
+- Spring frameworks id est **Spring Core**, **Spring Boot**, **Spring WEB MVC** and **Spring Data JPA**;
+- **Hibernate** as a one of the most popular JPA implementations;
+- **JUnit** and **Mockito**. The more quality tests you provide the clearer the documentation becomes;
+- **Lombok** for the optimisation purposes;
+- All the project dependencies and libraries were assembled by **Maven**.
 
-    A sum mark is an algebraic addition of album's songs
-2. In order to perform the necessary mathematical operations, a journal with marks helps to navigate and search for the artist's data like album statistics, song marks, et cetera.
+## Infrastructure features
+- Supports the **Docker** containerization for the **PostgreSQL** database management system;
+- The next goal is to integrate a virtual space for the whole system and hand over this responsibility to the **Kubernetes** cluster.
